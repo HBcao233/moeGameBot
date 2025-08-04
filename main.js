@@ -699,43 +699,8 @@ window.addEventListener('load', () => {
   Telegram.WebApp.setHeaderColor('secondary_bg_color');
   // Telegram.WebApp.onEvent('viewportChanged', setViewportData);
   
-  let prevBgColorVal = document.getElementById('bg_color_sel').value;
-  const bgColorInput = document.getElementById('bg_color_input');
-  const headerColorSel = document.getElementById('header_color_sel');
-
-  bgColorInput.value = Telegram.WebApp.backgroundColor;
   document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-  headerColorSel.value = 'secondary_bg_color';
-  headerColorSel.addEventListener('change', function (e) {
-    const colorKey = e.target.value;
-    document.getElementById('top_sect').classList.toggle('second', colorKey === 'secondary_bg_color');
-    Telegram.WebApp.setHeaderColor(colorKey);
-    document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-  });
-  bgColorInput.addEventListener('change', function (e) {
-    const color = e.target.value;
-    document.getElementById('bg_color_val').textContent = color;
-    headerColorSel.value = 'custom';
-    prevBgColorVal = document.getElementById('bg_color_sel').value;
-    Telegram.WebApp.setBackgroundColor(color);
-    document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-  });
-  headerColorSel.addEventListener('change', function (e) {
-    const colorKey = e.target.value;
-    if (colorKey === 'custom') {
-      headerColorSel.value = prevBgColorVal;
-      bgColorInput.focus();
-    } else {
-      document.getElementById('bg_color_val').textContent = 'custom...';
-      Telegram.WebApp.setBackgroundColor(colorKey);
-      document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-      bgColorInput.value = Telegram.WebApp.backgroundColor;
-      prevBgColorVal = headerColorSel.value;
-    }
-  });
-
   Telegram.WebApp.onEvent('themeChanged', function () {
-    bgColorInput.value = Telegram.WebApp.backgroundColor;
     document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
   });
 
