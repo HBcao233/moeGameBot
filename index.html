@@ -51,7 +51,7 @@
     }
 
     .btn-primary {
-      background-color: var(--tg-theme-button-color, #50a8eb);
+      background-color: var(--tg-theme-button-color, #ff8aac); /* #50a8eb */
       color: var(--tg-theme-button-text-color, #fff);
       border: none;
     }
@@ -374,14 +374,7 @@
   </style>
   
   <script type="application/javascript">
-
-    /*
-     * This is a demo code for Telegram WebApp for Bots
-     * It contains basic examples of how to use the API
-     * Note: all requests to backend are disabled in this demo, you should use your own backend
-     */
-
-    const DemoApp = {
+    const MoeApp = {
       initData: Telegram.WebApp.initData || '',
       initDataUnsafe: Telegram.WebApp.initDataUnsafe || {},
       MainButton: Telegram.WebApp.MainButton,
@@ -389,18 +382,20 @@
       SettingsButton: Telegram.WebApp.SettingsButton,
 
       init(options) {
+        alert(JSON.stringify(MoeApp.initData) + '\n' + JSON.stringify(MoeApp.initDataUnsafe))
         document.body.style.visibility = ''
         Telegram.WebApp.ready()
         Telegram.WebApp.MainButton.setParams({
           text: 'CLOSE WEBVIEW',
           is_visible: true
-        }).onClick(DemoApp.close)
+        }).onClick(MoeApp.close)
         Telegram.WebApp.BackButton.onClick(function () {
-          DemoApp.showAlert('Back button pressed')
+          MoeApp.showAlert('Back button pressed')
         })
         Telegram.WebApp.SettingsButton.onClick(function () {
-          DemoApp.showAlert('Settings opened!')
+          MoeApp.showAlert('Settings opened!')
         })
+        MoeApp.BackButton.show();
       },
       expand() {
         Telegram.WebApp.expand();
@@ -418,21 +413,12 @@
           el.innerHTML = 'Hide Main Button';
         }
       },
-      toggleBackButton(el) {
-        if (DemoApp.BackButton.isVisible) {
-          DemoApp.BackButton.hide();
-          el.innerHTML = 'Show Back Button';
-        } else {
-          DemoApp.BackButton.show();
-          el.innerHTML = 'Hide Back Button';
-        }
-      },
       toggleSettingsButton(el) {
-        if (DemoApp.SettingsButton.isVisible) {
-          DemoApp.SettingsButton.hide();
+        if (MoeApp.SettingsButton.isVisible) {
+          MoeApp.SettingsButton.hide();
           el.innerHTML = 'Show Settings Button';
         } else {
-          DemoApp.SettingsButton.show();
+          MoeApp.SettingsButton.show();
           el.innerHTML = 'Hide Settings Button';
         }
       },
@@ -461,7 +447,7 @@
 
       // actions
       sendMessage(msg_id, with_webview) {
-        if (!DemoApp.initDataUnsafe.query_id) {
+        if (!MoeApp.initDataUnsafe.query_id) {
           alert('WebViewQueryId not defined');
           return;
         }
@@ -471,9 +457,9 @@
         const btn = document.querySelector('#btn_status');
         btn.textContent = 'Sending...';
 
-        DemoApp.apiRequest('sendMessage', {
+        MoeApp.apiRequest('sendMessage', {
           msg_id: msg_id || '',
-          with_webview: !DemoApp.initDataUnsafe.receiver && with_webview ? 1 : 0
+          with_webview: !MoeApp.initDataUnsafe.receiver && with_webview ? 1 : 0
         }, function (result) {
           document.querySelectorAll('button').forEach((btn) => btn.disabled = false);
 
@@ -506,7 +492,7 @@
         const btnStatus = document.querySelector('#btn_status');
         btnStatus.textContent = 'Changing button...';
 
-        DemoApp.apiRequest('changeMenuButton', {}, function (result) {
+        MoeApp.apiRequest('changeMenuButton', {}, function (result) {
           document.querySelectorAll('button').forEach((btn) => btn.disabled = false);
 
           if (result.response) {
@@ -541,12 +527,12 @@
       },
       checkInitData() {
         const webViewStatus = document.querySelector('#webview_data_status');
-        if (DemoApp.initDataUnsafe.query_id &&
-          DemoApp.initData &&
+        if (MoeApp.initDataUnsafe.query_id &&
+          MoeApp.initData &&
           webViewStatus.classList.contains('status_need')
         ) {
           webViewStatus.classList.remove('status_need');
-          DemoApp.apiRequest('checkInitData', {}, function (result) {
+          MoeApp.apiRequest('checkInitData', {}, function (result) {
             if (result.ok) {
               webViewStatus.textContent = 'Hash is correct (async)';
               webViewStatus.className = 'ok';
@@ -590,7 +576,7 @@
           }
 
           if (!chooseChatTypes.length) {
-            return DemoApp.showAlert('Select chat types!');
+            return MoeApp.showAlert('Select chat types!');
           }
 
           Telegram.WebApp.switchInlineQuery(query, chatTypes)
@@ -609,9 +595,9 @@
       requestContact() {
         Telegram.WebApp.requestContact(function (result) {
           if (result) {
-            DemoApp.showAlert('Contact granted');
+            MoeApp.showAlert('Contact granted');
           } else {
-            DemoApp.showAlert('Contact denied');
+            MoeApp.showAlert('Contact denied');
           }
         });
       },
@@ -629,7 +615,7 @@
           ]
         }, function (buttonId) {
           if (buttonId === 'delete') {
-            DemoApp.showAlert("'Delete all' selected");
+            MoeApp.showAlert("'Delete all' selected");
           } else if (buttonId === 'faq') {
             Telegram.WebApp.openLink('https://telegram.org/faq');
           }
@@ -651,7 +637,7 @@
               return true;
             }
           } else {
-            DemoApp.showAlert(text);
+            MoeApp.showAlert(text);
 
             return true;
           }
@@ -757,7 +743,7 @@
       cloudStorageItems: {},
       editCloudRow(el, event) {
         event.preventDefault();
-        const values = DemoApp.cloudStorageItems
+        const values = MoeApp.cloudStorageItems
         const key = el.closest('tr').getAttribute('data-key')
         el.form.reset();
         el.form.key.value = key;
@@ -768,17 +754,17 @@
         const key = el.closest('tr').getAttribute('data-key')
         Telegram.WebApp.CloudStorage.removeItem(key, function (err, deleted) {
           if (err) {
-            DemoApp.showAlert('Error: ' + err);
+            MoeApp.showAlert('Error: ' + err);
           } else {
             if (deleted) {
-              const index = DemoApp.cloudStorageKeys.indexOf(key);
+              const index = MoeApp.cloudStorageKeys.indexOf(key);
               if (index >= 0) {
-                DemoApp.cloudStorageKeys.splice(index, 1);
+                MoeApp.cloudStorageKeys.splice(index, 1);
               }
-              delete DemoApp.cloudStorageItems[key];
+              delete MoeApp.cloudStorageItems[key];
             }
             el.form.reset();
-            DemoApp.updateCloudRows();
+            MoeApp.updateCloudRows();
           }
         });
       },
@@ -788,26 +774,26 @@
         const value = form.value.value
         Telegram.WebApp.CloudStorage.setItem(key, value, function (err, saved) {
           if (err) {
-            DemoApp.showAlert('Error: ' + err);
+            MoeApp.showAlert('Error: ' + err);
           } else {
             if (saved) {
-              if (typeof DemoApp.cloudStorageItems[key] === 'undefined') {
-                DemoApp.cloudStorageKeys.push(key);
+              if (typeof MoeApp.cloudStorageItems[key] === 'undefined') {
+                MoeApp.cloudStorageKeys.push(key);
               }
-              DemoApp.cloudStorageItems[key] = value;
+              MoeApp.cloudStorageItems[key] = value;
             }
             form.reset();
-            DemoApp.updateCloudRows();
+            MoeApp.updateCloudRows();
           }
         });
       },
       updateCloudRows() {
         let html = '';
-        const keys = DemoApp.cloudStorageKeys;
-        const values = DemoApp.cloudStorageItems;
+        const keys = MoeApp.cloudStorageKeys;
+        const values = MoeApp.cloudStorageItems;
         for (let i = 0; i < keys.length; i++) {
           const key = keys[i];
-          html += '<tr data-key="' + cleanHTML(key) + '"><td>' + cleanHTML(key) + '</td><td>' + cleanHTML(values[key]) + '</td><td><button onclick="DemoApp.editCloudRow(this, event);">Edit</button><button onclick="DemoApp.deleteCloudRow(this, event);">Delete</button></td></tr>';
+          html += '<tr data-key="' + cleanHTML(key) + '"><td>' + cleanHTML(key) + '</td><td>' + cleanHTML(values[key]) + '</td><td><button onclick="MoeApp.editCloudRow(this, event);">Edit</button><button onclick="MoeApp.deleteCloudRow(this, event);">Delete</button></td></tr>';
         }
 
         document.getElementById('cloud_rows').innerHTML = html
@@ -815,20 +801,20 @@
       loadCloudKeys(el) {
         Telegram.WebApp.CloudStorage.getKeys(function (err, keys) {
           if (err) {
-            DemoApp.showAlert('Error: ' + err);
+            MoeApp.showAlert('Error: ' + err);
           } else {
             if (keys.length > 0) {
               Telegram.WebApp.CloudStorage.getItems(keys, function (err, values) {
                 if (err) {
-                  DemoApp.showAlert('Error: ' + err);
+                  MoeApp.showAlert('Error: ' + err);
                 } else {
-                  DemoApp.cloudStorageKeys = keys;
-                  DemoApp.cloudStorageItems = {};
+                  MoeApp.cloudStorageKeys = keys;
+                  MoeApp.cloudStorageItems = {};
                   for (let i = 0; i < keys.length; i++) {
                     const key = keys[i];
-                    DemoApp.cloudStorageItems[key] = values[key];
+                    MoeApp.cloudStorageItems[key] = values[key];
                   }
-                  DemoApp.updateCloudRows();
+                  MoeApp.updateCloudRows();
                 }
               });
             }
@@ -839,8 +825,8 @@
       // biometrics
       biometricInit(el) {
         const biometricManager = Telegram.WebApp.BiometricManager;
-        if (!DemoApp.biometricInited) {
-          DemoApp.biometricInited = true;
+        if (!MoeApp.biometricInited) {
+          MoeApp.biometricInited = true;
           Telegram.WebApp.onEvent('biometricManagerUpdated', function () {
             document.getElementById('bm_inited').textContent = biometricManager.isInited ? 'true' : 'false'
             document.getElementById('bm_available').textContent = biometricManager.isBiometricAvailable ? 'true' : 'false'
@@ -858,7 +844,7 @@
       biometricRequestAccess(el) {
         const biometricManager = Telegram.WebApp.BiometricManager;
         if (!biometricManager.isInited) {
-          return DemoApp.showAlert('Biometric not inited yet!');
+          return MoeApp.showAlert('Biometric not inited yet!');
         }
 
         biometricManager.requestAccess({ reason: 'The bot uses biometrics for testing purposes.' }, function (access_granted) {
@@ -874,7 +860,7 @@
       biometricRequestAuth(el) {
         const biometricManager = Telegram.WebApp.BiometricManager;
         if (!biometricManager.isInited) {
-          return DemoApp.showAlert('Biometric not inited yet!');
+          return MoeApp.showAlert('Biometric not inited yet!');
         }
 
         el.nextElementSibling.innerHTML = '';
@@ -893,7 +879,7 @@
       biometricOpenSettings(el) {
         const biometricManager = Telegram.WebApp.BiometricManager;
         if (!biometricManager.isInited) {
-          return DemoApp.showAlert('Biometric not inited yet!');
+          return MoeApp.showAlert('Biometric not inited yet!');
         }
 
         if (!biometricManager.isBiometricAvailable ||
@@ -907,7 +893,7 @@
       biometricSetToken(el) {
         const biometricManager = Telegram.WebApp.BiometricManager;
         if (!biometricManager.isInited) {
-          return DemoApp.showAlert('Biometric not inited yet!');
+          return MoeApp.showAlert('Biometric not inited yet!');
         }
 
         const token = parseInt(Math.random().toString().substring(2)).toString(16);
@@ -925,7 +911,7 @@
       biometricRemoveToken(el) {
         const biometricManager = Telegram.WebApp.BiometricManager;
         if (!biometricManager.isInited) {
-          return DemoApp.showAlert('Biometric not inited yet!');
+          return MoeApp.showAlert('Biometric not inited yet!');
         }
 
         biometricManager.updateBiometricToken('', function (updated) {
@@ -947,7 +933,7 @@
         // CHANGE THIS CODE TO YOUR OWN
         return onCallback && onCallback({ error: 'This function (' + method + ') should send requests to your backend. Please, change this code to your own.' });
 
-        const authData = DemoApp.initData || '';
+        const authData = MoeApp.initData || '';
         fetch('/demo/api', {
           method: 'POST',
           body: JSON.stringify(Object.assign(data, {
@@ -968,38 +954,25 @@
       }
     }
 
-    const DemoAppMenu = {
+    const MoeAppMenu = {
       init() {
-        DemoApp.init();
+        MoeApp.init();
         document.body.classList.add('gray');
         Telegram.WebApp.setHeaderColor('secondary_bg_color');
       }
     };
 
-    const DemoAppInitData = {
+    const MoeAppInitData = {
       init() {
-        DemoApp.init();
+        MoeApp.init();
         Telegram.WebApp.onEvent('themeChanged', function () {
           document.getElementById('theme_data').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
         });
-        document.getElementById('webview_data').innerHTML = JSON.stringify(DemoApp.initDataUnsafe, null, 2);
-        document.getElementById('theme_data').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
-        DemoApp.checkInitData();
+        
+        // document.getElementById('theme_data').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
+        MoeApp.checkInitData();
       }
     };
-
-    const DemoAppViewport = {
-      init() {
-        DemoApp.init();
-        Telegram.WebApp.onEvent('viewportChanged', DemoAppViewport.setData);
-        DemoAppViewport.setData();
-      },
-      setData() {
-        document.querySelector('.viewport-border').setAttribute('text', window.innerWidth + ' x ' + round(Telegram.WebApp.viewportHeight, 2))
-        document.querySelector('.viewport-stable_border').setAttribute('text', window.innerWidth + ' x ' + round(Telegram.WebApp.viewportStableHeight, 2) +
-          ' | is_expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false'));
-      }
-    }
 
     function cleanHTML(value) {
       return value
@@ -1044,18 +1017,19 @@
     /*
      * This part of code is used to initialize the demo app and set up the event handlers we need.
      */
-
+    
+    /*
     Telegram.WebApp.onEvent('themeChanged', function () {
       document.getElementById('theme_data').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
-    });
+    });*/
 
-    if (DemoApp.initDataUnsafe.query_id) {
+    if (MoeApp.initDataUnsafe.query_id) {
       document.getElementById('main_btn').style.display = 'block';
     }
-    document.getElementById('with_webview_btn').style.display = !!DemoApp.initDataUnsafe.query_id && !DemoApp.initDataUnsafe.receiver ? 'block' : 'none';
-    document.getElementById('webview_data').innerHTML = JSON.stringify(DemoApp.initDataUnsafe, null, 2);
+    document.getElementById('with_webview_btn').style.display = !!MoeApp.initDataUnsafe.query_id && !MoeApp.initDataUnsafe.receiver ? 'block' : 'none';
+    
 
-    document.getElementById('theme_data').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
+    // document.getElementById('theme_data').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
     document.getElementById('regular_link').setAttribute('href', document.getElementById('regular_link').getAttribute('href') + location.hash);
     document.getElementById('text_field').focus();
     document.getElementById('regular_field').addEventListener('input', function (e) {
@@ -1070,37 +1044,30 @@
     document.getElementById('ver').innerHTML = Telegram.WebApp.version;
     document.getElementById('platform').innerHTML = Telegram.WebApp.platform;
 
-    if (DemoApp.initDataUnsafe.receiver) {
+    if (MoeApp.initDataUnsafe.receiver) {
       document.getElementById('peer_wrap').style.display = 'block';
-      document.getElementById('peer_name').innerHTML = DemoApp.initDataUnsafe.receiver.first_name + ' ' + DemoApp.initDataUnsafe.receiver.last_name;
-      if (DemoApp.initDataUnsafe.receiver.photo_url) {
-        document.getElementById('peer_photo').setAttribute('src', DemoApp.initDataUnsafe.receiver.photo_url);
+      document.getElementById('peer_name').innerHTML = MoeApp.initDataUnsafe.receiver.first_name + ' ' + MoeApp.initDataUnsafe.receiver.last_name;
+      if (MoeApp.initDataUnsafe.receiver.photo_url) {
+        document.getElementById('peer_photo').setAttribute('src', MoeApp.initDataUnsafe.receiver.photo_url);
       } else {
         document.getElementById('peer_photo').style.display = 'none';
       }
-    } else if (DemoApp.initDataUnsafe.chat) {
+    } else if (MoeApp.initDataUnsafe.chat) {
       document.getElementById('peer_wrap').style.display = 'block';
-      document.getElementById('peer_name').innerHTML = DemoApp.initDataUnsafe.chat.title;
-      if (DemoApp.initDataUnsafe.chat.photo_url) {
-        document.getElementById('peer_photo').setAttribute('src', DemoApp.initDataUnsafe.chat.photo_url);
+      document.getElementById('peer_name').innerHTML = MoeApp.initDataUnsafe.chat.title;
+      if (MoeApp.initDataUnsafe.chat.photo_url) {
+        document.getElementById('peer_photo').setAttribute('src', MoeApp.initDataUnsafe.chat.photo_url);
       } else {
         document.getElementById('peer_photo').style.display = 'none';
       }
     }
 
-    DemoApp.checkInitData();
-    DemoApp.init();
-
-    function setViewportData() {
-      document.querySelector('.viewport-border').setAttribute('text', window.innerWidth + ' x ' + round(Telegram.WebApp.viewportHeight, 2))
-      document.querySelector('.viewport-stable_border').setAttribute('text', window.innerWidth + ' x ' + round(Telegram.WebApp.viewportStableHeight, 2) +
-        ' | is_expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false'));
-    }
+    MoeApp.checkInitData();
+    MoeApp.init();
 
     Telegram.WebApp.setHeaderColor('secondary_bg_color');
-    Telegram.WebApp.onEvent('viewportChanged', setViewportData);
-    setViewportData();
-
+    // Telegram.WebApp.onEvent('viewportChanged', setViewportData);
+    
     let prevBgColorVal = document.getElementById('bg_color_sel').value;
     const bgColorInput = document.getElementById('bg_color_input');
     const headerColorSel = document.getElementById('header_color_sel');
@@ -1142,15 +1109,15 @@
     });
 
     try {
-      DemoApp.testClipboard(document.getElementById('clipboard_test'));
+      MoeApp.testClipboard(document.getElementById('clipboard_test'));
     } catch (e) { }
 
     try {
-      DemoApp.loadCloudKeys();
+      MoeApp.loadCloudKeys();
     } catch (e) { }
 
     try {
-      DemoApp.biometricInit();
+      MoeApp.biometricInit();
     } catch (e) { }
   </script>
 
@@ -1393,35 +1360,21 @@
 <body>
 
   <section id="top_sect" class="second">
-    <button id="main_btn" onclick="DemoApp.sendMessage('');">Send «Hello, World!»</button>
-    <button id="with_webview_btn" onclick="DemoApp.sendMessage('', true);">Send «Hello, World!» with inline webview
+    <button id="main_btn" onclick="MoeApp.sendMessage('');">Send «Hello, World!»</button>
+    <button id="with_webview_btn" onclick="MoeApp.sendMessage('', true);">Send «Hello, World!» with inline webview
       button</button>
-    <button id="data_btn" onclick="DemoApp.sendTime(true);">Send current time to bot (x10)</button>
-    <button onclick="DemoApp.expand();">Expand Webview</button>
-    <button onclick="DemoApp.toggleBackButton(this);">Show Back Button</button>
-    <button onclick="DemoApp.toggleSettingsButton(this);">Show Settings Button</button>
-    <button onclick="DemoApp.toggleMainButton(this);">Hide Main Button</button>
-    <button onclick="DemoApp.toggleSwipeBehavior(this);">Disable Vertical Swypes</button>
+    <button id="data_btn" onclick="MoeApp.sendTime(true);">Send current time to bot (x10)</button>
+    <button onclick="MoeApp.expand();">Expand Webview</button>
+    <button onclick="MoeApp.toggleBackButton(this);">Show Back Button</button>
+    <button onclick="MoeApp.toggleSettingsButton(this);">Show Settings Button</button>
+    <button onclick="MoeApp.toggleMainButton(this);">Hide Main Button</button>
+    <button onclick="MoeApp.toggleSwipeBehavior(this);">Disable Vertical Swypes</button>
     <input type="text" placeholder="Input text in regular input..." id="regular_field" />
     <div class="input" contenteditable="true" data-placeholder="Input text in contenteditable field..." id="text_field">
     </div>
     <div id="peer_wrap" style="display:none">
       <img id="peer_photo" class="chat_img" src="">
       <span id="peer_name"></span>
-    </div>
-    <div class="sect_row">Header: <input type="color" id="header_color_input" />
-      <select id="header_color_sel">
-        <option value="bg_color" selected>bg_color</option>
-        <option value="secondary_bg_color">secondary_bg_color</option>
-        <option value="custom" id="header_color_val">custom...</option>
-      </select>
-    </div>
-    <div class="sect_row">Background: <input type="color" id="bg_color_input" />
-      <select id="bg_color_sel">
-        <option value="bg_color" selected>bg_color</option>
-        <option value="secondary_bg_color">secondary_bg_color</option>
-        <option value="custom" id="bg_color_val">custom...</option>
-      </select>
     </div>
   </section>
 
@@ -1462,24 +1415,24 @@
     <p>Test permissions:</p>
     <div class="columns">
       <ul>
-        <li><a href="javascript:;" onclick="return DemoApp.requestLocation(this);">Request Location</a> <span></span>
+        <li><a href="javascript:;" onclick="return MoeApp.requestLocation(this);">Request Location</a> <span></span>
         </li>
-        <li><a href="javascript:;" onclick="return DemoApp.requestVideo(this);">Request Video</a> <span></span></li>
-        <li><a href="javascript:;" onclick="return DemoApp.requestAudio(this);">Request Audio</a> <span></span></li>
-        <li><a href="javascript:;" onclick="return DemoApp.requestAudioVideo(this);">Request Audio+Video</a>
+        <li><a href="javascript:;" onclick="return MoeApp.requestVideo(this);">Request Video</a> <span></span></li>
+        <li><a href="javascript:;" onclick="return MoeApp.requestAudio(this);">Request Audio</a> <span></span></li>
+        <li><a href="javascript:;" onclick="return MoeApp.requestAudioVideo(this);">Request Audio+Video</a>
           <span></span>
         </li>
-        <li><a href="javascript:;" onclick="return DemoApp.testClipboard(this);" id="clipboard_test">Read from
+        <li><a href="javascript:;" onclick="return MoeApp.testClipboard(this);" id="clipboard_test">Read from
             clipboard</a> <span></span></li>
       </ul>
       <ul>
-        <li><a href="javascript:;" onclick="return DemoApp.requestWriteAccess(this);">Request write access</a>
+        <li><a href="javascript:;" onclick="return MoeApp.requestWriteAccess(this);">Request write access</a>
           <span></span>
         </li>
-        <li><a href="javascript:;" onclick="return DemoApp.requestPhoneNumber(this);">Request phone number</a>
+        <li><a href="javascript:;" onclick="return MoeApp.requestPhoneNumber(this);">Request phone number</a>
           <span></span><br><br>
         </li>
-        <li><a href="javascript:;" onclick="return DemoApp.requestServerTime(this);">Request server time</a> (invokes
+        <li><a href="javascript:;" onclick="return MoeApp.requestServerTime(this);">Request server time</a> (invokes
           custom method) <span></span></li>
       </ul>
     </div>
@@ -1492,13 +1445,13 @@
         <li><a href="javascript:;" onclick="prompt('How old are you?');">prompt</a></li>
       </ul>
       <ul>
-        <li><a href="javascript:;" onclick="DemoApp.showAlert('Hello!');">showAlert</a></li>
-        <li><a href="javascript:;" onclick="DemoApp.showConfirm('Are you sure?');">showConfirm</a></li>
-        <li><a href="javascript:;" onclick="DemoApp.requestWriteAccess();">requestWriteAccess</a></li>
-        <li><a href="javascript:;" onclick="DemoApp.requestContact();">requestContact</a></li>
-        <li><a href="javascript:;" onclick="DemoApp.showPopup();">showPopup</a></li>
-        <li><a href="javascript:;" onclick="DemoApp.showScanQrPopup();">showScanQrPopup</a></li>
-        <li><a href="javascript:;" onclick="DemoApp.showScanQrPopup(true);">showScanQrPopup (links only)</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.showAlert('Hello!');">showAlert</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.showConfirm('Are you sure?');">showConfirm</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.requestWriteAccess();">requestWriteAccess</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.requestContact();">requestContact</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.showPopup();">showPopup</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.showScanQrPopup();">showScanQrPopup</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.showScanQrPopup(true);">showScanQrPopup (links only)</a></li>
       </ul>
     </div>
 
@@ -1517,7 +1470,7 @@
     </ul>
 
     <p>Cloud storage:</p>
-    <form onsubmit="DemoApp.saveCloudForm(this, event);">
+    <form onsubmit="MoeApp.saveCloudForm(this, event);">
       <table class="table table-bordered small">
         <thead>
           <tr>
@@ -1547,36 +1500,22 @@
         <li>available: <span class="txt" id="bm_available">false</span></li>
         <li>type: <span class="txt" id="bm_type"></span></li>
         <li>access_requested: <span class="txt" id="bm_access_requested">false</span> (<a href="javascript:;"
-            onclick="return DemoApp.biometricRequestAccess(this);">Request access</a>) <span></span></li>
+            onclick="return MoeApp.biometricRequestAccess(this);">Request access</a>) <span></span></li>
         <li>access_granted: <span class="txt" id="bm_access_granted">false</span> <span id="bm_settings"
-            style="display:none;">(<a href="javascript:;" onclick="return DemoApp.biometricOpenSettings(this);">Open
+            style="display:none;">(<a href="javascript:;" onclick="return MoeApp.biometricOpenSettings(this);">Open
               settings</a>)</span></li>
         <li>token_saved: <span class="txt" id="bm_token_saved">false</span> (<a href="javascript:;"
-            onclick="return DemoApp.biometricSetToken(this);">Set token</a>, <a href="javascript:;"
-            onclick="return DemoApp.biometricRemoveToken(this);">Remove token</a>) <span></span></li>
+            onclick="return MoeApp.biometricSetToken(this);">Set token</a>, <a href="javascript:;"
+            onclick="return MoeApp.biometricRemoveToken(this);">Remove token</a>) <span></span></li>
         <li>device_id: <span class="txt" id="bm_device_id"></span></li>
-        <li><a href="javascript:;" onclick="return DemoApp.biometricRequestAuth(this);">Request auth</a> <span></span>
+        <li><a href="javascript:;" onclick="return MoeApp.biometricRequestAuth(this);">Request auth</a> <span></span>
         </li>
       </ul>
     </div>
 
-    <pre><code id="webview_data"></code></pre>
-    <div class="hint">
-      Data passed to webview.
-      <span id="webview_data_status" class="status_need">Checking hash...</span>
-    </div>
-    <pre><code id="theme_data"></code></pre>
-    <div class="hint">
-      Theme params
-    </div>
-    <div class="hint">
-      Version: <span id="ver"></span>,
-      platform: <span id="platform"></span>
-    </div>
-  </section>
 
-  <div class="viewport-border"></div>
-  <div class="viewport-stable_border"></div>
+   
+  </section>
 
 </body>
 
