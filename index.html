@@ -382,7 +382,6 @@
       SettingsButton: Telegram.WebApp.SettingsButton,
 
       init(options) {
-        alert(JSON.stringify(MoeApp.initData) + '\n' + JSON.stringify(MoeApp.initDataUnsafe))
         document.body.style.visibility = ''
         Telegram.WebApp.ready()
         Telegram.WebApp.MainButton.setParams({
@@ -396,6 +395,8 @@
           MoeApp.showAlert('Settings opened!')
         })
         MoeApp.BackButton.show();
+      
+        alert(JSON.stringify(Telegram.WebApp.initData) + '\n' + JSON.stringify(Telegram.WebApp.initDataUnsafe))
       },
       expand() {
         Telegram.WebApp.expand();
