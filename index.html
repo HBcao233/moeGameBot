@@ -12,26 +12,43 @@
   <meta name="robots" content="noindex,nofollow" />
   <meta property="og:title" content="MOE">
   <meta property="og:description" content="MOE Game">
-  
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>MOE</title>
   
   <script src="https://telegram.org/js/telegram-web-app.js?2"></script>
-  <link rel="stylesheet" href="main.css?v=2">
-  <script src="./main.js?v=3"></script>
+  <link rel="stylesheet" href="main.css?v=6">
+  <script src="./main.js?v=30"></script>
 </head>
-<body>
+<body style="visibility: hidden;">
+  <section class="container">
+    <div class="header">
+      <div class="avatar-box">
+        <img class="avatar" src="images/b65b5ae0595439920e46e80daf47512a.jpg" />
+      </div>
+      <div class="info">
+        <div class="nickname"></div>
+        <div class="role">
+          <img class="circle" src="svg/circle.svg" style="display: none;">
+          <img class="triangle" src="svg/triangle.svg" style="display: none;">
+          <img class="square" src="svg/square.svg" style="display: none;">
+        </div>
+        <div class="sex">
+          <img class="male" src="svg/male.svg" style="display: none">
+          <img class="female" src="svg/female.svg" style="display: none">
+          <span class="ftm" style="display: none">&#x26a6;</span></span>
+          <span class="mtf" style="display: none">&#x26a5;</span>
+        </div>
+      </div>
+      <div class="love">0 <img src="svg/love.svg" /></div>
+    </div>
+    
+  </section>
   <section id="top_sect" class="second">
-    <button id="main_btn" onclick="MoeApp.sendMessage('');">Send «Hello, World!»</button>
-    <button id="with_webview_btn" onclick="MoeApp.sendMessage('', true);">Send «Hello, World!» with inline webview
-      button</button>
-    <button id="data_btn" onclick="MoeApp.sendTime(true);">Send current time to bot (x10)</button>
-    <button onclick="MoeApp.expand();">Expand Webview</button>
-    <button onclick="MoeApp.toggleBackButton(this);">Show Back Button</button>
     <button onclick="MoeApp.toggleSettingsButton(this);">Show Settings Button</button>
     <button onclick="MoeApp.toggleMainButton(this);">Hide Main Button</button>
-    <button onclick="MoeApp.toggleSwipeBehavior(this);">Disable Vertical Swypes</button>
     <input type="text" placeholder="Input text in regular input..." id="regular_field" />
-    <div class="input" contenteditable="true" data-placeholder="Input text in contenteditable field..." id="text_field">
     </div>
     <div id="peer_wrap" style="display:none">
       <img id="peer_photo" class="chat_img" src="">
@@ -76,22 +93,10 @@
     <p>Test permissions:</p>
     <div class="columns">
       <ul>
-        <li><a href="javascript:;" onclick="return MoeApp.requestLocation(this);">Request Location</a> <span></span>
+        <li><a href="javascript:;" onclick="return MoeApp.requestVideo(this);">Request Video</a> <span></span>
         </li>
-        <li><a href="javascript:;" onclick="return MoeApp.requestVideo(this);">Request Video</a> <span></span></li>
-        <li><a href="javascript:;" onclick="return MoeApp.requestAudio(this);">Request Audio</a> <span></span></li>
-        <li><a href="javascript:;" onclick="return MoeApp.requestAudioVideo(this);">Request Audio+Video</a>
-          <span></span>
-        </li>
-        <li><a href="javascript:;" onclick="return MoeApp.testClipboard(this);" id="clipboard_test">Read from
-            clipboard</a> <span></span></li>
-      </ul>
-      <ul>
         <li><a href="javascript:;" onclick="return MoeApp.requestWriteAccess(this);">Request write access</a>
           <span></span>
-        </li>
-        <li><a href="javascript:;" onclick="return MoeApp.requestPhoneNumber(this);">Request phone number</a>
-          <span></span><br><br>
         </li>
         <li><a href="javascript:;" onclick="return MoeApp.requestServerTime(this);">Request server time</a> (invokes
           custom method) <span></span></li>
@@ -113,64 +118,6 @@
         <li><a href="javascript:;" onclick="MoeApp.showPopup();">showPopup</a></li>
         <li><a href="javascript:;" onclick="MoeApp.showScanQrPopup();">showScanQrPopup</a></li>
         <li><a href="javascript:;" onclick="MoeApp.showScanQrPopup(true);">showScanQrPopup (links only)</a></li>
-      </ul>
-    </div>
-
-    <p>Haptics:</p>
-    <ul>
-      <li>Impact: <a href="javascript:Telegram.WebApp.HapticFeedback.impactOccurred('heavy');">heavy</a>, &nbsp; <a
-          href="javascript:Telegram.WebApp.HapticFeedback.impactOccurred('light');">light</a>, &nbsp; <a
-          href="javascript:Telegram.WebApp.HapticFeedback.impactOccurred('medium');">medium</a>, &nbsp; <a
-          href="javascript:Telegram.WebApp.HapticFeedback.impactOccurred('rigid');">rigid</a>, &nbsp; <a
-          href="javascript:Telegram.WebApp.HapticFeedback.impactOccurred('soft');">soft</a><br><br></li>
-      <li>Notification: <a href="javascript:Telegram.WebApp.HapticFeedback.notificationOccurred('error');">error</a>,
-        &nbsp; <a href="javascript:Telegram.WebApp.HapticFeedback.notificationOccurred('success');">success</a>, &nbsp;
-        <a href="javascript:Telegram.WebApp.HapticFeedback.notificationOccurred('warning');">warning</a><br><br>
-      </li>
-      <li>Selection: <a href="javascript:Telegram.WebApp.HapticFeedback.selectionChanged();">changed</a><br><br></li>
-    </ul>
-
-    <p>Cloud storage:</p>
-    <form onsubmit="MoeApp.saveCloudForm(this, event);">
-      <table class="table table-bordered small">
-        <thead>
-          <tr>
-            <th width="20%">Key</th>
-            <th width="70%">Value</th>
-            <th width="10%"></th>
-          </tr>
-        </thead>
-        <tbody id="cloud_rows"></tbody>
-        <tfoot>
-          <tr>
-            <td><input type="text" name="key" /></td>
-            <td><input type="text" name="value" /></td>
-            <td>
-              <button type="submit">Save</button>
-              <button type="reset">Clear</button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </form>
-
-    <p>Biometrics:</p>
-    <div class="columns">
-      <ul>
-        <li>isInited: <span class="txt" id="bm_inited">false</span></li>
-        <li>available: <span class="txt" id="bm_available">false</span></li>
-        <li>type: <span class="txt" id="bm_type"></span></li>
-        <li>access_requested: <span class="txt" id="bm_access_requested">false</span> (<a href="javascript:;"
-            onclick="return MoeApp.biometricRequestAccess(this);">Request access</a>) <span></span></li>
-        <li>access_granted: <span class="txt" id="bm_access_granted">false</span> <span id="bm_settings"
-            style="display:none;">(<a href="javascript:;" onclick="return MoeApp.biometricOpenSettings(this);">Open
-              settings</a>)</span></li>
-        <li>token_saved: <span class="txt" id="bm_token_saved">false</span> (<a href="javascript:;"
-            onclick="return MoeApp.biometricSetToken(this);">Set token</a>, <a href="javascript:;"
-            onclick="return MoeApp.biometricRemoveToken(this);">Remove token</a>) <span></span></li>
-        <li>device_id: <span class="txt" id="bm_device_id"></span></li>
-        <li><a href="javascript:;" onclick="return MoeApp.biometricRequestAuth(this);">Request auth</a> <span></span>
-        </li>
       </ul>
     </div>
    
