@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="MobileOptimized" content="176" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta property="og:title" content="MOE">
+  <meta property="og:description" content="MOE Game">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>编辑任务</title>
+  
+  <script src="https://telegram.org/js/telegram-web-app.js?2"></script>
+  <link rel="stylesheet" href="/static/css/main.css?v=1">
+  <link rel="stylesheet" href="/static/css/tasks/edit.css?v=1">
+  <script src="/static/js/main.js?v=1"></script>
+  <script src="/static/js/tasks/edit.js?v=1"></script>
+</head>
+<body>
+  <section class="container">
+    <div class="row">
+      <div class="name">标题</div>
+      <div class="value">
+        <input type="text" class="text" name="title" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="name">难度</div>
+      <div class="value">
+        <label class="option difficulty easy">
+          <input type="radio" name="difficulty" value="0" checked />
+          <div class="text">简单</div>
+        </label>
+        <label class="option difficulty normal">
+          <input type="radio" name="difficulty" value="1" />
+          <div class="text">普通</div>
+        </label>
+        <label class="option difficulty hard">
+          <input type="radio" name="difficulty" value="2" />
+          <div class="text">困难</div>
+        </label>
+        <label class="option difficulty hell">
+          <input type="radio" name="difficulty" value="3" />
+          <div class="text">地狱</div>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="name">限时</div>
+      <div class="value">
+        <label class="option time t3">
+          <input type="radio" name="time" value="0" />
+          <div class="text">3 小时</div>
+        </label>
+        <label class="option time t12">
+          <input type="radio" name="time" value="1" />
+          <div class="text">12 小时</div>
+        </label>
+        <label class="option time t24">
+          <input type="radio" name="time" value="2" />
+          <div class="text">24 小时</div>
+        </label>
+        <label class="option time t48">
+          <input type="radio" name="time" value="3" checked />
+          <div class="text">48 小时</div>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="name">可见性</div>
+      <div class="value">
+        <label class="radio">
+          <input type="radio" name="visability" value="0" checked />
+          <div class="icon"></div>
+          <div class="text">私有</div>
+        </label>
+        <label class="radio">
+          <input type="radio" name="visability" value="1" />
+          <div class="icon"></div>
+          <div class="text">公开</div>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="name">类型</div>
+      <div class="value">
+        <label class="radio">
+          <input type="radio" name="type" value="0" checked />
+          <div class="icon"></div>
+          <div class="text">普通</div>
+        </label>
+        <label class="radio">
+          <input type="radio" name="type" value="1" />
+          <div class="icon"></div>
+          <div class="text">轮盘</div>
+        </label>
+      </div>
+    </div>
+    <div class="row column content">
+      <div class="name">内容</div>
+      <div class="value">
+        <textarea name="content"></textarea>
+      </div>
+    </div>
+    <div class="row wheel" style="display: none">
+      <div class="name">轮盘</div>
+      <div class="value">
+        <button type="button" class="btn add">添加</button>
+      </div>
+    </div>
+    <div class="data" style="display: none"></div>
+    
+    <button type="button" class="btn save">保存</button>
+
+  </section>
+</body>
+</html>

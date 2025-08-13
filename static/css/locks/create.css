@@ -1,0 +1,253 @@
+.errors {
+  position: fixed;
+  top: 5px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 200px;
+  color: #ff8aac;
+  background: #ffffffdf;
+  border: 2px solid #ff8aac;
+  border-radius: 5px;
+  padding: 5px;
+  display: none;
+}
+.errors .name {
+  font-weight: bold;
+}
+.clean {
+  width: 40px;
+  margin: 10px;
+  margin-bottom: 0;
+  padding: 3px 5px;
+  font-weight: bold;
+}
+.group {
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #fff;
+}
+.group .title {
+  color: #d7a850;
+  margin: 5px 0;
+  font-weight: bold;
+}
+.group > .content {
+  border: 1px solid #888aae;
+  background: #8488e3a6;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+.row {
+  display: flex;
+  background: #ffffff2c;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+  align-items: center;
+}
+.row .name {
+  width: 100px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.row .value {
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+.row .value.column {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.row .value.right {
+  justify-content: flex-end;
+}
+.row .value label {
+  display: flex;
+  align-items: center;
+}
+.love img {
+  margin-left: 3px;
+  width: 15px;
+  height: 15px;
+}
+
+.srow {
+  background: #ffffff2c;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+  align-items: center;
+  font-style: normal;
+}
+.srow .row {
+  padding: 0;
+  background-color: transparent;
+}
+.srow .row .name {
+  width: 60px;
+}
+.srow > .content {
+  display: none;
+}
+.srow > .content > .text {
+  color: #eee;
+  margin: 0 5px;
+}
+.srow > .content .row {
+  margin-left: 5px;
+}
+
+input.number {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0 3px;
+  color: #faf40d;
+  border: none;
+  border-bottom: 2px solid #fff;
+  background-color: transparent;
+  font-weight: bold;
+  outline: none;
+  text-align: right;
+}
+
+.radio input {
+  appearance: none;
+}
+.radio input ~ .icon {
+  background: #fff;
+  border: 1px solid #5259d4;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  transform: translateY(-2px);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.radio input:checked ~ .icon::before {
+  content: '';
+  display: block;
+  width: 9px;
+  height: 9px;
+  background: #5259d4;
+  border-radius: 50%;
+}
+
+.switch input {
+  appearance: none;
+}
+.switch input ~ .icon {
+  width: 40px;
+  height: 20px;
+  background: #ddd;
+  border-radius: 10px;
+  transition: all .3s;
+}
+.switch input ~ .icon::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: #fefefe;
+  border-radius: 50%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  transition: all .3s;
+}
+.switch input:checked ~ .icon {
+  background: #30bc55;
+}
+.switch input:checked ~ .icon::after {
+  margin-left: 21px;
+  border-radius: 50%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.row.wheel-option {
+  background: #8488e3a6;
+  border-radius: 5px;
+  padding: 5px;
+  position: relative;
+}
+.row.wheel-option input.text {
+  width: 150px;
+}
+
+.lists {
+  background: #ffffff2f;
+  padding: 5px;
+  border-radius: 5px;
+}
+.lists .name {
+  font-weight: bold;
+}
+.btn {
+  width: 32%;
+  height: 30px;
+  background-color: #ff8aac;
+  color: #fff;
+  border: 1px solid #eeeeee7f;
+  padding: 2px 5px;
+  margin: 10px 0;
+}
+.tasks-lists .task {
+  background: #8488e3a6;
+  padding: 5px;
+  position: relative;
+  border-radius: 10px;
+  margin: 5px 0;
+}
+.delete {
+  position: absolute;
+  top: -7px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 25px;
+  background: transparent;
+}
+.task-delete {
+  top: 10px;
+}
+
+input.text {
+  height: 20px;
+  margin: 0;
+  padding: 0 3px;
+  color: #ff8aac;
+  border: 1px solid #ff8aac;
+  background-color: #fff;
+  text-align: left;
+  outline: none;
+  border-radius: 5px;
+  font-weight: normal;
+}
+input.task-point {
+  display: block;
+  margin-left: 10px;
+  width: 25px;
+}
+
+.select {
+  padding: 6px 4px;
+  margin-right: 5px;
+  box-sizing: border-box;
+  border: 1px solid #eeeeee7f;
+  outline: none;
+  border-radius: 4px;
+  background-color: #ff8aac;
+  color: #ffffff;
+  cursor: pointer;
+}
