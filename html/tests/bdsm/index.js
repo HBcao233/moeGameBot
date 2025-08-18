@@ -334,6 +334,7 @@ window.addEventListener('load', () => {
         result.push(formdata[`${i+1}-${j+1}`]);
       }
     }
+    console.log(JSON.stringify(result))
     result = gz64_encode(JSON.stringify(result));
     return result;
   }
@@ -349,7 +350,7 @@ window.addEventListener('load', () => {
         url = `https://t.me/moeGameBot?start=tests_bdsm_uid_${searchParams.get('uid') || MoeApp.user.id}`;
       } else if (e.target.closest('.btn.link2')) {
         let result = get_result()
-        url = `https://hbcaodog--moe-f.modal.run/tests/bdsm/?result=${result}`;
+        url = `https://hbcaodog--moe-f.modal.run/html/tests/bdsm/?result=${result}`;
       }
       copyToClipboard(url);
       let text = e.target.innerText;

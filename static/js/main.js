@@ -222,7 +222,7 @@ const gz64_encode = function (s) {
   const encoder = new TextEncoder();
   let buffer = encoder.encode(s);
   if (buffer.length > 140) {
-    return gz_decode(s)
+    return gz_encode(s)
   }
   return b64.bufferToBase64(buffer);
 }
