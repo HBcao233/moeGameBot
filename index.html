@@ -20,14 +20,14 @@
   <script src="https://telegram.org/js/telegram-web-app.js?2"></script>
   <link rel="stylesheet" href="/static/css/main.css?v=1">
   <link rel="stylesheet" href="/static/css/index.css?v=18">
-  <script src="/static/js/main.js?v=5"></script>
+  <script src="/static/js/main.js?v=12"></script>
   <script src="/static/js/index.js?v=54"></script>
 </head>
 <body>
   <section class="container">
     <div class="header">
       <div class="avatar-box">
-        <img class="avatar" src="/static/images/b65b5ae0595439920e46e80daf47512a.jpg" />
+        <img class="avatar" src="" onerror="this.src='/static/images/b65b5ae0595439920e46e80daf47512a.jpg'" />
       </div>
       <div class="info">
         <div style="display: flex; align-items: center;">
@@ -60,7 +60,7 @@
       </div>
       <div class="row">
         <button type="button" class="btn" onclick="window.location.href='/html/locks/'">时间锁</button>
-        <button class="btn" disabled>小任务</button>
+        <button type="button" class="btn" onclick="window.location.href='/html/tasks/'">任务</button>
         <button class="btn" disabled>蓝牙玩具</button>
       </div>
       <div class="row">

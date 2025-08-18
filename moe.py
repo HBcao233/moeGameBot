@@ -50,7 +50,9 @@ def f():
       return response404()
     
     if os.path.isfile(path):
-      return FileResponse(path)
+      return FileResponse(path, headers={
+        'Cache-Control': 'max-age=86400',
+      })
     
     return response404()
   

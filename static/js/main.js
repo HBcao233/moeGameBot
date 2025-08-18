@@ -1,8 +1,38 @@
+window.addEventListener('error', function(e) {
+  if (e.error === undefined) return;
+  const msg = `${e.error}, at ${e.filename}:${e.lineno}:${e.colno}, ${JSON.stringify(e.cause)}`;
+  console.error(msg);
+  alert(msg);
+}, true);
+
 window['$'] = document.querySelector.bind(document);
+window['$$'] = document.querySelectorAll.bind(document);
 
 const isNumber = s => Object.prototype.toString.call(s) === "[object Number]";
 const isString = s => Object.prototype.toString.call(s) === "[object String]";
 const isArrayLike = s => s != null && typeof s[Symbol.iterator] === 'function';
+function formatDateTime(d) {
+  const formatter = new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  })
+  return formatter.format(d).replaceAll('/', '-')
+}
+function formatTime(t) {
+  let s = Math.floor(t % 60);
+  if (s < 10) s = '0' + s;
+  let m = Math.floor(t / 60 % 60);
+  if (m < 10) m = '0' + m;
+  let h = Math.floor(t / 3600);
+  if (h < 10) h = '0' + h;
+  if (h > 0) return h + ':' + m + ':' + s;
+  return m + ':' + s;
+}
 /**
  * 创建 Element
  * @param {String} tagName 
@@ -52,14 +82,14 @@ class Base64 {
   _revLookup;
   _encodeChunkSize = 16383;
   constructor() {
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
     this._lookup = [...alphabet].filter((char, i, arr) => arr.indexOf(char) === i && char.charCodeAt(0) < 128);
     this._revLookup = this._lookup.reduce(
       (map, char, i) => {
         map[char.charCodeAt(0)] = i;
         return map;
       },
-      {}
+      { 43: 62, 47: 63, 45: 62, 95: 63 }
     );
   }
   
@@ -168,8 +198,7 @@ class Base64 {
   encode(str) {
     const encoder = new TextEncoder();
     let buffer = encoder.encode(str);
-    let res = this.bufferToBase64(buffer);
-    return res;
+    return this.bufferToBase64(buffer);
   }
   
   decode(str) {
@@ -180,6 +209,31 @@ class Base64 {
   }
 }
 let b64 = new Base64();
+
+const gz_encode = function (s) {
+  return b64.bufferToBase64(pako.gzip(s));
+}
+const gz_decode = function (s) {
+  const decoder = new TextDecoder("utf-8");
+  return decoder.decode(pako.ungzip(b64.base64ToBuffer(s)));
+}
+
+const gz64_encode = function (s) {
+  const encoder = new TextEncoder();
+  let buffer = encoder.encode(s);
+  if (buffer.length > 140) {
+    return gz_decode(s)
+  }
+  return b64.bufferToBase64(buffer);
+}
+
+const gz64_decode = function (s) {
+  if (s.startsWith('H4sI')) {
+    return gz_decode(s)
+  }
+  return b64.decode(s)
+}
+
 const copyToClipboard = (text) => {
   if (MoeApp.initData == '') {
     let nav = navigator || window.navigator;
@@ -213,7 +267,6 @@ class MoeApp {
   static MainButton = Telegram.WebApp.MainButton
   static SettingsButton = Telegram.WebApp.SettingsButton
   static user = {};
-  static logined = false;
   
   static close() {
     Telegram.WebApp.close();
@@ -242,33 +295,29 @@ class MoeApp {
 
   // actions
   static login() {
-    return new Promise((resolve, reject) => {
-      if (MoeApp.logined) {
-        MoeApp.user = JSON.parse(window.localStorage.getItem('user'))
-        reject();
-      }
-      
-      MoeApp.logined = true;
+    return new Promise((resolve) => {
       if (window.localStorage.getItem('user')) {
-        MoeApp.user = JSON.parse(window.localStorage.getItem('user'))
+        MoeApp.user = JSON.parse(window.localStorage.getItem('user'));
         resolve()
       } else if (MoeApp.initData) {
-        MoeApp.apiRequest('user/login', {}, function (result) {
-          console.log(result)
-          if (result.code === 0) {
+        MoeApp.apiRequest('user/login', {}, function (res) {
+          if (res.error) {
+            alert(`错误: ${res.error}`)
+            resolve();
+          } else if (result.code === 0) {
             MoeApp.user = result.data;
             window.localStorage.setItem('user', JSON.stringify(MoeApp.user))
-            resolve()
+            resolve(true)
           } else {
-            alert('登录失败: ' + JSON.stringify(result))
-            reject();
+            alert(`登录失败: ${res.message}`)
+            resolve();
           }
         });
       } else {
         console.warn('初始化失败: 非telegram访问')
-        reject();
+        resolve();
       }
-    })
+    });
   }
   
   static switchInlineQuery(query, chooseChat) {
@@ -396,6 +445,7 @@ class MoeApp {
   static apiRequest(method, data, onCallback) {
     console.log('fetch', method, data)
     const authData = MoeApp.initData || '';
+    if (!authData) return alert('未登录');
     fetch(`https://hbcaodog--mtgbot-f.modal.run/api/${method}`, {
       method: 'POST',
       body: JSON.stringify(Object.assign(data, {
@@ -405,12 +455,9 @@ class MoeApp {
       headers: {
         'Content-Type': 'application/json'
       },
-    }).then(function (response) {
-      return response.json();
-    }).then(function (result) {
-      onCallback && onCallback(result);
-    }).catch(function (error) {
-      onCallback && onCallback({ error: error });
+    }).then(async function (r) {
+      let res = await r.json();
+      onCallback && onCallback(res);
     });
   }
   
@@ -426,8 +473,6 @@ class MoeApp {
       return response.json();
     }).then(function (result) {
       onCallback && onCallback(result);
-    }).catch(function (error) {
-      onCallback && onCallback({ error: error });
     });
   }
 }

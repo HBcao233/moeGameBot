@@ -1,7 +1,31 @@
 head, body {
   padding: 0;
   margin: 0;
+  color: #fff;
+  font-size: 14px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
+dialog {
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: unset;
+  opacity: 0;
+  -webkit-transition: opacity .3s ease-in;
+  -o-transition: opacity .3s ease-in;
+  transition: opacity .3s ease-in;
+  color: #fff;
+  font-size: 14px;
+}
+dialog[open] {
+  opacity: 1;
+}
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, .5); 
+}
+
 .container {
   width: 100%;
   min-height: 100vh;
@@ -13,9 +37,6 @@ head, body {
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
-  overflow-x: hidden;
-  overflow-y: auto;
-  color: #fff;
 }
 .container.bg1 {
   background-image: url('/static/images/133022012_p0.jpg');
@@ -55,4 +76,8 @@ button.close_btn {
   margin: 0;
   padding: 16px 20px;
   text-transform: uppercase;
+}
+
+input[disabled] {
+  opacity: .6;
 }

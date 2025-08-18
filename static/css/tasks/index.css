@@ -1,0 +1,257 @@
+body {
+  overflow: hidden;
+}
+.container {
+  font-size: 14px;
+  overflow: hidden;
+}
+.tab-title {
+  display: flex;
+}
+.tab-switch {
+  margin: 5px;
+  padding: 3px 5px;
+  opacity: .6;
+}
+.tab-switch.active {
+  opacity: 1;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+.row.right {
+  width: 100%;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  justify-content: flex-end;
+}
+.row .btn {
+  width: 40px;
+  padding: 3px 5px;
+  margin: 0 5px;
+}
+
+.tasks {
+  padding: 5px;
+  height: 75vh;
+  overflow-y: auto;
+}
+.task {
+  padding: .1px 5px;
+  margin: 5px 0;
+  background: #ffffff3f;
+  border-radius: 5px;
+}
+.none {
+  text-align: center; 
+  color: #eee
+  font-weight: bold;
+}
+.task .id {
+  background: #5a3333;
+  border-radius: 5px;
+  padding: 0 5px;
+  margin-right: 5px;
+  flex-shrink: 0;
+}
+.star {
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  background: url('/static/svg/star.svg') no-repeat;
+  background-size: contain;
+}
+.star.starred {
+  background-image: url('/static/svg/starred.svg');
+}
+.task .type {
+  flex-shrink: 0;
+  background: #666;
+}
+.task .difficulty,
+.task .time {
+  margin-left: 5px;
+}
+.task .title,
+.popup-content .title {
+  color: #66ccff;
+  text-shadow: 
+    0 0.1px #ffedfc,
+    0.1px 0 #ffedfc, 
+    0 -0.1px #ffedfc,
+    -0.1px 0 #ffedfc;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.task .type,
+.task .difficulty,
+.task .time {
+  padding: 0 5px;
+  border-radius: 5px;
+}
+.type[data-index="0"] {
+  color: #fff;
+}
+.type[data-index="1"] {
+  color: #dda02c;
+}
+.difficulty[data-index="0"] {
+  background: #6ab73d;
+}
+.difficulty[data-index="1"] {
+  background: #7c6b35;
+}
+.difficulty[data-index="2"] {
+  background: #5e4264;
+}
+.difficulty[data-index="3"] {
+  background: #76413b;
+}
+.time {
+  background: #6749a3;
+}
+.creator {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+.creator .avatar-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 5px;
+}
+.creator .avatar-box .avatar {
+  width: 100%;
+  height: 100%;
+}
+.creator .name {
+  max-width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.task .content {
+  display: block;
+  width: 100%;
+  height: 15px;
+  margin: 10px 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.popup-box .popup {
+  width: 260px;
+  position: fixed;
+  overflow: hidden;
+  background-color: #fff;
+  padding: 0;
+  border-radius: 10px;
+  background-image: url('/static/images/124697953_p0.png');
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  background-position: center;
+  background-size: cover;
+  background-attachment: local;
+}
+.popup-content {
+  padding: 10px;
+}
+.popup .row {
+  padding: 5px;
+  background: #6666667f;
+  border-radius: 5px;
+}
+.popup .row > .name {
+  width: 60px;
+  color: #dda02c;
+  flex-shrink: 0;
+}
+.popup .btn {
+  width: 80px;
+  outline: none;
+}
+.popup .diff {
+  display: flex;
+}
+.popup .difficulty,
+.popup .time {
+  width: fit-content;
+  height: 20px;
+  border: 1px solid #cccccc9f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+.popup .time {
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+.popup .difficulty {
+  opacity: .5;
+}
+.popup .difficulty.active {
+  opacity: 1;
+}
+.popup .difficulty:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.popup .difficulty:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.popup .edit_task {
+  background: #6d519e;
+}
+.popup .delete_task {
+  background: #c04c55;
+}
+.recover {
+  background: #5d9647;
+}
+.popup .start_task {
+  background: #5d9647;
+}
+.popup .actions {
+  background-color: transparent;
+  padding-top: 0;
+  padding-bottom: 0;
+  justify-content: center;
+}
+.popup .creator {
+  margin-left: 0;
+}
+.popup .content {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-footer {
+  display: flex;
+  justify-content: center;
+}
+.tab-footer .tab-switch {
+  width: fit-content;
+  margin: 0 5px;
+  background: transparent;
+  text-decoration: underline;
+  color: #eee;
+}

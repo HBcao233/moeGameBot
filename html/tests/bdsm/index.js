@@ -234,7 +234,7 @@ window.addEventListener('load', () => {
     if (Object.keys(formdata).length <= 0) {
       if (result = searchParams.get('result')) {
         try {
-          result = JSON.parse(b64.decode(result));
+          result = JSON.parse(gz64_decode(result));
           formdata['nickname'] = result.shift()
           formdata['role'] = result.shift()
           for (let i=0; i < groups.length; i++) {
@@ -334,7 +334,7 @@ window.addEventListener('load', () => {
         result.push(formdata[`${i+1}-${j+1}`]);
       }
     }
-    result = b64.encode(JSON.stringify(result));
+    result = gz64_encode(JSON.stringify(result));
     return result;
   }
   

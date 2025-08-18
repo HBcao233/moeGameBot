@@ -1,0 +1,87 @@
+.container {
+  overflow-y: hidden;
+}
+.task {
+  background-color: rgba(0,0,0,.5);
+  width: 100%; 
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.actions {
+  width: 100%; 
+  height: 20vh;
+  padding: 0 10px;
+  box-sizing: border-box;
+  background-color: rgba(0,0,0,.5);
+}
+.container .box {
+  padding: 10px;
+  padding-top: 20px;
+  text-align: center;
+  background: #f8a3f39f;
+  border-radius: 10px;
+  border: 2px solid #c4a2c2;
+  box-shadow: 0 0 15px #c4a2c2;
+}
+.task .title {
+  color: #66ccff;
+  text-shadow: 
+    0 0 3px #9d3bd6,
+    0 0 3px #9d3bd6, 
+    0 0 3px #9d3bd6,
+    0 0 3px #9d3bd6;
+  font-size: 16px;
+}
+.task .content {
+  font-size: 15px;
+  margin-top: 10px;
+}
+.task .time {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: 1px solid #780cb7cf;
+  background: #8900b93f;
+  padding: 3px 10px;
+  text-shadow: 
+    0 0 3px #9d3bd6,
+    0 0 3px #9d3bd6, 
+    0 0 3px #9d3bd6,
+    0 0 3px #9d3bd6;
+}
+.row{
+  display: flex;
+}
+.row.right {
+  justify-content: flex-end;
+}
+.btn {
+  width: 80px;
+  padding: 3px 5px;
+  margin: 0 5px;
+}
+.btn.finish {
+  background: #5d9647;
+}
+.btn.fail {
+  background: #c04c55;
+}
+
+.records .name {
+  padding: 5px;
+}
+.records .value {
+  width: 100%;
+  height: 50px;
+  padding: 5px;
+  background: rgba(33, 33, 33, .5);
+}
+.records .value .row {
+  font-size: 13px;
+  padding: 5px;
+  text-align: left;
+  background: rgba(200, 200, 200, .2);
+}

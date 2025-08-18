@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
   console.log(Telegram.WebApp.version, Telegram.WebApp.platfor);
   
   MoeApp.login().then(() => {
-    Telegram.WebApp.ready()
+    Telegram.WebApp.ready();
     if ('nickname' in MoeApp.user) {
       document.querySelector('.nickname').innerText = MoeApp.user.nickname;
       document.querySelector('.avatar').src = MoeApp.user.photo_url;
