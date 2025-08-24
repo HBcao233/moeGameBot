@@ -1,0 +1,167 @@
+.container {
+  padding: 20px 10px;
+}
+.group > .content {
+  border: 1px solid #888aae;
+  background: #8488e3a6;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+.row {
+  display: flex;
+  background: #ffffff2c;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+  align-items: center;
+  font-size: 14px;
+}
+.row.column {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.row .name {
+  width: 60px;
+  text-align: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.row .value {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.srow {
+  background: #ffffff2c;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+  align-items: center;
+  font-style: normal;
+}
+.srow .row {
+  background: transparent;
+  padding: 0;
+}
+.srow > .content {
+  display: none;
+  padding: 5px;
+}
+.srow > .content > .text {
+  margin-left: 5px;
+  color: #ddd;
+  font-size: 13px;
+}
+
+input.text {
+  width: 100%;
+  padding: 2px 4px;
+  border: 1px solid #ffffff9f;
+  outline: none;
+  background: #ffffff4f;
+  border-radius: 5px;
+  color: #fff;
+}
+.option input {
+  display: none;
+}
+.option .text {
+  width: fit-content;
+  height: 20px;
+  border: 1px solid #cccccc9f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+.option:first-child .text {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.option:last-child .text {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.option.easy .text {
+  background: #6ab73d;
+}
+.option.normal .text {
+  background: #7c6b35;
+}
+.option.hard .text {
+  background: #5e4264;
+}
+.option.hell .text {
+  background: #76413b;
+}
+.option.time .text {
+  background: #6749a3;
+}
+.option input ~ .text {
+  opacity: .5;
+}
+.option input:checked ~ .text {
+  opacity: 1;
+}
+
+.radio {
+  display: flex;
+}
+.radio .text {
+  margin-left: 10px;
+}
+.radio input {
+  appearance: none;
+}
+.radio input ~ .icon {
+  background: #fff;
+  border: 1px solid #5259d4;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.radio input:checked ~ .icon::before {
+  content: '';
+  display: block;
+  width: 9px;
+  height: 9px;
+  background: #5259d4;
+  border-radius: 50%;
+}
+input[disabled] ~ .text,
+input[disabled] ~ .icon {
+  opacity: .6;
+}
+
+.row.content .value {
+  padding: 5px;
+  width: 100%;
+}
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 2px 4px;
+  outline: none;
+  border: 1px solid #ffffff9f;
+  background-color: #cccccc4f;
+  border-radius: 5px;
+  color: #fff;
+}
+.row.column textarea {
+  height: 250px;
+}
+
+.btn.save {
+  margin-top: 50px;
+}
+.btn.add {
+  margin-right: 10px;
+  width: 50px;
+  padding: 5px 10px;
+}

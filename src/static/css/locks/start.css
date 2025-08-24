@@ -1,0 +1,125 @@
+.group {
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #fff;
+}
+.group > .title {
+  color: #d7a850;
+  margin: 5px 0;
+  font-weight: bold;
+}
+.group > .content {
+  border: 1px solid #888aae;
+  background: #8488e3a6;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+.row {
+  display: flex;
+  background: #ffffff2c;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+  align-items: center;
+}
+.row .name {
+  width: 80px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.row .value {
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+.row .value.column {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.row .value.right {
+  justify-content: flex-end;
+}
+.row .value label {
+  display: flex;
+  align-items: center;
+}
+.love img {
+  margin-left: 3px;
+  width: 15px;
+  height: 15px;
+}
+
+.option input {
+  display: none;
+}
+.option .text {
+  width: fit-content;
+  height: 20px;
+  border: 1px solid #cccccc9f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+.option:first-child .text {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.option:last-child .text {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.option.easy .text {
+  background: #6ab73d;
+}
+.option.normal .text {
+  background: #7c6b35;
+}
+.option.hard .text {
+  background: #5e4264;
+}
+.option.hell .text {
+  background: #76413b;
+}
+.option input ~ .text {
+  opacity: .5;
+}
+.option input:checked ~ .text {
+  opacity: 1;
+}
+
+.srow {
+  background: #ffffff2c;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+  align-items: center;
+  font-style: normal;
+}
+.srow .row {
+  padding: 0;
+  background-color: transparent;
+}
+.srow > .content > .text {
+  color: #eee;
+  margin: 0 5px;
+}
+.srow > .content .row {
+  margin-left: 5px;
+}
+
+input.text {
+  height: 20px;
+  margin: 0;
+  padding: 0 3px;
+  color: #ff8aac;
+  border: 1px solid #ff8aac;
+  background-color: #fff;
+  text-align: left;
+  outline: none;
+  border-radius: 5px;
+  font-weight: normal;
+}

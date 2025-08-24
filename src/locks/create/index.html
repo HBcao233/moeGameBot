@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="MobileOptimized" content="176" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta property="og:title" content="MOE">
+  <meta property="og:description" content="MOE Game">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>创建 - 时间管理锁</title>
+  
+  <script src="https://telegram.org/js/telegram-web-app.js?2"></script>
+  <link rel="stylesheet" href="/static/css/main.css?v=3">
+  <link rel="stylesheet" href="/static/css/locks/create.css?v=3">
+  <script src="/static/js/pako_v2.0.4.js"></script>
+  <script src="/static/js/main.js?v=3"></script>
+  <script src="/static/js/locks/create.js?v=6"></script>
+</head>
+<body>
+  <section class="container">
+    <div class="errors">
+      <div class="name">错误:</div>
+      <div class="content"></div>
+    </div>
+    <button type="button" class="clean">清空</button>
+    <div class="group">
+      <div class="title">◆ 属性设置</div>
+      <div class="content">
+        <div class="row">
+          <div class="name">名称</div>
+          <div class="value">
+            <input type="text" class="text" name="name" value="" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="name">难度</div>
+          <div class="value">
+            <label class="option difficulty easy">
+              <input type="radio" name="difficulty" value="0" checked />
+              <div class="text">简单</div>
+            </label>
+            <label class="option difficulty normal">
+              <input type="radio" name="difficulty" value="1" />
+              <div class="text">普通</div>
+            </label>
+            <label class="option difficulty hard">
+              <input type="radio" name="difficulty" value="2" />
+              <div class="text">困难</div>
+            </label>
+            <label class="option difficulty hell">
+              <input type="radio" name="difficulty" value="3" />
+              <div class="text">地狱</div>
+            </label>
+          </div>
+        </div>
+        
+        <div class="srow">
+          <div class="row">
+            <div class="name">可见性</div>
+            <div class="value">
+              <label class="radio">
+                <input type="radio" name="visability" value="0" checked>
+                <div class="icon"></div>
+                <span style="margin-left: 10px; flex-shrink: 0; width: 50px">私有</span>
+              </label>
+              <label class="radio">
+                <input type="radio" name="visability" value="1">
+                <div class="icon"></div>
+                <span style="margin-left: 10px; flex-shrink: 0; width: 50px">公开</span>
+              </label>
+            </div>
+          </div>
+          <div class="content visability">
+            <div class="text">公开即代表您同意 <a href="/terms/">《用户条款与社区准则》</a></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="name">爱心限制</div>
+          <div class="value">
+            <input type="text" class="number" name="cost" value="0" />
+             <div class="love"><img src="/static/svg/love.svg" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="group">
+      <div class="title">◆ 时间设置</div>
+      <div class="content">
+        <div class="row">
+          <div class="name">最小初始时长</div>
+          <div class="value">
+            <input type="text" class="number day" name="min-day" value="0" />
+            <span>天</span>
+            <input type="text" class="number hour" name="min-hour" value="1" />
+            <span>时</span>
+            <input type="text" class="number minute" name="min-minute" value="0" />
+            <span>分</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="name">最大初始时长</div>
+          <div class="value">
+            <input type="text" class="number day" name="max-day" value="0" />
+            <span>天</span>
+            <input type="text" class="number hour" name="max-hour" value="1" />
+            <span>时</span>
+            <input type="text" class="number minute" name="max-minute" value="0" />
+            <span>分</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="name">时长上限</div>
+          <div class="value column">
+            <label class="radio">
+              <input type="radio" name="limit" value="0" checked>
+              <div class="icon"></div>
+              <span style="margin-left: 10px">无上限</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="limit" value="1">
+              <div class="icon"></div>
+              <span style="margin-left: 10px">有上限</span>
+              <input type="text" class="number day" name="limit_time-day" value="0" />
+              <span>天</span>
+              <input type="text" class="number hour" name="limit_time-hour" value="1" />
+              <span>时</span>
+            </label>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="group">
+      <div class="title">◆ 游戏设置</div>
+      <div class="content">
+        <div class="srow">
+          <div class="row">
+            <div class="name">推特加时</div>
+            <div class="value right">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" name="twitter" />
+                <div class="icon"></div>
+              </label>
+            </div>
+          </div>
+          <div class="content twitter">
+            <div class="text">根据推文数据增加时间</div>
+            <div class="row">
+              <div type="name">点赞增加</div>
+              <div type="value">
+                <input type="text" class="number day" name="x_love_add-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="x_love_add-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="x_love_add-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div type="name">推转增加</div>
+              <div type="value">
+                <input type="text" class="number day" name="x_forward_add-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="x_forward_add-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="x_forward_add-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div type="name">评论增加</div>
+              <div type="value">
+                <input type="text" class="number day" name="x_comment_add-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="x_comment_add-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="x_comment_add-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div type="name">关注增加</div>
+              <div type="value">
+                <input type="text" class="number day" name="x_follow_add-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="x_follow_add-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="x_follow_add-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="srow">
+          <div class="row">
+            <div class="name">公开投票</div>
+            <div class="value right">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" name="public" />
+                <div class="icon"></div>
+              </label>
+            </div>
+          </div>
+          <div class="content public">
+            <div class="text">其他玩家可以为你增加/减少时间</div>
+            <div class="row">
+              <div type="name">增加时间</div>
+              <div type="value">
+                <input type="text" class="number day" name="public_add-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="public_add-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="public_add-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div type="name">减少时间</div>
+              <div type="value">
+                <input type="text" class="number day" name="public_remove-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="public_remove-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="public_remove-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="name">票数要求</div>
+              <div class="value">
+                <input type="text" class="number" value="0" name="public_votes" />
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="srow">
+          <div class="row">
+            <div class="name">隐藏时间<div class="love"><span class="text" style="margin-left: 15px">10</span><img src="/static/svg/love.svg" /></div></div>
+            <div class="value right">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" name="hidden" />
+                <div class="icon"></div>
+              </label>
+            </div>
+          </div>
+          <div class="content hidden">
+            <div class="text">无法查看剩余时间，时间未到尝试开锁将随机增加时间。<div class="love"><span class="text">10</span><img src="/static/svg/love.svg" /></div> 以上才能使用</div>
+            <div class="row">
+              <div type="name">增加时间</div>
+              <div type="value">
+                <input type="text" class="number day" name="hidden_add-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="hidden_add-hour" value="0" />
+                <span>时</span>
+                <input type="text" class="number minute" name="hidden_add-minute" value="10" />
+                <span>分</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="srow">
+          <div class="row">
+            <div class="name">临时开锁</div>
+            <div class="value right">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" name="temporary_open" />
+                <div class="icon"></div>
+              </label>
+            </div>
+          </div>
+          <div class="content temporary_open">
+            <div class="text">间隔多长时间临时开锁用于清洁</div>
+            <div class="row">
+              <div type="name">间隔时间</div>
+              <div type="value">
+                <input type="text" class="number day" name="temporary_interval-day" value="1" />
+                <span>天</span>
+                <input type="text" name="temporary_interval-hour" class="number hour" value="0" />
+                <span>时</span>
+                <input type="text" class="number minute" name="temporary_interval-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div type="name">开锁时长</div>
+              <div type="value">
+                <input type="text" class="number hour" name="temporary_time-hour" value="0" />
+                <span>时</span>
+                <input type="text" class="number minute" name="temporary_time-minute" value="30" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div type="name">超时惩罚</div>
+              <div type="value">
+                <input type="text" class="number day" name="temporary_punish-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="temporary_punish-hour" value="0" />
+                <span>时</span>
+                <input type="text" class="number minute" name="temporary_punish-minute" value="10"/>
+                <span>分</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="srow">
+          <div class="row">
+            <div class="name">验证照片</div>
+            <div class="value right">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" name="verification_picture" />
+                <div class="icon"></div>
+              </label>
+            </div>
+          </div>
+          <div class="content verification_picture">
+            <div class="text">每次上锁/间隔时间后需拍照确认</div>
+            <div class="row">
+              <div type="name">间隔时间</div>
+              <div type="value">
+                <input type="text" class="number day" name="verification_interval-day" value="7" />
+                <span>天</span>
+                <input type="text" name="verification_interval-hour" class="number hour" value="0" />
+                <span>时</span>
+                <input type="text" class="number minute" name="verification_interval-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="name">验证方式</div>
+              <div class="value">
+                <label class="radio">
+                  <input type="radio" name="verification_method" value="0" checked />
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px; flex-shrink: 0">投票</span>
+                </label>
+                
+                <label class="radio">
+                  <input type="radio" name="verification_method" value="1" />
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px; flex-shrink: 0">监督者确认</span>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div type="name">失败惩罚</div>
+              <div type="value">
+                <input type="text" class="number day" name="verification_punish-day" value="0" />
+                <span>天</span>
+                <input type="text" name="verification_punish-hour" class="number hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="verification_punish-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="srow">
+          <div class="row">
+            <div class="name">幸运转盘</div>
+            <div class="value right">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" name="wheel" />
+                <div class="icon"></div>
+              </label>
+            </div>
+          </div>
+          <div class="content wheel">
+            <div class="row">
+              <div class="name">获得方式</div>
+              <div class="value column">
+                <label class="radio">
+                  <input type="radio" name="wheel_method" value="0" checked />
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px; flex-shrink: 0; width: 50px">不累积</span>
+                  <span style="color: #eee; font-size: 12px">一段时间一次</span>
+                </label>
+                
+                <label class="radio">
+                  <input type="radio" name="wheel_method" value="1" />
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px; flex-shrink: 0; width: 50px">累积</span>
+                  <span style="color: #eee; font-size: 12px">一段时间&nbsp;+1</span>
+                </label>
+                
+                <label class="radio">
+                  <input type="radio" name="wheel_method" value="2" />
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px">无限制</span>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="name">间隔时间</div>
+              <div class="value">
+                <input type="text" class="number day" name="wheel_interval-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="wheel_interval-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="wheel_interval-minute" value="0"/>
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="name">次数要求</div>
+              <div class="value">
+                <input type="text" class="number" value="0" name="wheel_times" />
+              </div>
+            </div>
+            <div class="lists">
+              <div class="name">选项</div>
+              <div class="content wheel-lists"></div>
+              <div class="row">
+                <select class="select wheel-newoption">
+                  <option value="add_time">增加时间</option>
+                  <option value="remove_time">减少时间</option>
+                  <option value="add_remove_time">增/减时间</option>
+                  <option value="text">文本</option>
+                  <option value="punish">惩罚</option>
+                  <option value="task">任务</option>
+                </select>
+                <button type="button" class="btn listadd wheel-add">增加选项</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="srow">
+          <div class="row">
+            <div class="name">任务</div>
+            <div class="value right">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" name="tasks" />
+                <div class="icon"></div>
+              </label>
+            </div>
+          </div>
+          <div class="content tasks">
+            <div class="text">完成任务来减少时间或者作为开锁条件</div>
+            <div class="row">
+              <div class="name">获得方式</div>
+              <div class="value column">
+                <label class="radio">
+                  <input type="radio" name="tasks_method" value="0" checked>
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px; flex-shrink: 0; width: 50px">不累积</span>
+                  <span style="color: #eee; font-size: 12px">一段时间一次</span>
+                </label>
+                
+                <label class="radio">
+                  <input type="radio" name="tasks_method" value="1">
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px; flex-shrink: 0; width: 50px">累积</span>
+                  <span style="color: #eee; font-size: 12px">一段时间&nbsp;+1</span>
+                </label>
+                
+                <label class="radio">
+                  <input type="radio" name="tasks_method" value="2">
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px">无限制</span>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="name">间隔时间</div>
+              <div class="value">
+                <input type="text" class="number day" name="tasks_interval-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="tasks_interval-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="tasks_interval-minute" value="0"/>
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="name">任务选择</div>
+              <div class="value">
+                <label class="radio">
+                  <input type="radio" name="tasks_choose" value="0" checked>
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px; flex-shrink: 0; width: 50px">自选</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="tasks_choose" value="1">
+                  <div class="icon"></div>
+                  <span style="margin-left: 10px; flex-shrink: 0; width: 50px">随机</span>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="name">放弃惩罚</div>
+              <div class="value">
+                <input type="text" class="number day" name="tasks_punish-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="tasks_punish-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="tasks_punish-minute" value="0"/>
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="name">点数要求</div>
+              <div class="value">
+                <input type="text" class="number" value="0" name="tasks_points" />
+              </div>
+            </div>
+            <div class="lists">
+              <div class="name">任务列表</div>
+              <div class="content tasks-lists">
+                <div class="task">
+                  <div class="row">
+                    <input type="text" class="text task-content" placeholder="任务内容..." />
+                    <input type="text" class="number text task-point" placeholder="点数"/>
+                  </div>
+                  <div class="row">
+                    <div class="name">减少时间</div>
+                    <div class="value">
+                      <input type="text" class="number day" value="0" />
+                      <span>天</span>
+                      <input type="text" class="number hour" value="1" />
+                      <span>时</span>
+                      <input type="text" class="number minute" value="0"/>
+                      <span>分</span>
+                    </div>
+                  </div>
+                  <button type="button" class="btn delete task-delete">×</button>
+                </div>
+              </div>
+              <button type="button" class="btn listadd tasks-add">增加选项</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="srow">
+          <div class="row">
+            <div class="name">双生花<div class="love"><span class="text" style="margin-left:15px">20</span><img src="/static/svg/love.svg" /></div></div>
+            <div class="value right">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" name="twin_flowers" />
+                <div class="icon"></div>
+              </label>
+            </div>
+          </div>
+          <div class="content twin_flowers">
+            <div class="text">绑定一个好友，任何增加/减少时间或惩罚都会同时作用于双方。需要双方都有 <div class="love"><span class="text">20</span><img src="/static/svg/love.svg" /></div> 以上</div>
+          </div>
+        </div>
+        
+        <div class="srow">
+          <div class="row">
+            <div class="name">嫁祸<div class="love"><span class="text" style="margin-left:15px">30</span><img src="/static/svg/love.svg" /></div></div>
+            <div class="value right">
+              <label class="switch">
+                <input type="checkbox" class="switch-input" name="framing" />
+                <div class="icon"></div>
+              </label>
+            </div>
+          </div>
+          <div class="content framing">
+            <div class="text">增加时间或惩罚时会转移一部分给随机一位开启嫁祸的被锁者。需要<div class="love"><span class="text">30</span><img src="/static/svg/love.svg" /></div> 以上才能使用</div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <button type="button" class="create">创建</button>
+  </section>
+  
+  <dialog class="popup-box">
+    <div class="popup">
+      <div class="popup-content">
+        <div class="tab-title">
+          <button class="btn tab-switch active" data-index="0">公开任务</button>
+          <button class="btn tab-switch" data-index="1">我的</button>
+          <button class="btn tab-switch" data-index="2">收藏</button>
+        </div>
+    
+        <section class="tab-content active" data-index="0">
+          <div class="row right">
+            <button type="button" class="btn refresh">刷新</button>
+          </div>
+          <div class="tasks"></div>
+        </section>
+        
+        <section class="tab-content" data-index="1">
+          <div class="row right">
+            <button type="button" class="btn refresh">刷新</button>
+          </div>
+          <div class="tasks"></div>
+        </section>
+        
+        <section class="tab-content" data-index="2">
+          <div class="row right">
+            <button type="button" class="btn refresh">刷新</button>
+          </div>
+          <div class="tasks"></div>
+        </section>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>

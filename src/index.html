@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="MobileOptimized" content="176" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta property="og:title" content="MOE">
+  <meta property="og:description" content="MOE Game">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>MOE</title>
+  
+  <script src="https://telegram.org/js/telegram-web-app.js?2"></script>
+  <link rel="stylesheet" href="/static/css/main.css?v=3">
+  <link rel="stylesheet" href="/static/css/index.css?v=21">
+  <script src="/static/js/pako_v2.0.4.js"></script>
+  <script src="/static/js/main.js?v=14"></script>
+  <script src="/static/js/index.js?v=70"></script>
+</head>
+<body>
+  <section class="container">
+    <div class="header">
+      <div class="avatar-box">
+        <img class="avatar" src="" onerror="this.src='/static/images/b65b5ae0595439920e46e80daf47512a.jpg'" />
+      </div>
+      <div class="info">
+        <div style="display: flex; align-items: center;">
+          <div class="nickname"></div>
+          <span class="role">
+            <img class="item circle" src="/static/svg/circle.svg" data-index="1" style="display: none;">
+            <img class="item triangle" src="/static/svg/triangle.svg" data-index="2" style="display: none;">
+            <img class="item square" src="/static/svg/square.svg" data-index="3" style="display: none;">
+          </span>
+          <span class="sex">
+            <img class="item male" src="/static/svg/male.svg" data-index="1" style="display: none">
+            <img class="item female" src="/static/svg/female.svg" data-index="2" style="display: none">
+            <span class="item ftm" data-index="3" style="display: none">&#x26a6;</span></span>
+            <span class="item mtf" data-index="4" style="display: none">&#x26a5;</span>
+          </span>
+        </div>
+        <div class="description"></div>
+        <div class="statuses">
+          <button type="button" class="lock_status" style="display: none" onclick="window.location.href='/locks/'"><img class="lock_icon" src="/static/svg/lock.svg" />上锁中</button>
+        </div>
+      </div>
+      <div class="love">
+        <div class="text">0</div>
+        <img src="/static/svg/love.svg" />
+      </div>
+    </div>
+    
+    <div class="group actions">
+      <div class="title">
+        <span>功能</span>
+      </div>
+      <div class="row">
+        <button type="button" class="btn" onclick="window.location.href='/info/'">档案</button>
+        <button type="button" class="btn" disabled>关系</button>
+        <button type="button" class="btn" disabled>动态</button>
+      </div>
+      <div class="row">
+        <button type="button" class="btn" onclick="window.location.href='/locks/'">时间锁</button>
+        <button type="button" class="btn" onclick="window.location.href='/tasks/'">任务</button>
+        <button class="btn" disabled>蓝牙玩具</button>
+      </div>
+      <div class="row">
+        <button type="button" class="btn" disabled>相册</button>
+        <button type="button" class="btn" onclick="window.location.href='/tests/bdsm/'">测验</button>
+        <button type="button" class="btn" disabled>投票</button>
+      </div>
+    </div>
+    <div class="group infos">
+      <div class="title">
+        <span>信息</span>
+      </div>
+      <div class="row lockrow" style="display: none">
+        <div class="name">时间锁</div>
+        <button type="button" class="value lock_time_value" onclick="window.location.href='/locks/'">
+          <img class="lock_icon" src="/static/svg/lock.svg"/>
+          <div class="lock_time"></div>
+        </button>
+      </div>
+      <div class="row tagsrow" style="display: none">
+        <div class="name">性格</div>
+        <div class="row">
+          <span class="tags" data-index="1" style="display: none">可爱</span>
+          <span class="tags" data-index="2" style="display: none">柔弱</span>
+          <span class="tags" data-index="3" style="display: none">傲娇</span>
+          <span class="tags" data-index="4" style="display: none">呆萌</span>
+          <span class="tags" data-index="5" style="display: none">元气</span>
+          <span class="tags" data-index="6" style="display: none">服从</span>
+          <span class="tags" data-index="7" style="display: none">病娇</span>
+          <span class="tags" data-index="8" style="display: none">开朗</span>
+          <span class="tags" data-index="9" style="display: none">温柔</span>
+          <span class="tags" data-index="10" style="display: none">高冷</span>
+          <span class="tags" data-index="11" style="display: none">腹黑</span>
+          <span class="tags" data-index="12" style="display: none">强势</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="name">任务次数(月)</div>
+        <div class="task">0</div>
+      </div>
+      <div class="row">
+        <div class="name">惩罚次数(月)</div>
+        <div class="punish">0</div>
+      </div>
+    </div>
+    <div class="group">
+      <div class="title">日历</div>
+      <div class="row calendar-box">
+        <table class="calendar">
+          <tr>
+            <th class="month"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th colspan="3"><span class="calendar-icon task-icon">M</span> 任务 <span class="calendar-icon lock-icon">L</span> 上锁</th>
+          </tr>
+          <tr>
+            <th>周一</th>
+            <th>周二</th>
+            <th>周三</th>
+            <th>周四</th>
+            <th>周五</th>
+            <th>周六</th>
+            <th>周日</th>
+          </tr>
+          <tr>
+            <td data-index="1">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="2">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="3">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="4">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="5">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="6">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="7">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+          </tr>
+          <tr>
+            <td data-index="8">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="9">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="10">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="11">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="12">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="13">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="14">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+          </tr>
+          <tr>
+            <td data-index="15">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="16">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="17">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="18">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="19">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="20">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="21">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+          </tr>
+          <tr>
+            <td data-index="22">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="23">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="24">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="25">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="26">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="27">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="28">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+          </tr>
+          <tr>
+            <td data-index="29">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="30">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="31">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="32">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="33">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="34">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+            <td data-index="35">
+              <div class="day"></div>
+              <div class="row mark"><span class="calendar-icon task-icon" style="display: none">M</span><span class="calendar-icon lock-icon" style="display: none">L</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    
+    <button type="button" onclick="window.localStorage.clear();" style="margin-top: 100px">清除缓存</button>
+    <footer>
+      <a href="/terms/">用户条款与社区准则</a>
+    </footer>
+  </section>
+  
+  
+  <!--<section>
+    <p>Test links:</p>
+    <ul>
+      <li><a id="regular_link" href="?nextpage=1">Regular link #1</a> (opens inside webview)</li>
+      <li><a href="https://telegram.org/" target="_blank">target="_blank" link</a> (opens outside webview)</li>
+      <li><a href="javascript:window.open('https://telegram.org/');">window.open() link</a> (opens outside webview)</li>
+      <li><a href="https://t.me/like">LikeBot t.me link</a> (opens inside Telegram app)</li>
+      <li><a href="javascript:Telegram.WebApp.openTelegramLink('https://t.me/vote');">web_app_open_tg_link()</a> (opens
+        inside Telegram app)</li>
+      <li><a href="javascript:Telegram.WebApp.openLink('https://google.com/');">web_app_open_link()</a> (opens outside
+        webview)</li>
+      <li><a href="tg://resolve?domain=vote">VoteBot tg:// link</a> (does not open)</li>
+      <li><a
+          href="javascript:Telegram.WebApp.openLink('https://telegra.ph/api',{try_instant_view:true});">web_app_open_link({try_instant_view:true})</a>
+        (opens IV inside Telegram app)</li>
+      <li><a
+          href="javascript:Telegram.WebApp.openTelegramLink('https://t.me/DurgerKingBot/menu');">web_app_open_tg_link(webapp_direct_link)</a>
+        (opens with confirm for the first time, then without)</li>
+    </ul>
+    <ul>
+      <li><a href="javascript:Telegram.WebApp.openLink('https://telegram.org',{try_browser:'chrome'});">telegram.org</a>
+        (opens in Chrome)</li>
+      <li><a
+          href="javascript:Telegram.WebApp.openLink('https://telegram.org',{try_browser:'firefox'});">telegram.org</a>
+        (opens in Firefox)</li>
+      <li><a href="javascript:Telegram.WebApp.openLink('https://telegram.org',{try_browser:'safari'});">telegram.org</a>
+        (opens in Safari)</li>
+      <li><a href="javascript:Telegram.WebApp.openLink('https://telegram.org',{try_browser:'opera'});">telegram.org</a>
+        (opens in Opera)</li>
+      <li><a href="javascript:Telegram.WebApp.close({return_back:true});">Return back</a> (Android only)</li>
+    </ul>
+
+    <p>Test permissions:</p>
+    <div class="columns">
+      <ul>
+        <li><a href="javascript:;" onclick="return MoeApp.requestVideo(this);">Request Video</a> <span></span>
+        </li>
+        <li><a href="javascript:;" onclick="return MoeApp.requestWriteAccess(this);">Request write access</a>
+          <span></span>
+        </li>
+        <li><a href="javascript:;" onclick="return MoeApp.requestServerTime(this);">Request server time</a> (invokes
+          custom method) <span></span></li>
+      </ul>
+    </div>
+
+    <p>Test alerts:</p>
+    <div class="columns">
+      <ul>
+        <li><a href="javascript:;" onclick="alert('Hello!');">alert</a></li>
+        <li><a href="javascript:;" onclick="confirm('Are you sure?');">confirm</a></li>
+        <li><a href="javascript:;" onclick="prompt('How old are you?');">prompt</a></li>
+      </ul>
+      <ul>
+        <li><a href="javascript:;" onclick="MoeApp.showAlert('Hello!');">showAlert</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.showConfirm('Are you sure?');">showConfirm</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.requestWriteAccess();">requestWriteAccess</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.requestContact();">requestContact</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.showPopup();">showPopup</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.showScanQrPopup();">showScanQrPopup</a></li>
+        <li><a href="javascript:;" onclick="MoeApp.showScanQrPopup(true);">showScanQrPopup (links only)</a></li>
+      </ul>
+    </div>
+  </section>-->
+
+</body>
+
+</html>

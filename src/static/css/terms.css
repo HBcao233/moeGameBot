@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background: linear-gradient(135deg, #6c5ce7, #8c7ae6);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.content {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  color: #6c5ce7;
+  margin: 1.8rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+p {
+  margin-bottom: 1.2rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.8rem;
+}
+
+.warning {
+  background-color: #fff4f4;
+  border-left: 4px solid #ff6b6b;
+  padding: 1.2rem;
+  margin: 1.5rem 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.warning h3 {
+  color: #ff6b6b;
+  margin-bottom: 0.5rem;
+}
+
+.prohibited-list {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  border: 1px solid #e9ecef;
+}
+
+.prohibited-list ul {
+  list-style-type: none;
+}
+
+.prohibited-list li {
+  margin-bottom: 0.8rem;
+}
+
+.prohibited-list li div {
+  margin-left: 1rem;
+}
+
+.prohibited-list li:before {
+  content: "❌";
+  margin-right: 10px;
+  font-size: 0.9rem;
+}
+
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.consent-section {
+  background-color: #eef7ff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+  border: 1px solid #dbeafe;
+}
+
+.btn {
+  display: block;
+  width: 200px;
+  margin: 2rem auto;
+  padding: 12px 20px;
+  background: #6c5ce7;
+  color: white;
+  text-align: center;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: #5649c0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 1.5rem;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+}

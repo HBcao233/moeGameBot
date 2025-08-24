@@ -6,10 +6,7 @@ image = (
     .pip_install(
       'fastapi[standard]',
     )
-    .add_local_file('index.html', '/root/')
-    .add_local_file('404.html', '/root/')
-    .add_local_dir('static', '/root/static')
-    .add_local_dir('html', '/root/html')
+    .add_local_dir('src', '/root/src')
 )
 app = modal.App(
   'moe',
@@ -30,7 +27,7 @@ def f():
   
   app = FastAPI()
   def response404():
-    with open('404.html', 'r') as f:
+    with open('src/404.html', 'r') as f:
       return HTMLResponse(f.read())
     
   @app.get("/{path:path}")
@@ -38,22 +35,25 @@ def f():
     # print([i for i in request.__dir__() if not i.startswith('_')])
     path = request.path_params['path']
     if path == '' or path.endswith('/'):
-      if os.path.isfile(f'{path}index.html'):
-        with open(f'{path}index.html', 'r') as f:
+      if os.path.isfile(f'src/{path}index.html'):
+        with open(f'src/{path}index.html', 'r') as f:
           return HTMLResponse(f.read())
+    
+    if path.startswith('html/'):
+      return RedirectResponse(url='/' + path[5:])
     if os.path.isdir(path):
-      return RedirectResponse(url=f'/{path}/')
+      return RedirectResponse(url=f"/{path.rstrip('/')}/")
+    
     if path.endswith('.html') or path.endswith('.htm'):
-      if os.path.isfile(path):
-        with open(path, 'r') as f:
+      if os.path.isfile('src/' + path):
+        with open('src/' + path, 'r') as f:
           return HTMLResponse(f.read())
       return response404()
     
-    if os.path.isfile(path):
-      return FileResponse(path, headers={
+    if os.path.isfile('src/' + path):
+      return FileResponse('src/' + path, headers={
         'Cache-Control': 'max-age=86400',
       })
-    
     return response404()
   
   return app

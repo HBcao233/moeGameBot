@@ -1,0 +1,275 @@
+.header {
+  display: flex;
+  height: 80px;
+  padding: 5px 0;
+  position: relative;
+  background: #3333337f;
+}
+.avatar-box {
+  width: auto;
+  height: calc(100% - 20px);
+  margin-right: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  margin-top: 7px;
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+.avatar {
+  width: 100%;
+  height: 100%;
+}
+.info {
+  height: 100%;
+  text-align: left;
+}
+.info .nickname {
+  height: 1.2em;
+  font-size: 20px;
+  color: #e175ad;
+  font-weight: bold;
+}
+.info .description {
+  height: 2.4em;
+  display: block;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  display: -webkit-box; 
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; 
+  word-break: break-all; /* 确保长单词也能被截断 */
+}
+.role img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 3px;
+}
+.triangle {
+  transform: translateY(3px);
+}
+.sex img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 3px;
+}
+.male {
+  transform: translateY(-2px);
+}
+.female {
+  transform: translateY(1px);
+}
+.ftm {
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  font-size: 32px;
+  transform: translateY(-2px);
+}
+.mtf {
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  font-size: 30px;
+  transform: translateY(1.5px);
+}
+.love {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 2px 5px;
+  border-radius: 20px;
+  background-color: #1111115f;
+  color: #fff;
+}
+.love img {
+  margin-left: 3px;
+  width: 15px;
+  height: 15px;
+}
+.group {
+  background-color: #5555552f;
+  margin-top: 15px;
+  padding: 15px;
+  padding-bottom: 30px;
+}
+.group .title {
+  margin-bottom: 5px;
+  color: #dda02c;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+}
+.group .row {
+  display: flex;
+}
+.group .btn {
+  display: inline-block;
+  width: 32%;
+  height: 30px;
+  background-color: #695e438f;
+  color: #fff;
+  border: 1px solid #ffffff7f;
+  padding: 2px 5px;
+  margin: 5px 2px;
+  text-decoration: none;
+}
+.group .btn:disabled {
+  background-color: #7777777f;
+}
+.group .name {
+  width: 100px;
+  color: #d7a850;
+  text-shadow: 
+    0 0.1px #ffffff7f,
+    0.1px 0 #ffffff7f, 
+    0 -0.1px #ffffff7f,
+    -0.1px 0 #ffffff7f;
+  display: flex;
+  align-items: center;
+}
+.group .row {
+  color: #fff;
+}
+.tags,
+.task,
+.punish {
+  width: 35px;
+}
+.tags {
+  text-shadow: 
+    0 0.1px #ffffff7f,
+    0.1px 0 #ffffff7f, 
+    0 -0.1px #ffffff7f,
+    -0.1px 0 #ffffff7f;
+}
+.tags[data-index="1"],
+.tags[data-index="2"] {
+  color: #ff8aac;
+}
+.tags[data-index="3"] {
+  color: #f5ab6c;
+}
+.tags[data-index="4"] {
+  color: #66ccff;
+}
+.tags[data-index="5"] {
+  color: #f56c6c;
+}
+.tags[data-index="6"] {
+  color: #fbb9f6;
+}
+.tags[data-index="7"] {
+  color: #fa2abe;
+}
+.tags[data-index="8"] {
+  color: #bff6fe;
+}
+.tags[data-index="9"] {
+  color: #fab6b6;
+}
+.tags[data-index="10"] {
+  color: #9ea1fb;
+}
+.tags[data-index="11"] {
+  color: #ca6cf5;
+}
+.tags[data-index="12"] {
+  color: #f84fb1;
+}
+.calendar-box {
+  display: flex;
+  justify-content: center;
+}
+.calendar {
+  
+}
+.calendar .month {
+  background-color: unset;
+  text-align: left;
+}
+.calendar th, 
+.calendar td {
+  background: #aaaaaa7f;
+}
+.calendar tr:nth-child(1) th {
+  background: unset;
+  font-weight: normal;
+}
+.calendar tr th {
+  height: 23px;
+}
+.calendar tr td {
+  width: 35px;
+  height: 35px;
+}
+.calendar-icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  padding: 1px;
+}
+.task-icon {
+  background-color: #b66464;
+}
+.lock-icon {
+  background-color: #ff6600;
+}
+.calendar .day {
+  font-size: 13px;
+  text-align: right;
+  transform: translateX(-1px);
+  width: 35px;
+  height: 17.5px;
+}
+.calendar .mark {
+  width: 35px;
+  height: 17.5px;
+}
+
+.lock_time {
+  color: #33ff33;
+}
+.statuses {
+  display: flex;
+  margin-top: 2px;
+}
+.lock_status {
+  width: fit-content;
+  color: #33ff33;
+  background: #0000002f;
+  border-radius: 3px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+.lock_icon {
+  width: 15px;
+  height: 15px;
+}
+.lockrow {
+  height: auto;
+}
+.lock_time_value {
+  width: fit-content;
+  margin: 5px 0;
+  background: #0000002f;
+  border-radius: 3px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
