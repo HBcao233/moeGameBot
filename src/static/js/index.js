@@ -79,15 +79,15 @@ window.addEventListener('load', () => {
       $('.lockrow').style.display = 'none'
       return;
     }
-    let now = Math.floor(Date.now() / 1000)
     $('.lock_status').style.display = '';
     const ti = () => {
+      const now = Math.floor(Date.now() / 1000);
       $('.lock_time').innerText = (now >= user_lock.end_time ? '时间已到' : formatTime(user_lock.end_time - now));
       if (now >= user_lock.end_time) clearInterval(timer);
     }
     if (timer) clearInterval(timer);
     ti();
-    setInterval(ti, 1000);
+    timer = setInterval(ti, 1000);
     
     $('.lockrow').style.display = '';
   }

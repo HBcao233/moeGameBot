@@ -1,5 +1,9 @@
 if (typeof VConsole !== 'undefined') {
-  const vconsole = new VConsole();
+  let vconsole = new VConsole();
+  vConsole.setSwitch({
+    enable: true, 
+    enablePanel: 'console',
+  })
   const VConsoleDom = document.getElementById("__vconsole");
 }
 

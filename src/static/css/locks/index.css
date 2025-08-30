@@ -441,12 +441,13 @@ input.text {
 .historys .create_time {
   color: #ff8aac;
   flex-shrink: 0;
+  margin-left: 2px;
 }
 .from_user {
   display: flex;
   align-items: center;
   background: #f02da18a;
-  padding: 1px;
+  padding: 1px 2px;
   flex-shrink: 0;
   border-radius: 3px;
 }
