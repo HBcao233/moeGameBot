@@ -11,12 +11,17 @@ if (startapp) {
     case startapp.startsWith('tests_bdsm'):
       window.location.href = 'tests/bdsm/';
       break;
+      
     case startapp.startsWith('lock_'):
       data = startapp.slice(5);
       data = gz64_decode(data)
       window.location.href = `locks/?uid=${data}`;
       break;
-      
+    case startapp.startsWith('lock'):
+      data = startapp.slice(5);
+      data = gz64_decode(data)
+      window.location.href = `locks/`;
+      break;
   }
 }
 

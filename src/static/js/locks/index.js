@@ -261,8 +261,9 @@ window.addEventListener('load', () => {
   const searchParams = new URLSearchParams(window.location.search);
   let uid = searchParams.get('uid') || MoeApp.user.id; 
   let preview = searchParams.get('preview'); 
-  
+  alert('x')
   MoeApp.login().then(() => {
+    alert('b')
     Telegram.WebApp.ready();
     Telegram.WebApp.BackButton.onClick(function () {
       if (window.history.length > 1) window.history.back()
