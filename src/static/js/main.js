@@ -1,12 +1,27 @@
 window['$'] = document.querySelector.bind(document);
 window['$$'] = document.querySelectorAll.bind(document);
+
+function wait(selector, func) {
+  let timer;
+  timer = setInterval(() => {
+    if (element = $(selector)) {
+      func && func.bind(element)(element)
+      clearInterval(timer);
+    }
+  }, 200);
+}
+
 if (typeof VConsole !== 'undefined') {
   const vconsole = new VConsole();
   let vconsoleDom = document.getElementById("__vconsole");
-  $('#__vc_tab_system').style.display = 'none';
-  $('#__vc_tab_network').style.display = 'none';
-  $('#__vc_tab_element').style.display = 'none';
-  $('#__vc_tab_storage').style.display = 'none';
+  wait('#__vc_tab_system', (e) => {
+    alert('ok')
+    e.style.display = 'none';
+    $('#__vc_tab_network').style.display = 'none';
+    $('#__vc_tab_element').style.display = 'none';
+    $('#__vc_tab_storage').style.display = 'none';
+  })
+  alert('a')
 }
 
 window.addEventListener('error', function(e) {
