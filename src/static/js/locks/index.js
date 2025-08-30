@@ -29,8 +29,10 @@ window.addEventListener('load', () => {
     }, (res) => {
       if (res.code == 0) {
         user_lock.end_time = res.data.end_time;
-        user_lock.time_history = res.data.time_history;
-        show_time_history()
+        if (user_lock.time_history.length !== res.data.time_history) {
+          user_lock.time_history = res.data.time_history;
+          show_time_history()
+        }
       }
     })
   }
@@ -110,7 +112,8 @@ window.addEventListener('load', () => {
     }
     ti()
     timer = setInterval(ti, 1000);
-    if (user_lock.id > 0) update_timer = setInterval(update, 30000);
+    if (user_lock.id > 0) update_timer = setInterval(update, 60000);
+    show_time_history()
   }
   
   const create_lock = (lock) => {
