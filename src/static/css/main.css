@@ -30,7 +30,11 @@ dialog::backdrop {
   background-color: rgba(0, 0, 0, .5); 
 }
 dialog .popup {
-  overflow: hidden;
+  width: 260px;
+  height: fit-content;
+  max-height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: #fff;
   padding: 0;
   border-radius: 10px;
@@ -96,4 +100,56 @@ button.close_btn {
 
 input[disabled] {
   opacity: .6;
+}
+
+input.number,
+select.number {
+  width: 22px;
+  height: 20px;
+  margin: 0;
+  padding: 0 3px;
+  color: #faf40d;
+  border: none;
+  border-bottom: 2px solid #fff;
+  background-color: transparent;
+  font-weight: bold;
+  outline: none;
+  text-align: right;
+  appearance: none;
+}
+
+.calendar-box {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar th, 
+.calendar td {
+  background: #aaaaaa7f;
+}
+.calendar tr:nth-child(1) th {
+  background: unset;
+  font-weight: normal;
+}
+.calendar tr th {
+  height: 23px;
+}
+.calendar tr td {
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  text-align: center;
+  border: 2px solid transparent;
+}
+.calendar td.active {
+  border: 2px solid #fb9333;
+  background: #aaaaaae0;
+}
+.date_selecter .time-box {
+  background: transparent !important;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }

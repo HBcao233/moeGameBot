@@ -37,11 +37,17 @@ window.addEventListener('load', () => {
     j++;
   }
   
-  const update_love = async () => {
-    res = await MoeApp.apiPost('user/love', {})
-    MoeApp.user.love = res.data.love;
-    $('.love .text').innerText = MoeApp.user.love;
-    window.localStorage.setItem('user', JSON.stringify(MoeApp.user))
+  const update_love = () => {
+    if (!MoeApp.initData) return;
+    MoeApp.apiPost('user/love', {}).then(res => {
+      if (res.code != 0) {
+        alert(res.message)
+        return 
+      }
+      MoeApp.user.love = parseInt(res.data.love || '0');
+      $('.love .text').innerText = MoeApp.user.love;
+      window.localStorage.setItem('user', JSON.stringify(MoeApp.user))
+    })
   }
   
   // console.log(Telegram.WebApp.version, Telegram.WebApp.platfor);
@@ -50,20 +56,18 @@ window.addEventListener('load', () => {
   $('.lock_status').style.display = 'none';
   $('.lockrow').style.display = 'none'
   const get_user_lock = () => {
-    return new Promise((resolve, reject) => {
-      MoeApp.apiGet('locks/is_locked', {
-        _auth: MoeApp.initData,
-      }).then((res) => {
-        // console.log('res', res)
-        if (res.code == 0) {
-          user_lock = res.data;
-          fill_user_lock();
-        } else {
-          alert(res.message)
-        }
-        resolve();
-      })
-    });
+    if (!MoeApp.initData) return;
+    MoeApp.apiGet('locks/is_locked', {
+      _auth: MoeApp.initData,
+    }).then((res) => {
+      // console.log('res', res)
+      if (res.code == 0) {
+        user_lock = res.data;
+        fill_user_lock();
+      } else {
+        alert(res.message)
+      }
+    })
   }
   const fill_user_lock = () => {
     if (!user_lock.id) {
@@ -83,11 +87,11 @@ window.addEventListener('load', () => {
     $('.lockrow').style.display = '';
   }
   
-  MoeApp.login().then(() => {
-    update_love().then();
-    get_user_lock().then(() => {})
+  MoeApp.login().then((res) => {
     Telegram.WebApp.ready();
     if (MoeApp.user.id) {
+      get_user_lock();
+      if (!res) update_love();
       document.querySelector('.nickname').innerText = MoeApp.user.nickname;
       document.querySelector('.avatar').src = MoeApp.user.photo_url;
       document.querySelector('.description').innerText = MoeApp.user.description;

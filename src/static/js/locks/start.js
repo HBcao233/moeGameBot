@@ -20,7 +20,6 @@ window.addEventListener('load', () => {
           t = $(`input[name="${k}"][value="${v}"]`);
           if (t) {
             t.checked = true;
-            $('.passrow').style.display =  '';
           }
         } else if (t.type == 'text'){
           t.value = v
@@ -31,6 +30,7 @@ window.addEventListener('load', () => {
         t.value = v
       }
     };
+    $('.passrow').style.display =  (user_lock['method'] == 1 ? '' : 'none');
   }
   if (!user_lock) set_default();
   else user_lock = JSON.parse(user_lock);
@@ -44,29 +44,29 @@ window.addEventListener('load', () => {
       keyholder: parseInt(user_lock['keyholder']),
       desc: user_lock['desc'],
     }, (res) => {
-      if (res.error) {
-        alert(res.error)
+      if (res.code != 0) {
+        alert(res.message)
         return
       }
-      if (res.code == 0) {
-        alert('创建成功！');
-        set_default()
-        save_user_lock();
-        window.history.replaceState({}, '', '/locks/')
-        window.location.reload();
-        fill_user_lock();
-      } else {
-        alert(res.message)
-      }
+      alert('创建成功！');
+      set_default()
+      save_user_lock();
+      window.history.replaceState(null, null, '/locks/')
+      window.history.go(0);
+      fill_user_lock();
     })
   }
   
   const searchParams = new URLSearchParams(window.location.search);
   let lock = searchParams.get('lock');
   let lock_info = JSON.parse(gz64_decode(lock));
-  $('.title').innerText = `#${lock_info.id} ${lock_info.name}`;
-  $('.init_time').innerText = (lock_info.min == lock_info.max ? formatTime(lock_info.min) : `${formatTime(lock_info.min)} ~ ${formatTime(lock_info.max)}`);
-  $('.limit_time').innerText = (lock_info.is_limit ? formatTime(lock_info.limit_time): '∞')
+  if (lock_info.id === undefined) {
+    alert('加载失败')
+  } else {
+    $('.title').innerText = `#${lock_info.id} ${lock_info.name}`;
+    $('.init_time').innerText = (lock_info.min == lock_info.max ? formatTime(lock_info.min) : `${formatTime(lock_info.min)} ~ ${formatTime(lock_info.max)}`);
+    $('.limit_time').innerText = (lock_info.is_limit ? formatTime(lock_info.limit_time): '∞')
+  }
   
   MoeApp.login().then(() => {
     Telegram.WebApp.ready();

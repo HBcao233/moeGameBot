@@ -1,9 +1,16 @@
+if (typeof VConsole !== 'undefined') {
+  const vconsole = new VConsole();
+  const VConsoleDom = document.getElementById("__vconsole");
+}
+
 window.addEventListener('error', function(e) {
-  if (e.error === undefined) return;
-  const msg = `${e.error}, at ${e.filename}:${e.lineno}:${e.colno}, ${JSON.stringify(e.cause)}`;
+  const err = e.error || e.message || e;
+  if (err == undefined || e instanceof Event) return;
+  const msg = `${err}, at ${e.filename}:${e.lineno}:${e.colno}, ${JSON.stringify(e.cause)}`;
   console.error(msg);
   alert(msg);
 }, true);
+
 
 window['$'] = document.querySelector.bind(document);
 window['$$'] = document.querySelectorAll.bind(document);
@@ -15,10 +22,22 @@ const show_dialog = (selector) => {
   $(selector).style.top = ((window.innerHeight - rect.clientHeight) / 2 - 30) + 'px';
 }
 
+const randint = (min, max) => {
+  if (!min) {
+    throw new Error('缺少参数');
+  }
+  if (!max) {
+    max = min;
+    min = 0;
+  }
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const isNumber = s => Object.prototype.toString.call(s) === "[object Number]";
 const isString = s => Object.prototype.toString.call(s) === "[object String]";
 const isArrayLike = s => s != null && typeof s[Symbol.iterator] === 'function';
 function formatDateTime(d) {
+  if (d < 9999999999) d *= 1000;
   const formatter = new Intl.DateTimeFormat("zh-CN", {
     timeZone: "Asia/Shanghai",
     year: "numeric",
@@ -40,7 +59,7 @@ function formatTime(t) {
   let d = Math.floor(t / 86400);
   if (h < 10) h = '0' + h;
   
-  if (d > 0) return `${d} ${h}:${m}:${s}`
+  if (d > 0) return `${d}d${h}:${m}:${s}`
   if (h > 0) return `${h}:${m}:${s}`;
   return `${m}:${s}`;
 }
@@ -49,9 +68,23 @@ function formatTime2(t) {
   let m = Math.floor(t / 60 % 60);
   let h = Math.floor(t / 3600 % 86400);
   let d = Math.floor(t / 86400);
-  if (d > 0) return h > 0 ? `${d}d${h}h` : `${d}d`
-  if (h > 0) return m > 0 ? `${h}h${m}min` : `${h}h`;
-  return s > 0 ? `${m}min${s}s` : `${m}min`;;
+  if (d > 0) {
+    if (h > 0) return `${d}d${h}h`;
+    if (m > 0) return `${d}d${m}m`;
+    if (s > 0) return `${d}d${s}s`;
+    return `${d}d`;
+  }
+  if (h > 0) {
+    if (m > 0) return `${h}h${m}m`;
+    if (s > 0) return `${h}h${s}s`
+    return `${h}h`;
+  }
+  if (m > 0) {
+    if (s > 0) return `${m}m${s}s`;
+    return `${m}m`;
+  }
+  if (s > 0) return `${s}s`;
+  return '0';
 }
 /**
  * 创建 Element
@@ -255,17 +288,19 @@ const gz64_decode = function (s) {
 }
 
 const copyToClipboard = (text) => {
-  if (MoeApp.initData == '') {
-    let nav = navigator || window.navigator;
+  let nav = navigator || window.navigator;
+  if (MoeApp.initData == '' && nav && nav.clipboard && nav.clipboard.writeText) {
     nav.clipboard.writeText(text);
     return
   }
   const tempInput = document.createElement("textarea");
   tempInput.value = text;
-  document.body.appendChild(tempInput);
+  let t = $('dialog[open]');
+  if (!t) t = document.body;
+  t.appendChild(tempInput);
   tempInput.select();
   document.execCommand("copy");
-  document.body.removeChild(tempInput);
+  t.removeChild(tempInput);
 }
 /**
  * 下载文件
@@ -281,9 +316,224 @@ const downloadFile = (url, filename) => {
 };
 
 
+class DateSelector {
+  static init() {
+    let now = new Date();
+    now.setHours(23, 59, 0, 0);
+    DateSelector.time = Math.floor(now.getTime() / 1000);
+    let t = [
+      tag('option', {
+        innerText: (now.getFullYear()) + ' 年', 
+        attrs: {
+          value: now.getFullYear(),
+          checked: '',
+        },
+      }),
+      tag('option', {
+        innerText: (now.getFullYear() + 1) + ' 年', 
+        attrs: {
+          value: now.getFullYear() + 1,
+        },
+      }),
+    ]
+    $('.date_selecter .calendar .year').innerHTML = '';
+    $('.date_selecter .calendar .year').appendChild(t[0]);
+    $('.date_selecter .calendar .year').appendChild(t[1]);
+    t = [
+      tag('option', {
+        innerText: now.getFullYear(), 
+        attrs: {
+          value: now.getFullYear(),
+          checked: '',
+        },
+      }),
+      tag('option', {
+        innerText: now.getFullYear() + 1, 
+        attrs: {
+          value: now.getFullYear() + 1,
+        },
+      }),
+    ]
+    $('.date_selecter .time-box .year').innerHTML = '';
+    $('.date_selecter .time-box .year').appendChild(t[0]);
+    $('.date_selecter .time-box .year').appendChild(t[1]);
+  }
+  
+  static fill(time) {
+    let t;
+    let now = new Date(time * 1000);
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    $('.date_selecter .calendar .year').value = year;
+    $('.date_selecter .time-box .year').value = year;
+    $('.date_selecter .calendar .month').value = month;
+    $('.date_selecter .time-box .month').value = month;
+    const daynum = (new Date(year, month, 0)).getDate();
+    now.setDate(1);
+    let offset = now.getDay();
+    if (offset == 0) offset = 7;
+    let j = 1;
+    $('.date_selecter .time-box .day').innerHTML = '';
+    for (let i = 1; i < 43; i++) {
+      let td = document.querySelector(`.date_selecter td[data-index="${i}"]`)
+      if (i < offset || i >= offset + daynum) {
+        td.removeAttribute('data-day');
+        td.innerText = ''
+      } else {
+        td.setAttribute('data-day', j);
+        td.innerText = j;
+        $('.date_selecter .calendar')
+        $('.date_selecter .time-box .day').appendChild(tag('option', {
+          innerText: j,
+          attrs: {
+            value: j,
+          }
+        }))
+        j++;
+      }
+    }
+    if (t = $('.date_selecter .calendar td.active')) t.classList.remove('active')
+    $(`.date_selecter .calendar td[data-day="${day}"]`).classList.add('active');
+    $('.date_selecter .time-box .day').value = day;
+    $('.date_selecter .time-box .hour').value = now.getHours();
+    $('.date_selecter .time-box .minute').value = now.getMinutes();
+  }
+  
+  static get time() {
+    return parseInt($('.date_selecter').getAttribute('data-time') || '0');
+  }
+  
+  static set time(t) {
+    $('.date_selecter').setAttribute('data-time', t);
+    let e = new Event('change', {
+      time: t,
+    });
+    $('.date_selecter').dispatchEvent(e);
+    DateSelector.fill(t);
+  }
+  
+  static show() {
+    let time = DateSelector.time;
+    if (!time) {
+      DateSelector.init()
+      time = DateSelector.time;
+    }
+    
+    DateSelector.fill(time)
+    show_dialog('dialog.date_selecter');
+  }
+  
+  static close() {
+    $('dialog.date_selecter').close()
+  }
+}
+document.addEventListener('click', (e) => {
+  let t, index, day;
+  if (e.target.nodeName == 'DIALOG') {
+    e.target.close();
+  }
+  if (e.target.closest('.date_selecter td')) {
+    day = e.target.getAttribute('data-day')
+    if (!day) return;
+    time = DateSelector.time;
+    if (!time) {
+      DateSelector.init();
+      time = DateSelector.time;
+    } 
+    now = new Date(time * 1000);
+    now.setDate(day);
+    time = Math.floor(now.getTime() / 1000);
+    DateSelector.time = time;
+  }
+});
+document.addEventListener('change', (e) => {
+  const name = e.target.name;
+  const value = e.target.value;
+  let t, time, now, month, year, daynum, day;
+  switch (true) {
+    case !!e.target.closest('.date_selecter .date_select'):
+      DateSelector.close()
+      break;
+
+    case !!e.target.closest('.date_selecter .year'):
+      time = DateSelector.time;
+      if (!time) {
+        DateSelector.init();
+        time = DateSelector.time;
+      } 
+      now = new Date(time * 1000);
+      month = now.getMonth() + 1;
+      day = now.getDate();
+      daynum = (new Date(value, month, 0)).getDate();
+      if (day > daynum) {
+        now.setDate(daynum);
+      }
+      now.setFullYear(value);
+      time = Math.floor(now.getTime() / 1000);
+      DateSelector.time = time
+      break;
+    
+    case !!e.target.closest('.date_selecter .month'):
+      time = DateSelector.time;
+      if (!time) {
+        DateSelector.init();
+        time = DateSelector.time;
+      } 
+      now = new Date(time * 1000);
+      year = now.getFullYear();
+      day = now.getDate();
+      daynum = (new Date(year, parseInt(value), 0)).getDate();
+      if (day > daynum) {
+        now.setDate(daynum);
+      }
+      now.setMonth(parseInt(value) - 1);
+      time = Math.floor(now.getTime() / 1000);
+      DateSelector.time = time
+      break;
+    
+    case !!e.target.closest('.date_selecter .day'):
+      time = DateSelector.time;
+      if (!time) {
+        DateSelector.init();
+        time = DateSelector.time;
+      } 
+      now = new Date(time * 1000);
+      now.setDate(value);
+      time = Math.floor(now.getTime() / 1000);
+      DateSelector.time = time
+      break;
+    
+    case !!e.target.closest('.date_selecter .hour'):
+      time = DateSelector.time;
+      if (!time) {
+        DateSelector.init();
+        time = DateSelector.time;
+      } 
+      now = new Date(time * 1000);
+      now.setHours(value);
+      time = Math.floor(now.getTime() / 1000);
+      DateSelector.time = time
+      break;
+    
+    case !!e.target.closest('.date_selecter .minute'):
+      time = DateSelector.time;
+      if (!time) {
+        DateSelector.init();
+        time = DateSelector.time;
+      } 
+      now = new Date(time * 1000);
+      now.setMinutes(value);
+      time = Math.floor(now.getTime() / 1000);
+      DateSelector.time = time
+      break;
+  }
+})
+
+
 class MoeApp {
   static initData = Telegram.WebApp.initData || ''
-  static initDataUnsafe = Telegram.WebApp.initDataUnsafe || {}
+  static initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
   static MainButton = Telegram.WebApp.MainButton
   static SettingsButton = Telegram.WebApp.SettingsButton
   static user = {
@@ -316,7 +566,7 @@ class MoeApp {
   }
 
   // actions
-  static login() {
+  static async login() {
     return new Promise((resolve) => {
       $('body').style.height = window.innerHeight + 'px';
       window.addEventListener('resize', () => {
@@ -325,13 +575,13 @@ class MoeApp {
       if (window.localStorage.getItem('user')) {
         MoeApp.user = JSON.parse(window.localStorage.getItem('user'));
         resolve()
-      } else if (MoeApp.initData) {
-        MoeApp.apiRequest('user/login', {}, function (res) {
-          if (res.error) {
-            alert(`错误: ${res.error}`)
-            resolve();
-          } else if (result.code === 0) {
-            MoeApp.user = result.data;
+      } else if (!MoeApp.initData) {
+        console.warn('初始化失败: 非telegram访问')
+        resolve();
+      } else {
+        MoeApp.apiPost('user/login', {}).then((res) => {
+          if (res.code === 0) {
+            MoeApp.user = res.data;
             window.localStorage.setItem('user', JSON.stringify(MoeApp.user))
             resolve(true)
           } else {
@@ -339,9 +589,6 @@ class MoeApp {
             resolve();
           }
         });
-      } else {
-        console.warn('初始化失败: 非telegram访问')
-        resolve();
       }
     });
   }
@@ -423,7 +670,6 @@ class MoeApp {
         }
       } else {
         MoeApp.showAlert(text);
-
         return true;
       }
     });

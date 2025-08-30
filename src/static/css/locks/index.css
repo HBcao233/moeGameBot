@@ -51,6 +51,15 @@
   font-weight: bold;
   text-align: center;
 }
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tags .tag {
+  margin: 2px 5px;
+}
+
 .locked_time {
   color: #f987cf;
 }
@@ -113,7 +122,9 @@
   height: 100%;
 }
 .desc {
-  height: 1em;
+  text-indent: 2em;
+  min-height: 1em;
+  word-break: break-all;
 }
 .lock_info .btn {
   background: #ff8aac;
@@ -258,17 +269,12 @@
   flex-wrap: wrap;
   padding: 10px;
 }
-.locked_mine .tags .btn {
+.lock_info .tags .tag {
   width: fit-content;
-  margin: 5px;
+  margin: 3px 5px;
 }
 
 
-.popup-box .popup {
-  width: 260px;
-  height: fit-content;
-  max-height: 500px;
-}
 .popup-content {
   padding: 5px;
 }
