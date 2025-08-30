@@ -1,12 +1,9 @@
-alert('4')
 window.addEventListener('load', () => {
-  alert('3')
   let user_lock = {};
   let timer = null;
   let update_timer = null;
   let locks = [];
   const difficultys = ['简单', '普通', '困难', '地狱'];
-  alert('2')
   const get_user_lock = (uid) => {
     MoeApp.apiGet('locks/get_locked', {
       uid: uid || MoeApp.user.id,
@@ -257,16 +254,14 @@ window.addEventListener('load', () => {
     }
     return null;
   }
-  alert('1')
+  
   $('.user_info').style.display = 'none';
   $('.lock_info').style.display = 'none';
   $('.locked_mine').style.display = 'none';
   const searchParams = new URLSearchParams(window.location.search);
   let uid = searchParams.get('uid') || MoeApp.user.id; 
   let preview = searchParams.get('preview');
-  alert('x')
   MoeApp.login().then(() => {
-    alert('b')
     Telegram.WebApp.ready();
     Telegram.WebApp.BackButton.onClick(function () {
       if (window.history.length > 1) window.history.back()
@@ -423,10 +418,10 @@ window.addEventListener('load', () => {
     $('.xn4').innerText = follow_num;
     if (follow_num < 0) follow_num = 0;
     let xm1, xm2, xm3, xm4, xm5;
-    xm1 = love_num * user_lock.lock_info.x_love_add,
-    xm2 = forward_num * user_lock.lock_info.x_forward_add,
-    xm3 = comment_num * user_lock.lock_info.x_comment_add,
-    xm4 = follow_num * user_lock.lock_info.x_follow_add,
+    xm1 = love_num * user_lock.lock_info.x_love_add;
+    xm2 = forward_num * user_lock.lock_info.x_forward_add;
+    xm3 = comment_num * user_lock.lock_info.x_comment_add;
+    xm4 = follow_num * user_lock.lock_info.x_follow_add;
     if (add_time) xm5 = add_time;
     else xm5 = xm1 + xm2 + xm3 + xm4;
     $('.xm1').innerText = formatTime2(xm1);
