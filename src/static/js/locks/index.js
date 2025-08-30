@@ -679,8 +679,11 @@ window.addEventListener('load', () => {
         DateSelector.close()
         break;
       
+      case !!e.target.closest('.vote'):
+        show_public();
+        break;
       case !!e.target.closest('.public_ok'):
-        public_vote()
+        public_vote();
         break;
     }
   })

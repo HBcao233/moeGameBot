@@ -73,7 +73,7 @@ function formatTime(t) {
   if (s < 10) s = '0' + s;
   let m = Math.floor(t / 60 % 60);
   if (m < 10) m = '0' + m;
-  let h = Math.floor(t / 3600 % 86400);
+  let h = Math.floor(t / 3600 % 24);
   if (h < 10) h = '0' + h;
   let d = Math.floor(t / 86400);
   if (d < 10) d = '0' + d;
@@ -85,7 +85,7 @@ function formatTime(t) {
 function formatTime2(t) {
   let s = Math.floor(t % 60);
   let m = Math.floor(t / 60 % 60);
-  let h = Math.floor(t / 3600 % 86400);
+  let h = Math.floor(t / 3600 % 24);
   let d = Math.floor(t / 86400);
   if (d > 0) {
     if (h > 0) return `${d}d${h}h`;
