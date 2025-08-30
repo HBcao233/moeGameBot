@@ -431,3 +431,49 @@ input.text {
   width: fit-content;
   padding: 3px 5px;
 }
+
+.historys {
+  margin: 10px;
+  background: #3333333f;
+  font-size: 13px;
+  overflow-x: auto;
+}
+.historys .create_time {
+  color: #ff8aac;
+  flex-shrink: 0;
+}
+.from_user {
+  display: flex;
+  align-items: center;
+  background: #f02da18a;
+  padding: 1px;
+  flex-shrink: 0;
+  border-radius: 3px;
+}
+.from_user .avatar-box {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: none;
+}
+.from_user .nickname {
+  color: #ff8aac;
+  margin: 0;
+  margin-left: 1px;
+  font-size: 13px;
+}
+.historys span {
+  flex-shrink: 0;
+}
+.historys .add_tip {
+  color: #eb3a36;
+  margin: 0 1px;
+}
+.historys .remove_tip {
+  color: #33ff33;
+  margin: 0 1px;
+}
+.historys .time_tip {
+  color: #66ccff;
+  margin: 0 1px;
+}

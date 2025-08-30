@@ -28,7 +28,9 @@ window.addEventListener('load', () => {
       id: user_lock.id
     }, (res) => {
       if (res.code == 0) {
-        user_lock.end_time = end_time
+        user_lock.end_time = res.data.end_time;
+        user_lock.time_history = res.data.time_history;
+        show_time_history()
       }
     })
   }
@@ -253,6 +255,56 @@ window.addEventListener('load', () => {
       }
     }
     return null;
+  }
+  const create_history = (history) => {
+    return tag('div', {
+      class: 'row history',
+      children: [
+        tag('div', {
+          class: 'create_time',
+          innerText: formatDateTimeLess(history.create_time),
+        }),
+        tag('div', {
+          class: 'from_user',
+          children: [
+            tag('div', {
+              class: 'avatar-box',
+              children: tag('img', {
+                class: 'avatar',
+                attrs: { src: history.from_user.photo_url || '/static/images/b65b5ae0595439920e46e80daf47512a.jpg' },
+              }, (t) => {
+                t.onerror = function() {
+                  t.src = '/static/images/b65b5ae0595439920e46e80daf47512a.jpg'
+                }
+              })
+            }),
+            tag('div', {
+              class: 'nickname',
+              innerText: history.from_user.nickname || history.reason,
+            }),
+          ]
+        }),
+        tag('span', { innerText: '为你' }),
+        (history.time > 0 ? tag('span', { 
+          class: 'add_tip',
+          innerText: '增加',
+        }) : tag('span', { 
+          class: 'remove_tip',
+          innerText: '减少',
+        })),
+        tag('span', { innerText: '了' }),
+        tag('span', { 
+          class: 'time_tip',
+          innerText: formatTime3(Math.abs(history.time)),
+        }),
+      ],
+    })
+  }
+  const show_time_history = () => {
+    $('.historys').innerHTML = '';
+    for (const history of user_lock.time_history) {
+      $('.historys').appendChild(create_history(history))
+    }
   }
   
   $('.user_info').style.display = 'none';

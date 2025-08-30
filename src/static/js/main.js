@@ -47,7 +47,11 @@ function formatDateTime(d) {
     minute: "2-digit",
     second: "2-digit",
   })
-  return formatter.format(d).replaceAll('/', '-')
+  return formatter.format(d).replaceAll('/', '-');
+}
+function formatDateTimeLess(d) {
+  const t = formatDateTime(d)
+  return t.slice(t.indexOf('-') + 1, t.lastIndexOf(':'))
 }
 function formatTime(t) {
   let s = Math.floor(t % 60);
