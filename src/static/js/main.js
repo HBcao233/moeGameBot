@@ -76,7 +76,7 @@ function formatTime(t) {
   let h = Math.floor(t / 3600 % 86400);
   if (h < 10) h = '0' + h;
   let d = Math.floor(t / 86400);
-  if (h < 10) h = '0' + h;
+  if (d < 10) d = '0' + d;
   
   if (d > 0) return `${d}d${h}:${m}:${s}`
   if (h > 0) return `${h}:${m}:${s}`;
