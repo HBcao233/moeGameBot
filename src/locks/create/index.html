@@ -20,8 +20,8 @@
   <link rel="stylesheet" href="/static/css/main.css?v=3">
   <link rel="stylesheet" href="/static/css/locks/create.css?v=3">
   <script src="/static/js/pako_v2.0.4.js"></script>
-  <script src="/static/js/main.js?v=3"></script>
-  <script src="/static/js/locks/create.js?v=6"></script>
+  <script src="/static/js/main.js?v=4"></script>
+  <script src="/static/js/locks/create.js?v=7"></script>
 </head>
 <body>
   <section class="container">
@@ -214,24 +214,46 @@
           <div class="content public">
             <div class="text">其他玩家可以为你增加/减少时间</div>
             <div class="row">
-              <div type="name">增加时间</div>
+              <div type="name">最小增加时间</div>
               <div type="value">
-                <input type="text" class="number day" name="public_add-day" value="0" />
+                <input type="text" class="number day" name="public_add_min-day" value="0" />
                 <span>天</span>
-                <input type="text" class="number hour" name="public_add-hour" value="1" />
+                <input type="text" class="number hour" name="public_add_min-hour" value="1" />
                 <span>时</span>
-                <input type="text" class="number minute" name="public_add-minute" value="0" />
+                <input type="text" class="number minute" name="public_add_min-minute" value="0" />
                 <span>分</span>
               </div>
             </div>
             <div class="row">
-              <div type="name">减少时间</div>
+              <div type="name">最大增加时间</div>
               <div type="value">
-                <input type="text" class="number day" name="public_remove-day" value="0" />
+                <input type="text" class="number day" name="public_add_max-day" value="0" />
                 <span>天</span>
-                <input type="text" class="number hour" name="public_remove-hour" value="1" />
+                <input type="text" class="number hour" name="public_add_max-hour" value="1" />
                 <span>时</span>
-                <input type="text" class="number minute" name="public_remove-minute" value="0" />
+                <input type="text" class="number minute" name="public_add_max-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div type="name">最小减少时间</div>
+              <div type="value">
+                <input type="text" class="number day" name="public_remove_min-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="public_remove_min-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="public_remove_min-minute" value="0" />
+                <span>分</span>
+              </div>
+            </div>
+            <div class="row">
+              <div type="name">最大减少时间</div>
+              <div type="value">
+                <input type="text" class="number day" name="public_remove_max-day" value="0" />
+                <span>天</span>
+                <input type="text" class="number hour" name="public_remove_max-hour" value="1" />
+                <span>时</span>
+                <input type="text" class="number minute" name="public_remove_max-minute" value="0" />
                 <span>分</span>
               </div>
             </div>

@@ -478,3 +478,43 @@ input.text {
   color: #66ccff;
   margin: 0 1px;
 }
+
+.public_box .row > .name {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  color: #dda02c;
+}
+.public_actions  {
+  width: 100%;
+  display: flex;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin: 0 10px;
+  overflow: hidden;
+  text-align: center;
+}
+.public_actions input {
+  display: none;
+}
+.public_actions label {
+  width: 33%;
+  opacity: .3;
+  padding: 3px 5px;
+}
+.public_actions label:has(input:checked) {
+  opacity: 1;
+}
+.public_add {
+  background: #eb3a36;
+}
+.public_remove {
+  background: #33ff33;
+}
+.public_random {
+  background: #66ccff;
+}
+.btn.public_ok {
+  margin: 0 auto;
+}

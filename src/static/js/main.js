@@ -15,13 +15,11 @@ if (typeof VConsole !== 'undefined') {
   const vconsole = new VConsole();
   let vconsoleDom = document.getElementById("__vconsole");
   wait('#__vc_tab_system', (e) => {
-    alert('ok')
     e.style.display = 'none';
     $('#__vc_tab_network').style.display = 'none';
     $('#__vc_tab_element').style.display = 'none';
     $('#__vc_tab_storage').style.display = 'none';
   })
-  alert('a')
 }
 
 window.addEventListener('error', function(e) {

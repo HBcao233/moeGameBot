@@ -21,9 +21,9 @@
   <script src="/static/js/pako_v2.0.4.js"></script>
   
   <link rel="stylesheet" href="/static/css/main.css?v=5">
-  <link rel="stylesheet" href="/static/css/locks/index.css?v=14">
-  <script src="/static/js/main.js?v=34"></script>
-  <script src="/static/js/locks/index.js?v=69"></script>
+  <link rel="stylesheet" href="/static/css/locks/index.css?v=15">
+  <script src="/static/js/main.js?v=35"></script>
+  <script src="/static/js/locks/index.js?v=70"></script>
 </head>
 <body>
   <section class="container">
@@ -445,6 +445,47 @@
       <div class="row center">
         <button type="button" class="btn date_select">确定</button>
       </div>
+    </div>
+  </dialog>
+  
+  <dialog class="popup-box public_box">
+    <div class="popup">
+    <div class="popup-content">
+      <div class="row">
+        <div class="name">
+          <img src="/static/svg/peoples.svg" style="width: 30px; height: 30px"/>
+          <span style="margin-left: 5px">目标</span>
+        </div>
+        <div class="value public_votes"></div>
+      </div>
+      <div class="row">
+        <div class="name">增加时间</div>
+        <div class="value public_add_tip"></div>
+      </div>
+      <div class="row">
+        <div class="name">减少时间</div>
+        <div class="value public_remove_tip"></div>
+      </div>
+      <div class="row">
+        <div class="public_actions">
+          <label class="public_add">
+            <input type="radio" name="public_action" value="0" checked>
+            <div class="text">增加</div>
+          </label>
+          <label class="public_remove">
+            <input type="radio" name="public_action" value="1">
+            <div class="text">减少</div>
+          </label>
+          <label class="public_random">
+            <input type="radio" name="public_action" value="2">
+            <div class="text">随机</div>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <button type="button" class="btn public_ok">投票</button>
+      </div>
+    </div>
     </div>
   </dialog>
 </body>

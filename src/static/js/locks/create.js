@@ -50,8 +50,10 @@ window.addEventListener('load', () => {
       x_comment_add: 3600,
       x_follow_add: 3600,
       public: false,
-      public_add: 3600,
-      public_remove: 3600,
+      public_add_min: 3600,
+      public_add_max: 3600,
+      public_remove_min: 3600,
+      public_remove_max: 3600,
       public_votes: 0,
       hidden: false,
       hidden_add: 3600,
@@ -686,10 +688,17 @@ window.addEventListener('load', () => {
           remove_error('max')
         }
       }
+      
       if (flag) {
         setTime(k, v);
         if (k == 'min' && v > newlock['max']) {
           setTime('max', v);
+        }
+        if (k == 'public_add_min' && v > newlock['public_add_max']) {
+          setTime('public_add_max', v);
+        }
+        if (k == 'public_remove_min' && v > newlock['public_remove_max']) {
+          setTime('public_remove_max', v);
         }
         newlock[k] = v;
         save_newlock()

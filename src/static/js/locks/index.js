@@ -546,6 +546,46 @@ window.addEventListener('load', () => {
     })
   }
   
+  let public_action = 0;
+  const show_public = () => {
+    if (!user_lock.public) {
+      return alert('未启用该功能');
+    }
+    let lock = user_lock.lock_info;
+    
+    $('.public_votes').innerText = `${user_lock.votenum} / ${lock.public_votes}`;
+    let t = formatTime2(lock.public_add_min);
+    if (lock.public_add_min != lock.public_add_max) {
+      t += ' ~ ' + formatTime2(lock.public_add_max);
+    }
+    $('.public_add_tip').innerText = t;
+    
+    t = formatTime2(lock.public_remove_min);
+    if (lock.public_remove_min != lock.public_remove_max) {
+      t += ' / ' + formatTime2(lock.public_remove_max);
+    }
+    $('.public_box .public_remove_tip').innerText = t;
+    
+    show_dialog('dialog.public_box');
+  }
+  const public_vote = () => {
+    if (!MoeApp.initData) return;
+    if (user_lock.uid == MoeApp.user.id) {
+      alert('不能自己给自己投票的啦～')
+    }
+    MoeApp.apiPost('locks/vote', {
+      user_lock_id: user_lock.id,
+      action: public_action,
+    }).then(res => {
+      if (res.code !== 0) {
+        return alert(res.message)
+      }
+      alert('投票成功！')
+      user_lock.public.vote += 1;
+      $('.public_box .votes').innerText = `${user_lock.votenum} / ${user_lock.lock_info.public_votes}`;
+    })
+  }
+  
   document.addEventListener('click', (e) => {
     let t, index, lock;
     switch (true) {
@@ -639,6 +679,9 @@ window.addEventListener('load', () => {
         DateSelector.close()
         break;
       
+      case !!e.target.closest('.public_ok'):
+        public_vote()
+        break;
     }
   })
   document.addEventListener('change', (e) => {
@@ -661,6 +704,10 @@ window.addEventListener('load', () => {
         }
         new_twitter['tid'] = match[1];
         get_tweet();
+        break;
+        
+      case name == 'public_action':
+        public_action = parseInt(value);
         break;
     }
   })
