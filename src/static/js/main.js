@@ -1,10 +1,12 @@
+window['$'] = document.querySelector.bind(document);
+window['$$'] = document.querySelectorAll.bind(document);
 if (typeof VConsole !== 'undefined') {
-  let vconsole = new VConsole();
-  vconsole.setSwitch({
-    enable: true, 
-    enablePanel: 'console',
-  })
-  const VConsoleDom = document.getElementById("__vconsole");
+  const vconsole = new VConsole();
+  let vconsoleDom = document.getElementById("__vconsole");
+  $('#__vc_tab_system').style.display = 'none';
+  $('#__vc_tab_network').style.display = 'none';
+  $('#__vc_tab_element').style.display = 'none';
+  $('#__vc_tab_storage').style.display = 'none';
 }
 
 window.addEventListener('error', function(e) {
@@ -14,10 +16,6 @@ window.addEventListener('error', function(e) {
   console.error(msg);
   alert(msg);
 }, true);
-
-
-window['$'] = document.querySelector.bind(document);
-window['$$'] = document.querySelectorAll.bind(document);
 
 const show_dialog = (selector) => {
   $(selector).showModal();
