@@ -90,6 +90,9 @@ function formatTime2(t) {
   if (s > 0) return `${s}s`;
   return '0';
 }
+function formatTime3(t) {
+  return formatTime2(t).replace('d', '天').replace('h', '小时').replace('m', '分钟').replace('s', '秒');
+}
 /**
  * 创建 Element
  * @param {String} tagName 
