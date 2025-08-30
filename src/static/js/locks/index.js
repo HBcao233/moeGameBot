@@ -1,3 +1,4 @@
+alert('4')
 window.addEventListener('load', () => {
   alert('3')
   let user_lock = {};
