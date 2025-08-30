@@ -1,6 +1,6 @@
 if (typeof VConsole !== 'undefined') {
   let vconsole = new VConsole();
-  vConsole.setSwitch({
+  vconsole.setSwitch({
     enable: true, 
     enablePanel: 'console',
   })
