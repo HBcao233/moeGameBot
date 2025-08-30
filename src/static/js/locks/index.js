@@ -260,7 +260,7 @@ window.addEventListener('load', () => {
   $('.locked_mine').style.display = 'none';
   const searchParams = new URLSearchParams(window.location.search);
   let uid = searchParams.get('uid') || MoeApp.user.id; 
-  let preview = searchParams.get('preview'); 
+  let preview = searchParams.get('preview');
   alert('x')
   MoeApp.login().then(() => {
     alert('b')
