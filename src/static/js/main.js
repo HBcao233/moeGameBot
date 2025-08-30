@@ -760,4 +760,3 @@ class MoeApp {
     return await r.json();
   }
 }
-alert('ok')

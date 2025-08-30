@@ -1,9 +1,11 @@
 window.addEventListener('load', () => {
+  alert('3')
   let user_lock = {};
   let timer = null;
   let update_timer = null;
   let locks = [];
   const difficultys = ['简单', '普通', '困难', '地狱'];
+  alert('2')
   const get_user_lock = (uid) => {
     MoeApp.apiGet('locks/get_locked', {
       uid: uid || MoeApp.user.id,
@@ -254,7 +256,7 @@ window.addEventListener('load', () => {
     }
     return null;
   }
-  
+  alert('1')
   $('.user_info').style.display = 'none';
   $('.lock_info').style.display = 'none';
   $('.locked_mine').style.display = 'none';
