@@ -351,7 +351,7 @@ window.addEventListener('load', () => {
     }
     alert(msg);
   }
-  const unlock = () => {
+  const unlock = (confirm) => {
     if (user_lock.id == 0) {
       let now = Math.floor(Date.now() / 1000)
       if (now >= user_lock.end_time) {
@@ -365,6 +365,12 @@ window.addEventListener('load', () => {
     if (user_lock.uid != MoeApp.user.id) {
       alert('不能给别人开锁的啦～')
       return
+    }
+    if (!confirm) {
+      MoeApp.showConfirm('确定开锁？', (ok) => {
+        if (ok) unlock(true);
+      });
+      return;
     }
     MoeApp.apiRequest('locks/unlock', {
       id: user_lock.id,

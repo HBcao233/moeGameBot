@@ -490,6 +490,7 @@ window.addEventListener('load', () => {
       public_add_max: newlock['public_add_max'],
       public_remove_min: newlock['public_remove_min'],
       public_remove_max: newlock['public_remove_max'],
+      public_votes: newlock['public_votes'],
       hidden: newlock['hidden'],
       hidden_add: newlock['hidden_add'],
       temporary_open: newlock['temporary_open'],

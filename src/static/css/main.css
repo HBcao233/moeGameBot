@@ -153,3 +153,23 @@ select.number {
   display: flex;
   justify-content: center;
 }
+
+.date_selecter .calendar {
+  background: #aaaaaa7f; 
+  color: #fff;
+  border-radius: 10px;
+}
+.date_selecter .calendar th,
+.date_selecter .calendar td {
+  background: transparent;
+}
+.date_selecter .calendar td.active {
+  border-radius: 10px;
+  background: orange;
+  border: none;
+}
+.calendar tr th.monthdown img,
+.calendar tr th.monthup img {
+  width: 15px;
+  height: 15px;
+}
