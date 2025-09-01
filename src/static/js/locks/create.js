@@ -499,7 +499,7 @@ window.addEventListener('load', () => {
       temporary_punish: newlock['temporary_punish'],
       verification_picture: newlock['verification_picture'],
       verification_interval: newlock['verification_interval'],
-      verification_method: newlock['verification_method'],
+      verification_method: parseInt(newlock['verification_method']),
       verification_punish: newlock['verification_punish'],
       wheel: newlock['wheel'],
       wheel_method: newlock['wheel_method'],
