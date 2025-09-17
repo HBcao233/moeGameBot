@@ -36,6 +36,25 @@ img {
 p {
   text-indent: 2em;
 }
+details summary {
+  display: flex;
+  list-style: none; 
+  cursor: pointer; 
+}
+
+details summary::before {
+  content: '▼';
+  margin-right: 5px; 
+  display: inline-block; 
+  transform: rotate(-90deg); 
+  transition: transform 0.3s ease; 
+}
+
+/* 当细节展开时，调整箭头旋转方向 */
+details[open] summary::before {
+  transform: rotate(0deg);
+}
+
 
 @media only screen and (max-width: 768px) {
   .mobile-only {
@@ -49,11 +68,31 @@ p {
   padding: 5px;
   margin: 10px 0;
 }
+.box2 {
+  border: 2px solid #fff;
+  background: #083230;
+}
+.box3 {
+  border: 2px solid #ea0700;
+  background: #340809;
+}
+.box4 {
+  border: 2px solid #042eb8;
+  background: #120f24;
+}
+.box5 {
+  border: 2px solid #07309a;
+  background: #25221d;
+}
+
 .row {
   display: flex;
 }
 .row.center {
   justify-content: center;
+}
+.row.middle {
+  align-items: center;
 }
 .main-title {
   position: relative;
@@ -87,6 +126,9 @@ p {
   font-weight: bold;
 }
 
+.underline {
+  text-decoration: underline;
+}
 .text_colors tr td:first-child {
   width: 75px;
 }
@@ -102,19 +144,20 @@ p {
 .color_passive {
   color: #6e19aa;
 }
-.color_curse {
+.color_curse, .color_useful {
   color: #2b7447;
 }
 .color_enemy {
   color: #deb633;
 }
 .color_dick {
-  color: #ba2157;
+  color: #b41a56;
 }
 .color_key {
   color: #e7f063;
 }
-.color_fight {
+.color_fight, 
+.color_bad {
   color: red;
 }
 .color_random {
@@ -123,13 +166,14 @@ p {
 .color_chest {
   color: #c0c920;
 }
+.color_skill {
+  color: #2bece7;
+}
 
 img.icon {
-  display: inline;
   width: 25px;
   height: 25px;
-  transform: translateY(7px);
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .dice {
