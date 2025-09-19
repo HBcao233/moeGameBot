@@ -29,6 +29,7 @@ body {
     'しねきゃぷしょん', 
     'Microsoft YaHei', 
     'Arial', sans-serif;
+  font-size: 16px;
 }
 a {
   color: #66ccff;
@@ -43,9 +44,16 @@ a.link::before {
   mask-image: url('./images/link.svg');
   transform: translateY(2px);
 }
-img {
+.image_box {
   width: 100%;
   height: auto;
+  display: flex;
+  margin: 5px 0 10px 0;
+}
+img {
+  margin: 0 auto;
+  max-width: 500px;
+  height: fit-content;
 }
 img.icon {
   width: 25px;
@@ -85,9 +93,6 @@ img.icon {
 }
 
 
-.mobile-only {
-  display: none;
-}
 p {
   text-indent: 2em;
 }
@@ -114,10 +119,36 @@ details[open] summary::before {
   transform: rotate(0deg);
 }
 
-
+.row {
+  display: flex;
+}
+.row.center {
+  justify-content: center;
+}
+.row.middle {
+  align-items: center;
+}
+.row.column {
+  flex-direction: column; 
+}
+.mobile-only {
+  display: none;
+}
+.mobile-column {
+  flex-direction: row;
+}
 @media only screen and (max-width: 768px) {
+  img {
+    width: 100%;
+  }
   .mobile-only {
     display: revert;
+  }
+  .pc-only {
+    display: none !important;
+  }
+  .mobile-column {
+    flex-direction: column;
   }
 }
 
@@ -125,7 +156,7 @@ details[open] summary::before {
   border: 2px solid #c1b91c;
   background: #1e1e1e;
   padding: 5px;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 .box2 {
   border: 2px solid #fff;
@@ -163,15 +194,141 @@ details[open] summary::before {
   border: 2px solid #fa20fa;
   background: #0c0c0c;
 }
+.box11 {
+  background: #011e0c;
+}
+.border-none {
+  border: none;
+}
+.border7 {
+  border: 2px solid #2e6232;
+}
+.bg7 {
+  background: #001101;
+}
+.bg11 {
+  background: #011e0c;
+}
 
-.row {
+.curse {
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+.curse img {
+  max-width: 100%;
+}
+.curse .curse_header,
+.curse .curse_effect {
+  width: 25%;
+}
+.curse .curse_effect4 {
+  width: 100%;
+}
+.curse .enemy_name {
+  color: #ffb600;
+  font-size: 20px;
+  height: 50px;
+  background: #001101;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.curse .enemy_img {
+  width: 100%;
+}
+.curse .curse_name {
+  color: #1ea45d;
+  font-size: 18px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.curse_details {
+  background: #001101;
+  height: 100%;
+}
+.curse_gap {
+  width: 100%;
+  height: 0;
+}
+
+.curse_effect {
+  background: #011e0c;
+}
+.curse_effect > .header {
+  width: 100%;
+  height: 50px;
+  flex-shrink: 0;
+}
+.curse_effect_details {
+  padding: 10px;
+  padding-top: 0;
+}
+.curse_effect4 .curse_effect_info {
   display: flex;
 }
-.row.center {
+.curse_effect .image_box {
+  height: 180px;
+  flex-direction: column;
   justify-content: center;
-}
-.row.middle {
   align-items: center;
+}
+.curse_effect4 .image_box {
+  width: 25%;
+  height: auto;
+  flex-shrink: 0;
+}
+.curse_effect .title {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  background: #001101;
+  border: 2px solid #1ea45d;
+  transform: translateY(2px);
+}
+.curse_effect_name {
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.curse_effect1 > .header {
+  background-image: linear-gradient(to right, #03fc48, #53af33);
+}
+.curse_effect2 .header {
+  background-image: linear-gradient(to right, #53af33, #a95819);
+}
+.curse_effect3 .header {
+  background-image: linear-gradient(to right, #a95819, #fa0502);
+}
+.curse_effect4 .header {
+  background-image: linear-gradient(to right, #fa0502, #9b0702);
+}
+@media only screen and (max-width: 768px) {
+  .curse_effect {
+    margin-top: 20px;
+  }
+  .curse .curse_header,
+  .curse .curse_effect {
+    width: 100%;
+  }
+  .curse_effect4 .curse_effect_info {
+    flex-direction: column;
+  }
+  .curse_effect .image_box {
+    height: auto;
+  }
+  .curse_effect4 .image_box {
+    width: 100%;
+  }
 }
 
 .text-center {
@@ -217,8 +374,14 @@ details[open] summary::before {
 .color_curse {
   color: #1ea45d;
 }
+.color_curse2 {
+  color: #9ea301;
+}
+.color_curse3 {
+  color: #963c08;
+}
 .color_enemy {
-  color: #deb633;
+  color: #ffb600;
 }
 .color_dick {
   color: #b41a56;
@@ -234,6 +397,9 @@ details[open] summary::before {
 }
 .color_bad {
   color: #9d1112;
+}
+.color_bad_ending {
+  color: #f40502;
 }
 .color_boos {
   color: #ae0613;
