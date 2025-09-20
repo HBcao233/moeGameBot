@@ -16,8 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
     $('.reincarnate_step1').innerText = '请先投一颗骰子决定你的阵营';
     $('.reincarnate_step2').innerText = '请再投一颗骰子决定你的种族';
     $('.reincarnate_dice1').style.display = 'flex';
-    $('#dice_camp').classList.remove('d1', 'd2', 'd3', 'd4', 'd5', 'd6');
-    $('#dice_camp').classList.add(`d${camp * 3 - 2}`);
+    if (camp) {
+      $('#dice_camp').classList.remove('d1', 'd2', 'd3', 'd4', 'd5', 'd6');
+      $('#dice_camp').classList.add(`d${camp * 3 - 2}`);
+    }
     $('.reincarnate_dice2').innerHTML = `<div id="dice_race" class="dice d${race || 6}" data-sides="6"></div>`;
   }
   
