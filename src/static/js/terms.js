@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   MoeApp.login().then(() => {
     Telegram.WebApp.ready();
     Telegram.WebApp.BackButton.onClick(function () {

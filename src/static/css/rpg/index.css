@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'Microsoft YaHei';
-  src: url('./fonts/MicrosoftYaHei.ttf') format('truetype');
+  src: url('/static/fonts/MicrosoftYaHei.ttf') format('truetype');
 }
 @font-face {
   font-family: 'chinese punctuation';
-  src: url('./fonts/MicrosoftYaHei.ttf') format('truetype');
+  src: url('/static/fonts/MicrosoftYaHei.ttf') format('truetype');
   unicode-range: 
     U+FF0C, /* 中文逗号 */
     U+FF1A; /* 中文冒号 */
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: 'しねきゃぷしょん';
-  src: url('しねきゃぷしょん.ttf') format('truetype');
+  src: url('/static/fonts/しねきゃぷしょん.ttf') format('truetype');
 }
 
 
@@ -24,6 +24,7 @@ body {
   background: #000000;
   color: #fff;
   padding: 0 5px;
+  padding-bottom: 100px;
   font-family: 
     'chinese punctuation', 
     'しねきゃぷしょん', 
@@ -40,8 +41,8 @@ a.link::before {
   width: 1em;
   height: 1em;
   background-color: currentColor;
-  -webkit-mask-image: url('./images/link.svg');
-  mask-image: url('./images/link.svg');
+  -webkit-mask-image: url('/static/images/rpg/link.svg');
+  mask-image: url('/static/images/rpg/link.svg');
   transform: translateY(2px);
 }
 .image_box {
@@ -92,6 +93,17 @@ img.icon {
   background-color: #8c801e;
 }
 
+.btn {
+  width: auto;
+  padding: 3px 10px;
+  border: 2px solid #afae00;
+  background: #1e1e1e;
+  color: #e7f063; 
+}
+.btn.disabled {
+  opacity: .5;
+}
+
 
 p {
   text-indent: 2em;
@@ -137,9 +149,19 @@ details[open] summary::before {
 .mobile-column {
   flex-direction: row;
 }
+figure {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 @media only screen and (max-width: 768px) {
   img {
     width: 100%;
+  }
+  figure {
+    width: 100%;
+    align-items: center;
   }
   .mobile-only {
     display: revert;
@@ -194,8 +216,9 @@ details[open] summary::before {
   border: 2px solid #fa20fa;
   background: #0c0c0c;
 }
-.box11 {
-  background: #011e0c;
+.box12 {
+  border: 2px solid #432d1f;
+  background: #ad8b66;
 }
 .border-none {
   border: none;
@@ -212,12 +235,12 @@ details[open] summary::before {
 
 .curse {
   display: flex;
-  gap: 0;
   overflow: hidden;
   flex-wrap: wrap;
 }
 .curse img {
   max-width: 100%;
+  height: auto;
 }
 .curse .curse_header,
 .curse .curse_effect {
@@ -249,6 +272,8 @@ details[open] summary::before {
 .curse_details {
   background: #001101;
   height: 100%;
+  padding: 10px;
+  padding-top: 0;
 }
 .curse_gap {
   width: 100%;
@@ -272,9 +297,6 @@ details[open] summary::before {
 }
 .curse_effect .image_box {
   height: 180px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 .curse_effect4 .image_box {
   width: 25%;
@@ -369,7 +391,7 @@ details[open] summary::before {
   color: #d280c2;
 }
 .color_passive {
-  color: #6e19aa;
+  color: #8d04ff;
 }
 .color_curse {
   color: #1ea45d;
@@ -396,7 +418,7 @@ details[open] summary::before {
   color: #b60801;
 }
 .color_bad {
-  color: #9d1112;
+  color: #ce070c;
 }
 .color_bad_ending {
   color: #f40502;
@@ -431,8 +453,17 @@ details[open] summary::before {
 .color_coin {
   color: #ffff00;
 }
+.color_common {
+  color: #fff;
+}
 .color_uncommon {
   color: #72f79c;
+}
+.color_camp1 {
+  color: #ffb700;
+}
+.color_camp2 {
+  color: #7530a4;
 }
 
 .dice {
@@ -454,6 +485,14 @@ details[open] summary::before {
 .dice:active {
   transform: scale(0.95);
 }
+
+.dice.disabled {
+  opacity: .3;
+}
+.dice.active {
+  opacity: 1;
+}
+
 
 .dice.d1 {
   background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB4PSI1IiB5PSI1IiB3aWR0aD0iOTAiIGhlaWdodD0iOTAiIHJ4PSIxMCIgc3R5bGU9ImZpbGw6I2ZmZjtzdHJva2U6IzMzMztzdHJva2Utd2lkdGg6MjsiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI4IiBmaWxsPSIjMzMzIi8+PC9zdmc+');
@@ -488,4 +527,155 @@ details[open] summary::before {
   line-height: 2;
   font-size: 20px;
   font-weight: bold;
+}
+
+#转生女神 {
+  color: #e3cd22;
+}
+#转生女神 p {
+  margin-top: 10px;
+}
+#转生服务中心 {
+  position: relative;
+}
+.selection {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 3px 5px;
+  opacity: .5;
+  border-color: transparent;
+  transition: all .3s;
+}
+.selection:active, 
+.selection.active {
+  border-color: #ffb700;
+  opacity: 1;
+}
+.reincarnate_step1, 
+.reincarnate_step2 {
+  width: fit-content; 
+  height: 30px; 
+  background: #0f0f0f; 
+  margin: 0 auto; 
+  padding: 8px 10px 2px 10px;
+}
+@media only screen and (min-width: 768px) {
+  #转生女神 {
+    display: flex;
+  }
+  #转生女神 figure {
+    margin: 0 10px;
+  }
+  #转生女神 p {
+    margin-left: 15px;
+    margin-top: 0;
+  }
+}
+
+.camps {
+  display: flex;
+  justify-content: center;
+}
+.camp {
+  text-align: center;
+  margin: 10px;
+  opacity: .3;
+  border-style: solid;
+  border-width: 0;
+}
+.camp.active {
+  opacity: 1;
+  border-width: 2px;
+}
+.camp1 {
+  border-color: #afae00;
+  background: #1e1e1e;
+}
+.camp2 {
+  border-color: #6a315e;
+  background: #000115;
+}
+
+.race {
+  display: none;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+.race.active {
+  display: flex;
+}
+.race .image_box {
+  height: 180px;
+}
+.race_header .image_box {
+  height: 300px;
+}
+.race img {
+  max-width: 100%;
+  height: auto;
+}
+.race_name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.race_details {
+  padding: 10px;
+  padding-top: 0;
+  padding-bottom: 20px;
+}
+.race_info {
+  width: 100%;
+}
+.race_info > .header {
+  width: 100%;
+  height: 50px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.race_clothes > .header {
+  background: #620033;
+}
+.race_passive_skill > .header {
+  background: #260033;
+}
+.race_active_skill > .header {
+  background: #330009;
+}
+
+.race_info_title {
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 19px;
+}
+.race_info_details {
+  padding: 10px;
+  padding-top: 0;
+  padding-bottom: 20px;
+}
+
+.race_header,
+.race_clothes {
+  width: 50%;
+}
+.race_skill {
+  width: 50%;
+}
+.race_skills {
+  display: flex;
+  flex-wrap: wrap;
+}
+@media only screen and (max-width: 768px) {
+  .race_header,
+  .race_clothes,
+  .race_skill {
+    width: 100%;
+  }
+  .race .image_box {
+    height: auto;
+  }
 }

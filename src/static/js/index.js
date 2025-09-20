@@ -25,7 +25,7 @@ if (startapp) {
   }
 }
 
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   let now = new Date();
   const month = now.getMonth() + 1;
   document.querySelector('.calendar .month').innerText = `${month} 月`;

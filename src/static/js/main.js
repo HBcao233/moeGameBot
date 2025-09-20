@@ -1,6 +1,13 @@
 window['$'] = document.querySelector.bind(document);
 window['$$'] = document.querySelectorAll.bind(document);
 
+const getValue = (k) => {
+  return window.localStorage.getItem(k);
+}
+const setValue = (k, v) => {
+  window.localStorage.setItem(k, v);
+}
+
 function wait(selector, func) {
   let timer;
   timer = setInterval(() => {

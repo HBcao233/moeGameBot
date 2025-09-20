@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   let changed = false;
   let count = 0;
   let tags = 0;
