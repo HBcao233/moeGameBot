@@ -15,21 +15,41 @@
   src: url('/static/fonts/しねきゃぷしょん.ttf') format('truetype');
 }
 
+@keyframes flyIn {
+  0% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
 
 * {
   margin: 0;
   padding: 0;
+  font-family: 
+    'chinese punctuation', 
+    'しねきゃぷしょん', 
+    'Microsoft YaHei', 
+    'Arial', sans-serif;
 }
 body {
   background: #000000;
   color: #fff;
   padding: 0 5px;
   padding-bottom: 100px;
-  font-family: 
-    'chinese punctuation', 
-    'しねきゃぷしょん', 
-    'Microsoft YaHei', 
-    'Arial', sans-serif;
   font-size: 16px;
 }
 a {
@@ -50,6 +70,7 @@ a.link::before {
   height: auto;
   display: flex;
   margin: 5px 0 10px 0;
+  overflow: auto;
 }
 img {
   margin: 0 auto;
@@ -232,6 +253,15 @@ figure {
 .bg11 {
   background: #011e0c;
 }
+.box13 {
+  border: 2px solid #183f20;
+  background: #082e09;
+}
+.box14 {
+  border: 2px solid #01eded;
+  background: #152727;
+}
+
 
 .curse {
   display: flex;
@@ -373,6 +403,9 @@ figure {
 }
 .gradient4 {
   background-image: linear-gradient(to right, #2ebb21, #38b827);
+}
+.gradient5 {
+  background-image: linear-gradient(to right, #f26ed4, #f66dd7);
 }
 
 .underline {
@@ -678,4 +711,58 @@ figure {
   .race .image_box {
     height: auto;
   }
+}
+
+
+
+
+
+
+
+
+#section-mainmenu .box {
+  margin-bottom: 200px;
+}
+
+.mainmenu_btn {
+  display: block;
+  background: transparent;
+  font-size: 25px;
+  color: #fff;
+  border: none;
+  outline: none;
+  margin: 10px 20px;
+  user-select: none;
+  cursor: pointer;
+  transform: translateX(-200px);
+  animation: flyIn 1s ease-out forwards;
+}
+.mainmenu_btn.load {
+  animation-delay: .2s;
+}
+.mainmenu_btn.options {
+  animation-delay: .4s;
+}
+
+.mainmenu_btn:active {
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.mainmenu_btn.start:active {
+  background-image: linear-gradient(to right, #f26ed4, #f66dd7);
+}
+.mainmenu_btn.load:active {
+  background-image: linear-gradient(to right, #ea99a2, #eb999b);
+}
+.mainmenu_btn.options:active {
+  background-image: linear-gradient(to right, #2ebb21, #38b827);
+}
+
+
+.comic {
+  border: 2px solid #4a4a4a;
+}
+.fadeIn {
+  animation: fadeIn 1s ease-out forwards;
 }
