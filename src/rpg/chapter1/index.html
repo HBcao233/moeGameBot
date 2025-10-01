@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/static/css/rpg/chapter1.css">
   <script src="/static/js/telegram-web-app.min.js"></script>
   <script src="/static/js/main.js"></script>
+  <script src="/static/js/rpg/utils.js"></script>
   <script src="/static/js/rpg/chapter1.js"></script>
 </head>
 <body>
@@ -21,7 +22,7 @@
     <h2 class="title">第一章：<span class="text-gradient gradient3">淫暗森林</span></h2>
     <div>你的冒险将在一个森林的入口展开。你的新身体感觉很好，但是还需要适应，你已经迫不及待地要开始你的旅途了，在森林中走了短短几分钟之后，又出现了一个女神，当她似乎与你刚刚在地狱遇到的女神有所不同。她介绍着自己是轮盘文神的第二个姐妹，拥有掌管凡人世界的权力。随后，她向你展示了这座森林的地图。</div>
   </div>
-  <div class="box box13">
+  <div class="box box13" id="norace">
     <div>你貌似还没有转生(^·w·^)? 请先前往第零章选择职业喵</div>
     <div class="row center">
       <a class="btn" href="../">回到第零章</a>
@@ -36,9 +37,15 @@
     <p>让我再告诉你一些发生在这个世界的故事吧。这里曾是一个充斥着鲜血与战争的世界，直到前任恶魔领主被另一群恶魔打败——魅魔，她们赢得了战争。因此，一个新的恶魔领主被推上了王位。恶魔领主拥有着可以改变世界运行规则的力量，新的恶魔领主做出的第一件事就是，用色情解决一切问题。她宣读了她的律法，所有的生物都放下了战争、谋杀与其他可怕的事。一个和平的时代来临了...应该算吧。这里大多数人都只为性而活，自然法则被破坏殆尽。我们必须把平衡重新带回人间。</p>
   </div>
   <div class="box box13" style="padding: 0">
-    <div class="image_box map1_box" style="margin: 0">
-      <img class="map1" src="/static/images/rpg/map1.jpg" style="width: 200%; transform: matrix(1,0,0,1, 0, 0);">
+    <div class="map_box">
+      <img class="map" src="/static/images/rpg/map1.jpg">
+      <span class="zoom_info">100%</span>
+      <img class="zoomIn" src="/static/svg/zoomIn.svg">
+      <img class="zoomOut" src="/static/svg/zoomOut.svg">
     </div>
+  </div>
+  <div class="box box13">
+    <div></div>
   </div>
 </body>
 </html>

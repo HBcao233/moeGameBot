@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  
+
   document.addEventListener('click', (e) => {
     switch(true) {
       case !!e.target.closest('.mainmenu_btn.start'):
