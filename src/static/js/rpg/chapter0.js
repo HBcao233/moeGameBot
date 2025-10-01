@@ -110,42 +110,20 @@ document.addEventListener('DOMContentLoaded', function() {
         $(`#camp${camp}-race${race}`).classList.add('active');
         break
       
-      // 掷骰子
-      case !!e.target.closest('.dice'):
-        if (e.target.classList.contains('disabled')) return;
-        const dice = e.target.closest('.dice');
-        const sides = parseInt(dice.getAttribute('data-sides'))
-        if (dice.rolling) return;
-        dice.rolling = true;
-        let timer = setInterval(() => {
-          const count = Math.floor(Math.random() * sides) + 1;
-          if (sides > 6) {
-            dice.innerText = count;
-          } else {
-            dice.classList.remove('d1', 'd2', 'd3', 'd4', 'd5', 'd6');
-            dice.classList.add('d' + count);
-          }
-        }, 100);
-        
-        const result = Math.floor(Math.random() * sides) + 1;
-        const duration = 1500 + Math.random() * 500;
-        setTimeout(() => {
-          clearInterval(timer);
-          let event = new CustomEvent('dice', {
-            bubbles: true,
-            detail: { dice: result },
-          });
-          e.target.dispatchEvent(event);
-          e.target.setAttribute('data-dice', result)
-    
-          if (sides > 6) {
-            dice.innerText = result;
-          } else {dice.classList.remove('d1', 'd2', 'd3', 'd4', 'd5', 'd6');
-            dice.classList.add('d' + result);
-          } 
-          dice.rolling = false;
-        }, duration);
-        break
+      // 下一章
+      case !!e.target.closest('.btn.next'):
+        const r = [
+          ['princess', 'wizard', 'elf', 'dwarf', 'beastwoman', 'holstaurus'],
+          ['witch', 'succubus', 'asceticist', 'zombie', 'corrupted', 'robot'],
+        ];
+        const race_key = r[camp-1][race-1];
+        setValue('save', JSON.stringify({
+          camp: camp,
+          race: race,
+          race_key: race_key,
+        }))
+        window.location.href = '../chapter1/';
+        break;
     }
 
   });

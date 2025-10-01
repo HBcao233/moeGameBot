@@ -597,7 +597,7 @@ class MoeApp {
   // actions
   static async login() {
     return new Promise((resolve) => {
-      $('body').style.height = window.innerHeight + 'px';
+      // $('body').style.height = window.innerHeight + 'px';
       window.addEventListener('resize', () => {
         $('body').style.height = window.innerHeight + 'px';
       })

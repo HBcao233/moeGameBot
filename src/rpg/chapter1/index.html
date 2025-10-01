@@ -17,6 +17,7 @@
   <script src="/static/js/rpg/chapter1.js"></script>
 </head>
 <body>
+<div class="container">
   <div class="box box13">
     <h2 class="main-title"><span class="text-gradient gradient1" style="color: ">伪娘</span><span class="text-gradient gradient2">转生</span><span style="color: #709fe5">到</span><br class="mobile-only"><span class="text-gradient gradient5">淫乱</span><span class="text-gradient gradient4">世界</span><span style="color: #ef9b41">跑团</span> <span style="color: #e8ef3f">RPG!</span><span style="font-size: 14px; margin-left: 15px">Ver. 2.2</span></h2>
     <h2 class="title">第一章：<span class="text-gradient gradient3">淫暗森林</span></h2>
@@ -36,16 +37,47 @@
     <p>我是这个世界的轮盘女神。我将监督你在地上世界的旅程。欢迎来到淫暗森林! 这是这个世界的地图。你们要去的第一个区域是恶魔领主的堡垒。不过秋可得先警告你，这里的植物和生物都会对你使用快乐攻击，可不要在巨大的快感下屈服哦～不过尽力而为就好～愿轮盘与你同在。</p>
     <p>让我再告诉你一些发生在这个世界的故事吧。这里曾是一个充斥着鲜血与战争的世界，直到前任恶魔领主被另一群恶魔打败——魅魔，她们赢得了战争。因此，一个新的恶魔领主被推上了王位。恶魔领主拥有着可以改变世界运行规则的力量，新的恶魔领主做出的第一件事就是，用色情解决一切问题。她宣读了她的律法，所有的生物都放下了战争、谋杀与其他可怕的事。一个和平的时代来临了...应该算吧。这里大多数人都只为性而活，自然法则被破坏殆尽。我们必须把平衡重新带回人间。</p>
   </div>
-  <div class="box box13" style="padding: 0">
-    <div class="map_box">
-      <img class="map" src="/static/images/rpg/map1.jpg">
-      <span class="zoom_info">100%</span>
+  <div class="box box13" style="padding: 0; display: flex; justify-content: center;">
+    <div class="map-box">
+      <div class="map" data-scale="2" data-centerX="-10" data-centerY="150">
+        <div class="map-content">
+          <img class="map-image" src="/static/images/rpg/map1.jpg">
+          <div class="map-markers"></div>
+        </div>
+        <span class="zoom-info">100%</span>
+      </div>
       <img class="zoomIn" src="/static/svg/zoomIn.svg">
       <img class="zoomOut" src="/static/svg/zoomOut.svg">
     </div>
   </div>
-  <div class="box box13">
+  
+  <div class="progress-container">
+    <div class="progress box13" id="progress0">
+      <p>你站在淫暗森林的入口，斑驳的阳光透过层层叠叠的枝叶洒下，潮湿的泥土混着草木清香扑面而来，一条隐约的小径蜿蜒向密林深处。深吸一口气，准备好踏上这段未知的冒险了吗？</p>
+      <br>
+      <p>请选择你的行动：</p>
+      <p class="action" id="action0-1">(1) 前进</p>
+    </div>
+    <div class="progress box13" id="progress1">
+      <p>你沿着小径小心翼翼地前进，周围的树木越来越高大，光线也越来越暗。突然，草丛中传来一阵窸窣声。</p>
+      <div style="text-indent: 2em">请投掷骰子: <div class="dice d6" data-sides="6" id="diceAction1-1"></div></div>
+      <p class="step" id="step1-1"><span class="color_enemy" id="enemy1-1"></span> 出现了！</p>
+    </div>
+    <div class="progress box13" id="progress2">
+      <p id="text2-1" style="display: none">你轻松击败了敌人，身上几乎没有一丝伤痕。森林的低语变得暧昧，仿佛在诱惑你靠近某个秘密。</p>
+      <p id="text2-2" style="display: none">击败敌人后，你感觉到身体有些疲惫。空气中飘来一缕难辨的气息，会是花香？还是腐败？还是某种说不清道不明的味道？</p>
+      <p id="text2-3" style="display: none">你强撑着打倒了敌人，没想到刚刚开始你就已经如此狼狈，这无疑给刚刚转生的你脑袋上来了当头一棒。空气中飘来一缕难辨的气息，会是补给？还是陷阱？</p>
+    </div>
+  </div>
+</div>
+</body>
+
+<div class="battle">
+  <div class="row right">
     <div></div>
   </div>
-</body>
+  <div class="battle-history"></div>
+  <div class="player-status"></div>
+</div>
+
 </html>
