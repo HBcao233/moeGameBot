@@ -934,9 +934,8 @@ figure {
 .tooltip-box p {
   white-space: normal;
 }
-.tooltip-box .image_box {
-  width: 150px;
-  margin: 0 auto;
+.tooltip-box img {
+  max-width: 150px;
 }
 
 /* 详情框箭头 */
@@ -1066,6 +1065,5 @@ figure {
 }
 
 .player_status .effects .effect {
-  margin: 5px;
-  margin-top: 0;
+  margin-bottom: 5px;
 }
