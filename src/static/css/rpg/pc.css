@@ -51,4 +51,11 @@ figure {
   margin-top: 0;
 }
 
+.inventory {
+  top: 30px;
+  left: 100px;
+  width: calc(100% - 200px);
+  max-height: calc(100% - 60px);
+}
+
 }

@@ -143,9 +143,20 @@ document.addEventListener('DOMContentLoaded', function() {
   function showBattle(dice) {
     
   }
+  /**
+   * 显示物品栏
+   */
+  function showInventory() {
+    $('.inventory .items').innerHTML = '<div style="color: #a1a1a1; margin: 20px auto">你的背包空空如也...</div>'
+    $('.inventory').classList.add('show');
+  }
   
+  /**
+   * 点击事件
+   */
   document.addEventListener('click', (e) => {
     let t;
+    // 行动
     if (e.target.id.startsWith('action')) {
       let action = e.target.id.slice(6);
       switch (action) {
@@ -155,11 +166,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       return;
     }
-    if (e.target.closest('.tooltip')) {
-      
+    if (e.target.closest('#show_inventory')) {
+      showInventory();
       return;
     }
-    if(t = $('.tooltip.active')) t.classList.remove();
+    if (!e.target.closest('.inventory') && $('.inventory.show')) $('.inventory.show').classList.remove('show');
   });
   
   document.addEventListener('dice', (e) => {
@@ -168,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let action = e.target.id.slice(10);
       switch (action) {
         case '1-1':
-          $('#enemy1-1').innerText = enemys[current_enemys[e.detail.dice]].name;
+          $('#enemy1-1').innerText = enemys[current_enemys[e.detail.dice - 1]].name;
           showStep(1);
           break;
       }

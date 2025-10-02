@@ -1140,7 +1140,7 @@ const race_info = {
       {
         name: '受虐狂',
         desc: '所有的教徒们都有将痛苦转化成快感和魔力的能力。她们不需要使用精液来释放符咒，不过要让自己始终处于痛苦之中。',
-        task: '发动攻击前，你需要置自身于痛苦之中。发动攻击前，你需要用道具抽打自己的屁股、大腿内侧或乳头等敏感部位。<span class="color_bad">[弱击]</span> 10下，<span class="color_useful">[有效]</span> 20下，～<span class="color_key">[会心]</span> 80下。不可以手下留情哦～',
+        task: '发动攻击前，你需要置自身于痛苦之中。发动攻击前，你需要用道具抽打自己的屁股、大腿内侧或乳头等敏感部位。<span class="color_bad">[弱击]</span> 10下，<span class="color_useful">[有效]</span> 20下，<span class="color_key">[会心]</span> 30下。不可以手下留情哦～',
       },
       {
         name: '贞操誓言',
@@ -1374,6 +1374,17 @@ window.addEventListener('scroll', function() {
   if (tooltip) adjustTooltipPosition(tooltip);
 });
 
+/**
+ * 记录滚动距离
+ */
+window.addEventListener('load', () => {
+  const container = $('.container') || window;
+  container.scrollTo(0, getValue('lastScroll'));
+  container.addEventListener('scroll', () => {
+    setValue('lastScroll', container.scrollTop);
+  });
+})
+
 /** 
  * 点击事件
  */
@@ -1490,11 +1501,12 @@ class MapController {
       this.scale = x;
       let centerX = 0;
       let centerY = 0;
-      if ((x = this.container.getAttribute('data-centerX')) && (x = parseInt(x))) centerX = x;
-      if ((x = this.container.getAttribute('data-centerY')) && (x = parseInt(x))) centerY = x;
+      if ((x = this.container.getAttribute('data-centerX')) && (x = parseFloat(x))) centerX = x / 100;
+      if ((x = this.container.getAttribute('data-centerY')) && (x = parseFloat(x))) centerY = x / 100;
 
-      this.posX = -centerX;
-      this.posY = -centerY;
+      const rect = this.container.getBoundingClientRect();
+      this.posX = -centerX * rect.width;
+      this.posY = -centerY * rect.height;
       this.animateTransform();
     }
     

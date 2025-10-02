@@ -19,22 +19,6 @@
 </head>
 <body>
 
-<div class="player_status">
-  <div class="race_image_box image_box">
-    <img class="race_image" src="/static/images/rpg/race_princess.jpg">
-  </div>
-  <div class="info column" style="margin-left: 10px; flex-shrink: 0">
-    <div class="tooltip race_name_box">
-      <span class="race_name"></span>
-      <div class="tooltip-box race_details"></div>
-    </div>
-    <div>HP <span class="hp">0 / 10</span></div>
-    <div>ATK <span class="atk">2</span></div>
-    <div>MP <span class="mp">0 / 0</span></div>
-  </div>
-  <div class="effects"></div>
-</div>
-
 <div class="container" style="padding-bottom: 200px">
   <div class="box box13">
     <h2 class="main-title"><span class="text-gradient gradient1" style="color: ">伪娘</span><span class="text-gradient gradient2">转生</span><span style="color: #709fe5">到</span><br class="mobile-only"><span class="text-gradient gradient5">淫乱</span><span class="text-gradient gradient4">世界</span><span style="color: #ef9b41">跑团</span> <span style="color: #e8ef3f">RPG!</span><span style="font-size: 14px; margin-left: 15px">Ver. 2.2</span></h2>
@@ -108,7 +92,7 @@
   </div>
   <div class="box box13" style="padding: 0; display: flex; justify-content: center;">
     <div class="map-box">
-      <div class="map" data-scale="2" data-centerX="-10" data-centerY="150">
+      <div class="map" data-scale="2" data-centerX="-2" data-centerY="50">
         <div class="map-content">
           <img class="map-image" src="/static/images/rpg/map1.jpg">
           <div class="map-markers"></div>
@@ -141,6 +125,38 @@
 </div>
 </body>
 
+<div class="player_status">
+  <div class="race_image_box image_box">
+    <img class="race_image" src="/static/images/rpg/race_princess.jpg">
+  </div>
+  <div class="info">
+    <div class="tooltip race_name_box">
+      <span class="race_name"></span>
+      <div class="tooltip-box race_details"></div>
+    </div>
+    <div>HP <span class="hp">0 / 10</span></div>
+    <div>ATK <span class="atk">2</span></div>
+    <div>MP <span class="mp">0 / 0</span></div>
+  </div>
+  <div class="effects"></div>
+  <div class="controls">
+    <div class="btn" id="show_inventory">背包</div>
+    <div class="btn" id="show_options">选项</div>
+  </div>
+</div>
+<div class="inventory box10">
+  <div class="title">背包</div>
+  <div class="items">
+    <div class="box box10">
+      <div class="item_icon item_common"><img src="/static/images/rpg/icon_coin1.png"></div>
+      <div class="item_info">
+        <div class="item_name color_coin">金币</div>
+        <div class="item_count">50</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="battle">
   <div class="row right">
     <div></div>
@@ -148,5 +164,7 @@
   <div class="battle-history"></div>
   <div class="player-status"></div>
 </div>
+
+
 
 </html>
