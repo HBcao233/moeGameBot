@@ -1296,8 +1296,94 @@ const race_info = {
   },
 };
 
-// 点击事件
+/**
+ * 调整提示框位置以避免超出视口
+ */
+function adjustTooltipPosition(tooltip) {
+  const tooltipBox = tooltip.querySelector('.tooltip-box');
+  // 重置之前的调整类
+  tooltipBox.classList.remove('adjust-left', 'adjust-right', 'show-below');
+  
+  // 获取元素位置信息
+  const triggerRect = tooltip.getBoundingClientRect();
+  const tooltipRect = tooltipBox.getBoundingClientRect();
+  const viewportWidth = window.innerWidth;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  
+  // 检查是否超出左边界
+  if (tooltipRect.left < 10) {
+    tooltipBox.classList.add('adjust-left');
+  }
+  
+  // 检查是否超出右边界
+  else if (tooltipRect.right > viewportWidth - 10) {
+    tooltipBox.classList.add('adjust-right');
+  }
+  
+  // 检查是否超出顶部（考虑滚动）
+  if (triggerRect.top - scrollTop < tooltipRect.height + 20) {
+    tooltipBox.classList.add('show-below');
+  }
+}
+
+/**
+ * 显示提示框
+ */
+function showTooltip(trigger) {
+  const tooltipBox = trigger.querySelector('.tooltip-box');
+  if (tooltipBox) {
+    // 先显示以获取准确的尺寸
+    trigger.classList.add('show');
+    // 调整位置
+    setTimeout(() => {
+      adjustTooltipPosition(trigger, tooltipBox);
+    }, 10);
+  }
+}
+
+// 隐藏提示框
+function hideTooltip() {
+  const tooltip = $('.tooltip.show');
+  if (tooltip) {
+    tooltip.classList.remove('show');
+  }
+}
+
+/**
+ * 鼠标进入
+ */
+document.addEventListener('mouseenter', (e) => {
+  if (e.target.closest && (tooltip = e.target.closest('.tooltip'))) {
+    showTooltip(tooltip);
+  }
+}, true);
+/**
+ * 鼠标离开
+ */
+document.addEventListener('mouseleave', (e) => {
+  if (e.target.closest('.tooltip')) {
+    hideTooltip();
+  }
+}, true);
+
+/**
+ * 滚动时调整已显示的提示框位置
+ */
+window.addEventListener('scroll', function() {
+  const tooltip = $('.tooltip.show');
+  if (tooltip) adjustTooltipPosition(tooltip);
+});
+
+/** 
+ * 点击事件
+ */
 document.addEventListener('click', (e) => {
+  let tooltip;
+  if (tooltip = e.target.closest('.tooltip')) {
+    showTooltip(tooltip);
+    return;
+  }
+  hideTooltip();
   switch (true) {
     // 掷骰子
     case !!e.target.closest('.dice'):
@@ -1510,7 +1596,7 @@ class MapController {
    * @param {TouchEvent} e - 触摸事件对象
    */
   handleTouchStart(e) {
-    e.preventDefault();
+    try{e.preventDefault();}catch(err){};
     
     if (e.touches.length === 1) {
       // 单指触摸 - 拖动

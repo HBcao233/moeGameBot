@@ -18,16 +18,41 @@ document.addEventListener('DOMContentLoaded', function() {
   const setSave = () => {
     setValue('save', JSON.stringify(save))
   }
+  /** 
+   * 选择了种族
+   */
   if (save.race) {
     $('#norace').style.display = 'none';
+    const r = race_info[save.race_key];
     if (save.player === undefined) {
-      const r = race_info[save.race_key];
       save.player = {
         race: save.race_key,
         hp: r.hp,
         atk: r.atk,
       }
       setSave();
+    }
+    $('.player_status .race_image').src = `/static/images/rpg/race_${save.race_key}.jpg`;
+    $('.player_status .race_name_box').classList.add('color_camp' + save.camp)
+    $('.player_status .race_name').innerText = r.name;
+    $('.player_status .race_details').innerHTML = `<p>${r.desc}</p>`;
+    $('.player_status .hp').innerText = `${save.player.hp} / ${r.hp}`;
+    $('.player_status .atk').innerText = save.player.atk;
+    
+    $('.player_status .effects').innerHTML = '';
+    for (const i of r.passive_skill) {
+      $('.player_status .effects').appendChild(tag('div', {
+        class: 'tooltip effect color_passive',
+        children: [
+          tag('span', {
+            innerText: i.name,
+          }),
+          tag('div', {
+            class: 'tooltip-box',
+            innerHTML: `<p>${i.desc}</p><br><p class="color_task">${i.task}</p>`
+          })
+        ]
+      }));
     }
   }
   if (save.progress === undefined) save.progress = 0;
@@ -49,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   document.addEventListener('click', (e) => {
+    let t;
     if (e.target.id.startsWith('action')) {
       let action = e.target.id.slice(6);
       switch (action) {
@@ -56,7 +82,13 @@ document.addEventListener('DOMContentLoaded', function() {
           showProgress(1);
           break;
       }
+      return;
     }
+    if (e.target.closest('.tooltip')) {
+      
+      return;
+    }
+    if(t = $('.tooltip.active')) t.classList.remove();
   });
   
   document.addEventListener('dice', (e) => {

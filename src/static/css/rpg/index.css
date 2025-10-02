@@ -45,16 +45,21 @@
     'Arial', sans-serif;
 }
 html {
+  height: 100%;
   overflow: hidden;
 }
-.container {
-  width: 100%;
-  height: 100vh;
-  padding: 0 5px;
-  padding-bottom: 100px;
+body {
+  height: 100%;
+  padding-top: 0.01px;
   background: #000000;
   color: #fff;
   font-size: 16px;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 0 5px;
+  padding-bottom: 100px;
   overflow: auto;
   box-sizing: border-box;
 }
@@ -208,6 +213,10 @@ figure {
   background: #1e1e1e;
   padding: 5px;
   margin: 15px 0;
+}
+.box1 {
+  border: 2px solid #c1b91c;
+  background: #1e1e1e;
 }
 .box2 {
   border: 2px solid #fff;
@@ -780,7 +789,7 @@ figure {
 }
 
 
-
+/* 地图 */
 .map-box {
   position: relative;
 }
@@ -910,6 +919,105 @@ figure {
   bottom: 5px;
 }
 
+/* 可悬停/点击的文字样式 */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 2px dotted currentColor;
+  transition: all 0.3s ease;
+}
+
+.tooltip:hover {
+  color: #764ba2;
+  border-bottom-color: #764ba2;
+}
+
+/* 详情框样式 */
+.tooltip-box {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  width: 200px;
+  transform: translateX(-50%);
+  background: #1e1e1e;
+  border: 2px solid #c1b91c;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.tooltip-box p {
+  white-space: normal;
+}
+
+/* 详情框箭头 */
+.tooltip-box::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #1e1e1e;
+  transform: rotate(45deg) translateY(-50%);
+  border-right: 2px solid #c1b91c;
+  border-bottom: 2px solid #c1b91c;
+}
+
+/* 显示状态 */
+.tooltip.show .tooltip-box {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* 当提示框靠近左边缘时，调整位置 */
+.tooltip-box.adjust-left {
+  left: 0;
+  transform: translateX(0);
+}
+
+.tooltip-box.adjust-left::after {
+  left: 20px;
+}
+
+/* 当提示框靠近右边缘时，调整位置 */
+.tooltip-box.adjust-right {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+}
+
+.tooltip-box.adjust-right::after {
+  left: auto;
+  right: 20px;
+}
+
+/* 当提示框靠近顶部时，显示在下方 */
+.tooltip-box.show-below {
+  bottom: auto;
+  top: calc(100% + 10px);
+}
+
+.tooltip-box.show-below::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: #333;
+}
+
+
 
 .progress-container {
   position: relative;
@@ -943,4 +1051,24 @@ figure {
   background: #082e09fa;
   z-index: 100;
   display: none;
+}
+
+.player_status {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+}
+.player_status .race_image_box {
+  width: 100px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.player_status .effects {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 50%;
+  margin-right: 10px; 
 }

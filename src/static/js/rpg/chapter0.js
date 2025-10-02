@@ -112,16 +112,18 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // 下一章
       case !!e.target.closest('.btn.next'):
-        const r = [
-          ['princess', 'wizard', 'elf', 'dwarf', 'beastwoman', 'holstaurus'],
-          ['witch', 'succubus', 'asceticist', 'zombie', 'corrupted', 'robot'],
-        ];
-        const race_key = r[camp-1][race-1];
-        setValue('save', JSON.stringify({
-          camp: camp,
-          race: race,
-          race_key: race_key,
-        }))
+        if (!getValue('save')) {
+          const r = [
+            ['princess', 'wizard', 'elf', 'dwarf', 'beastwoman', 'holstaurus'],
+            ['witch', 'succubus', 'asceticist', 'zombie', 'corrupted', 'robot'],
+          ];
+          const race_key = r[camp-1][race-1];
+          setValue('save', JSON.stringify({
+            camp: camp,
+            race: race,
+            race_key: race_key,
+          }));
+        };
         window.location.href = '../chapter1/';
         break;
     }

@@ -1,6 +1,11 @@
 window['$'] = document.querySelector.bind(document);
 window['$$'] = document.querySelectorAll.bind(document);
 
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+    || (window.innerWidth <= 768);
+}
+    
 const getValue = (k) => {
   return window.localStorage.getItem(k);
 }
