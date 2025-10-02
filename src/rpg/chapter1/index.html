@@ -10,7 +10,8 @@
   <title>第一章: 淫暗森林 - 伪娘转生到淫乱世界跑团RPG!</title>
 
   <link rel="stylesheet" href="/static/css/rpg/index.css">
-  <link rel="stylesheet" href="/static/css/rpg/chapter1.css">
+  <link rel="stylesheet" href="/static/css/rpg/pc.css">
+  
   <script src="/static/js/telegram-web-app.min.js"></script>
   <script src="/static/js/main.js"></script>
   <script src="/static/js/rpg/utils.js"></script>
@@ -18,11 +19,11 @@
 </head>
 <body>
 
-<div class="player_status row box1">
+<div class="player_status">
   <div class="race_image_box image_box">
     <img class="race_image" src="/static/images/rpg/race_princess.jpg">
   </div>
-  <div class="column" style="margin-left: 10px; flex-shrink: 0">
+  <div class="info column" style="margin-left: 10px; flex-shrink: 0">
     <div class="tooltip race_name_box">
       <span class="race_name"></span>
       <div class="tooltip-box race_details"></div>
@@ -40,11 +41,62 @@
     <h2 class="title">第一章：<span class="text-gradient gradient3">淫暗森林</span></h2>
     <div>你的冒险将在一个森林的入口展开。你的新身体感觉很好，但是还需要适应，你已经迫不及待地要开始你的旅途了，在森林中走了短短几分钟之后，又出现了一个女神，当她似乎与你刚刚在地狱遇到的女神有所不同。她介绍着自己是轮盘文神的第二个姐妹，拥有掌管凡人世界的权力。随后，她向你展示了这座森林的地图。</div>
   </div>
+  <div class="box">
+    <div class="title">文字颜色标识</div>
+    <table class="text_colors">
+      <tr>
+        <td>剧情文字</td>
+        <td>基本的故事文字</td>
+      </tr>
+      <tr>
+        <td class="color_task">任务文字</td>
+        <td>你需要在现实里完成的任务</td>
+      </tr>
+      <tr>
+        <td class="color_npc">NPC对话</td>
+        <td>故事中出现的人物的台词</td>
+      </tr>
+      <tr>
+        <td class="color_clothes">服装文字</td>
+        <td>施述了你必须穿着的服装</td>
+      </tr>
+      <tr>
+        <td class="color_passive">种族被动</td>
+        <td>某种族的特定被动任务</td>
+      </tr>
+      <tr>
+        <td class="color_curse">诅咒文字</td>
+        <td>和诅咒系统相关的文字</td>
+      </tr>
+      <tr>
+        <td class="color_enemy">敌方种类</td>
+        <td>描述敌人种类的文字</td>
+      </tr>
+      <tr>
+        <td class="color_dick">阴茎特征</td>
+        <td>需要使用的自慰棒的特征</td>
+      </tr>
+      <tr>
+        <td class="color_key">关键道具</td>
+        <td>特殊事件中需要使用到的道具</td>
+      </tr>
+    </table>
+  </div>
   <div class="box box13" id="norace">
     <div>你貌似还没有转生(^·w·^)? 请先前往第零章选择职业喵</div>
     <div class="row center">
       <a class="btn" href="../">回到第零章</a>
     </div>
+  </div>
+  <div class="box" id="raceok" style="display: none">
+    <div>游戏开始前请先穿好你转生角色的服饰哦</div>
+    <div class="text-center color_clothes" style="font-size: 19px;"></div>
+    <div class="image_box">
+      <img alt="职业服饰">
+    </div>
+    <p></p>
+    <br>
+    <p class="color_task"></p>
   </div>
   <div class="box box14">
     <div class="title text-center color_enemy">地上世界轮盘女神</div>

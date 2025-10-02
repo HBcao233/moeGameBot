@@ -1384,6 +1384,8 @@ document.addEventListener('click', (e) => {
     return;
   }
   hideTooltip();
+});
+document.addEventListener('click', (e) => {
   switch (true) {
     // 掷骰子
     case !!e.target.closest('.dice'):
@@ -1832,12 +1834,12 @@ class MapController {
    * @returns {HTMLElement} 标记元素
    */
   addMarker(options) {
-    const { x, y, label = '', type = 'pin', id = `marker-${Date.now()}`, onClick } = options;
+    const { x, y, label = '', type = 'pin', id = Date.now(), onClick } = options;
   
     // 创建标记元素
     const marker = document.createElement('div');
     marker.className = 'map-marker';
-    marker.id = id;
+    marker.id = 'marker-' + id;
     marker.style.left = `${x}%`;
     marker.style.top = `${y}%`;
     
@@ -1845,6 +1847,9 @@ class MapController {
     switch (type) {
       case 'pin':
         marker.innerHTML = `<div class="marker-pin"></div>${label ? `<div class="marker-label">${label}</div>` : ''}`;
+        break;
+      case 'battle':
+        marker.innerHTML = `<div class="marker-battle"></div>${label ? `<div class="marker-label">${label}</div>` : ''}`;
         break;
       case 'circle':
         marker.innerHTML = `<div style="width: 20px; height: 20px; background: #e74c3c; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.3);"></div>${label ? `<div class="marker-label">${label}</div>` : ''}`;

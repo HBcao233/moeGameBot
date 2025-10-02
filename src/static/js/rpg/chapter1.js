@@ -1,13 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
   const chest_items = ['herb', 'rope', 'slave_key', 'lucky_amulet', 'coin@50', 'godness_dice'];
   const current_enemys = ['thieves_brothers', 'werewolf', 'bee', 'normal_orcish', 'sorceress', 'aphrodisiac_plant'];
+  const map_blocks = {
+    0: {
+      type: 'start',
+      parent: null,
+      children: [0],
+      x: 47.30,
+      y: 88.40,
+    },
+    1: {
+      type: 'battle',
+      parent: 0,
+      children: [2],
+      x: 47.30,
+      y: 82.00,
+    },
+    2: {
+      type: 'random_event',
+      parent: 1,
+      children: [3],
+      x: 47.05,
+      y: 75.00,
+    },
+    3: {
+      type: 'battle',
+      parent: 2,
+      children: [4, 5],
+    },
+    4: {
+      type: 'random_event',
+      parent: 3,
+      children: [6],
+    },
+    5: {
+      type: 'battle',
+      parent: 3,
+      children: [7],
+    },
+  }
 
   // 创建地图控制器实例
   const mapController = new MapController();
   mapController.addMarker({
-    x: 47.30,
-    y: 88.40,
+    x: 46.9,
+    y: 84.9,
+    id: 'block1',
+    type: 'battle',
+  })
+  const player_marker = mapController.addMarker({
+    x: 47.00,
+    y: 75.00,
     id: 'player',
+    type: 'pin',
   })
   
   let x;
@@ -17,6 +62,47 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   const setSave = () => {
     setValue('save', JSON.stringify(save))
+  }
+  
+  function updateStatus() {
+    const r = race_info[save.race_key];
+    $('.player_status').classList.add('show');
+    $('.player_status .race_image').src = `/static/images/rpg/race_${save.race_key}.jpg`;
+    $('.player_status .race_name_box').classList.add('color_camp' + save.camp)
+    $('.player_status .race_name').innerText = r.name;
+    $('.player_status .race_details').innerHTML = `<p>${r.desc}</p>`;
+    $('.player_status .hp').innerText = `${save.player.hp} / ${r.hp}`;
+    $('.player_status .atk').innerText = save.player.atk;
+    
+    $('.player_status .effects').innerHTML = '';
+    // 服饰信息
+    $('.player_status .effects').appendChild(tag('div', {
+      class: 'tooltip effect color_clothes',
+      children: [
+        tag('span', {
+          innerText: '[' + r.clothes.name + ']',
+        }),
+        tag('div', {
+          class: 'tooltip-box',
+          innerHTML: `<div class="image_box" style="width: 150px; margin: 0 auto"><img src="/static/images/rpg/race_${save.race_key}_clothes.jpg"></div><p>${r.clothes.desc}</p><br><p class="color_task">${r.clothes.task}</p>`
+        })
+      ]
+    }));
+    // 被动技能
+    for (const i of r.passive_skill) {
+      $('.player_status .effects').appendChild(tag('div', {
+        class: 'tooltip effect color_passive',
+        children: [
+          tag('span', {
+            innerText: i.name,
+          }),
+          tag('div', {
+            class: 'tooltip-box',
+            innerHTML: `<p>${i.desc}</p><br><p class="color_task">${i.task}</p>`
+          })
+        ]
+      }));
+    }
   }
   /** 
    * 选择了种族
@@ -32,28 +118,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       setSave();
     }
-    $('.player_status .race_image').src = `/static/images/rpg/race_${save.race_key}.jpg`;
-    $('.player_status .race_name_box').classList.add('color_camp' + save.camp)
-    $('.player_status .race_name').innerText = r.name;
-    $('.player_status .race_details').innerHTML = `<p>${r.desc}</p>`;
-    $('.player_status .hp').innerText = `${save.player.hp} / ${r.hp}`;
-    $('.player_status .atk').innerText = save.player.atk;
+    $('#raceok .color_clothes').innerText = `[${r.clothes.name}]`;
+    $('#raceok img').src = `/static/images/rpg/race_${save.race_key}_clothes.jpg`;
+    $('#raceok p').innerText = r.clothes.desc;
+    $('#raceok p.color_task').innerText = r.clothes.task;
+    $('#raceok').style.display = '';
     
-    $('.player_status .effects').innerHTML = '';
-    for (const i of r.passive_skill) {
-      $('.player_status .effects').appendChild(tag('div', {
-        class: 'tooltip effect color_passive',
-        children: [
-          tag('span', {
-            innerText: i.name,
-          }),
-          tag('div', {
-            class: 'tooltip-box',
-            innerHTML: `<p>${i.desc}</p><br><p class="color_task">${i.task}</p>`
-          })
-        ]
-      }));
-    }
+    updateStatus()
   }
   if (save.progress === undefined) save.progress = 0;
   showProgress(save.progress);

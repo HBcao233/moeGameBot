@@ -10,8 +10,11 @@
   <title>第零章: 教程 - 伪娘转生到淫乱世界跑团RPG!</title>
 
   <link rel="stylesheet" href="/static/css/rpg/index.css">
+  <link rel="stylesheet" href="/static/css/rpg/pc.css">
+  
   <script src="/static/js/telegram-web-app.min.js"></script>
   <script src="/static/js/main.js"></script>
+  <script src="/static/js/rpg/utils.js"></script>
   <script src="/static/js/rpg/chapter0.js"></script>
 </head>
 <body>
@@ -58,7 +61,7 @@
         <td>需要使用的自慰棒的特征</td>
       </tr>
       <tr>
-        <td class="color_key">关健道具</td>
+        <td class="color_key">关键道具</td>
         <td>特殊事件中需要使用到的道具</td>
       </tr>
     </table>
@@ -96,7 +99,9 @@
   </details>
   <details class="box">
     <summary id="地图教程">地图教程</summary>
-    <img src="/static/images/rpg/map_tutorial.jpg" />
+    <div class="image_box">
+      <img src="/static/images/rpg/map_tutorial.jpg" alt="地图示例" />
+    </div>
     <p>该图是你的旅程的一副示例地图。让我们来看看每个回合都会发生什么..</p>
     <p>第一回合——你遇到到了一个<span class="color_fight">战斗事件</span>，所以你需要与一名敌人发生战斗。当你打败了敌人，或是披敌人打败之后，你可以前往下一个格子。</p>
     <p>第二回合——你遇到了一个<span class="color_random">随机事件</span>。你需要完成一个你所在地区的随机事件。当你完成了随机事件的行务后，你可以前往下一个格子。
@@ -187,6 +192,7 @@
   </details>
   <details class="box box10">
     <summary id="常见道具">常见道具</summary>
+  <div class="items_container">
     <div class="box box10">
       <div class="row middle">
         <div class="item item_common"><img src="/static/images/rpg/icon_coin1.png"></div>
@@ -400,6 +406,7 @@
       <div>温暖的力量从你身体中散发出来:</div>
       <p class="color_task">你和你的敌人的下次攻击将心必定为 <span class="color_key">[会心]</span>。</p>
     </div>
+  </div>
   </details>
   
   <details class="box box6">

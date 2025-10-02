@@ -1,0 +1,50 @@
+@media only screen and (min-width: 768px) {
+
+img {
+  width: auto;
+  max-width: 500px;
+}
+
+figure {
+  width: auto;
+  justify-content: center;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.items_container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.items_container .box {
+  width: calc(50% - 40px);
+  margin: 10px;
+}
+
+#转生女神 {
+  display: flex;
+}
+#转生女神 figure {
+  margin: 0 10px;
+}
+#转生女神 p {
+  margin-left: 15px;
+  margin-top: 0;
+}
+
+.race_header,
+.race_clothes,
+.race_skill {
+  width: 50%;
+}
+
+.player_status .effects {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+
+}

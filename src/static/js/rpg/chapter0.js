@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('.next').classList.add('disabled');
   }
   
-  if (x = getValue('selection') && parseInt(x)) {
+  if (x = getValue('selection') && parseInt(x) != NaN) {
     selection = Boolean(parseInt(x));
     if (selection) {
       enterSelection()
@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('dice', (e) => {
     let t;
     switch (true) {
+      // 随机阵营
       case !!e.target.closest('#dice_camp'):
         // e.target.setAttribute('disabled', '');
         if (e.detail.dice <= 3) {
@@ -147,12 +148,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         setValue('camp', camp);
         $('#dice_race').classList.remove('disabled');
-        break;
-      case !!e.target.closest('#dice_race'):
-        race = e.detail.dice;
         if (t = $('.race.active')) t.classList.remove('active');
         $(`#camp${camp}-race${race}`).classList.add('active');
+        break;
+      
+      // 随机职业
+      case !!e.target.closest('#dice_race'):
+        race = e.detail.dice;
         setValue('race', race);
+        if (t = $('.race.active')) t.classList.remove('active');
+        $(`#camp${camp}-race${race}`).classList.add('active');
         break;
     }
 

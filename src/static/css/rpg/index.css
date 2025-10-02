@@ -73,22 +73,23 @@ a.link::before {
   width: 1em;
   height: 1em;
   background-color: currentColor;
-  -webkit-mask-image: url('/static/images/rpg/link.svg');
-  mask-image: url('/static/images/rpg/link.svg');
+  -webkit-mask-image: url('/static/svg/link.svg');
+  mask-image: url('/static/svg/link.svg');
   transform: translateY(2px);
 }
 
 .image_box {
   width: 100%;
-  height: auto;
+  height: fit-content;
   display: flex;
   margin: 5px 0 10px 0;
   overflow: auto;
+  border-radius: 3px;
 }
 img {
+  width: 100%;
+  height: auto;
   margin: 0 auto;
-  max-width: 500px;
-  height: fit-content;
 }
 img.icon {
   width: 25px;
@@ -177,36 +178,19 @@ details[open] summary::before {
 .row.column {
   flex-direction: column; 
 }
-.mobile-only {
-  display: none;
-}
-.mobile-column {
-  flex-direction: row;
-}
+
 figure {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  width: 100%;
+  align-items: center;
 }
-@media only screen and (max-width: 768px) {
-  img {
-    width: 100%;
-  }
-  figure {
-    width: 100%;
-    align-items: center;
-  }
-  .mobile-only {
-    display: revert;
-  }
-  .pc-only {
-    display: none !important;
-  }
-  .mobile-column {
-    flex-direction: column;
-  }
+
+.pc-only {
+  display: none;
 }
+
 
 .box {
   border: 2px solid #c1b91c;
@@ -347,7 +331,7 @@ figure {
 }
 .curse_effect4 .image_box {
   width: 25%;
-  height: auto;
+  height: fit-content;
   flex-shrink: 0;
 }
 .curse_effect .title {
@@ -614,18 +598,7 @@ figure {
   margin: 0 auto; 
   padding: 8px 10px 2px 10px;
 }
-@media only screen and (min-width: 768px) {
-  #转生女神 {
-    display: flex;
-  }
-  #转生女神 figure {
-    margin: 0 10px;
-  }
-  #转生女神 p {
-    margin-left: 15px;
-    margin-top: 0;
-  }
-}
+
 
 .camps {
   display: flex;
@@ -713,25 +686,17 @@ figure {
 }
 
 .race_header,
-.race_clothes {
-  width: 50%;
-}
+.race_clothes,
 .race_skill {
-  width: 50%;
+  width: 100%;
 }
+
 .race_skills {
   display: flex;
   flex-wrap: wrap;
 }
-@media only screen and (max-width: 768px) {
-  .race_header,
-  .race_clothes,
-  .race_skill {
-    width: 100%;
-  }
-  .race .image_box {
-    height: auto;
-  }
+.race .image_box {
+  height: auto;
 }
 
 
@@ -845,6 +810,7 @@ figure {
   width: 3.34%;
   height: 3.34%;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 1px solid #c1b91c;
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
@@ -860,6 +826,15 @@ figure {
   background: white;
   border-radius: 50%;
   transform: rotate(45deg);
+}
+
+.marker-battle {
+  width: 4%;
+  height: 4%;
+  background: url('/static/images/rpg/icon_fight.jpg') no-repeat;
+  background-size: cover;
+  /*background-color: #ff5a57;*/
+  border: .7px solid #000;
 }
 
 /* 标记标签 */
@@ -909,7 +884,7 @@ figure {
   position: absolute;
   right: 5px;
   width: 25px;
-  z-index: 10;
+  z-index: 1;
   touch-action: manipulation;
 }
 .map-box .zoomIn {
@@ -930,8 +905,7 @@ figure {
 }
 
 .tooltip:hover {
-  color: #764ba2;
-  border-bottom-color: #764ba2;
+  transform: scale(1.1);
 }
 
 /* 详情框样式 */
@@ -959,6 +933,10 @@ figure {
 
 .tooltip-box p {
   white-space: normal;
+}
+.tooltip-box .image_box {
+  width: 150px;
+  margin: 0 auto;
 }
 
 /* 详情框箭头 */
@@ -1059,16 +1037,35 @@ figure {
   bottom: 0;
   width: 100%;
   z-index: 10;
+  border: 2px solid #c1b91c;
+  background: #1e1e1e;
+  padding: 5px;
+  display: none;
+}
+.player_status.show {
+  display: flex;
+}
+
+.player_status .info {
+  margin-top: 5px;
 }
 .player_status .race_image_box {
   width: 100px;
+  height: 100px;
   border-radius: 5px;
   flex-shrink: 0;
 }
+
 .player_status .effects {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   width: 50%;
+  margin: 5px;
   margin-right: 10px; 
+}
+
+.player_status .effects .effect {
+  margin: 5px;
+  margin-top: 0;
 }
