@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=chapter0/">
   <link rel="icon" href="https://i.postimg.cc/13tqQGwf/2.jpg">
   <meta name="title" itemprop="name" property="og:title" content="伪娘转生到淫乱世界跑团RPG!">
   <meta name="description" itemprop="description" property="og:description" content="某一天早上你从床上起来，准备去做日常工作。当你正从家里出来时，一辆大卡车突然出现在路上。瞬间，你的视野陷入一片黑暗……等你清醒过来时，你发现自己并不在医院里，而是在一个像是天堂般的地方，一位穿着花哨的女神正一边笑着一边俯视着你。被那东之国称为“异世界转生”的事件似乎发生在了你的身上。你决定抛弃你的过去，在这个新的幻想世界开始自己新的生活！">
@@ -11,8 +10,106 @@
   <title>伪娘转生到淫乱世界跑团RPG!</title>
 
   <link rel="stylesheet" href="/static/css/rpg/index.css">
+  <link rel="stylesheet" href="/static/css/rpg/pc.css">
+  
   <script src="/static/js/telegram-web-app.min.js"></script>
   <script src="/static/js/main.js"></script>
+  <script src="/static/js/rpg/utils.js"></script>
+  <script src="/static/js/rpg/index.js"></script>
 </head>
-<body></body>
+<body>
+<div class="container" style="padding-bottom: 100px">
+  <div class="progress-container">
+    <section class="show" id="section-title_screen">
+      <div class="box">
+        <h2 class="main-title"><span class="text-gradient gradient1" style="color: ">伪娘</span><span class="text-gradient gradient2">转生</span><span style="color: #709fe5">到</span><br class="mobile-only"><span class="text-gradient gradient3">淫乱</span><span class="text-gradient gradient4">世界</span><span style="color: #ef9b41">跑团</span> <span style="color: #e8ef3f">RPG!</span><span style="font-size: 14px; margin-left: 15px">Ver. 2.2</span></h2>
+      </div>
+      <div class="controls">
+        <button class="btn start" type="button">开始</button>
+        <button class="btn saves" type="button">存档</button>
+        <button class="btn options" type="button">设置</button>
+      </div>
+    </section>
+  </div>
+  <div class="map_container box box13">
+    <div class="map-box">
+      <div class="map" data-scale="2" data-centerX="-2" data-centerY="50">
+        <div class="map-content">
+          <img class="map-image" src="/static/images/rpg/map1.jpg">
+          <div class="map-markers"></div>
+        </div>
+        <span class="zoom-info">100%</span>
+      </div>
+      <img class="zoomIn" src="/static/svg/zoomIn.svg">
+      <img class="zoomOut" src="/static/svg/zoomOut.svg">
+    </div>
+  </div>
+</div>
+
+
+<div class="player_status">
+  <div class="race_image_box image_box">
+    <img class="race_image" src="/static/images/rpg/race_princess.jpg">
+  </div>
+  <div class="info">
+    <div class="tooltip race_name_box">
+      <span class="race_name"></span>
+      <div class="tooltip-box race_details"></div>
+    </div>
+    <div>HP <span class="hp">0 / 10</span></div>
+    <div>ATK <span class="atk">2</span></div>
+    <div>MP <span class="mp">0 / 0</span></div>
+  </div>
+  <div class="effects"></div>
+  <div class="controls">
+    <div class="btn" data-action="show_inventory">背包</div>
+    <div class="btn" data-action="show_options">选项</div>
+  </div>
+</div>
+
+<dialog id="inventory">
+  <div class="content box10">
+    <div class="title">背包</div>
+    <div class="items">
+      <div class="item box box10">
+        <div class="item_icon item_common"><img src="/static/images/rpg/icon_coin1.png"></div>
+        <div class="item_info">
+          <div class="item_name color_coin">金币</div>
+          <div class="item_count">50</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="options">
+  <div class="content box9">
+    <section class="part show">
+      <div class="title">选项</div>
+      <div class="row column middle">
+        <div class="btn switch_part" data-part="recall">回忆</div>
+        <div class="btn switch_part" data-part="saves">存档</div>
+        <div class="btn" data-action="title_screen">回到标题界面</div>
+      </div>
+    </section>
+    <section class="part" id="recall">
+      <div class="btn back switch_part" data-part="recall">返回</div>
+      <div class="title">回忆</div>
+    </section>
+    <section class="part" id="saves">
+      <div class="btn back switch_part" data-part="saves">返回</div>
+      <div class="title">存档</div>
+    </section>
+  </div>
+</dialog>
+
+<dialog class="battle box3">
+  <div class="row right">
+    <div></div>
+  </div>
+  <div class="battle-history"></div>
+  <div class="player-status"></div>
+</dialog>
+
+</body>
 </html>

@@ -144,26 +144,56 @@
     <div class="btn" id="show_options">选项</div>
   </div>
 </div>
-<div class="inventory box10">
-  <div class="title">背包</div>
-  <div class="items">
-    <div class="box box10">
-      <div class="item_icon item_common"><img src="/static/images/rpg/icon_coin1.png"></div>
-      <div class="item_info">
-        <div class="item_name color_coin">金币</div>
-        <div class="item_count">50</div>
+
+<dialog id="inventory">
+  <div class="content box10">
+    <div class="title">背包</div>
+    <div class="items">
+      <div class="item box box10">
+        <div class="item_icon item_common"><img src="/static/images/rpg/icon_coin1.png"></div>
+        <div class="item_info">
+          <div class="item_name color_coin">金币</div>
+          <div class="item_count">50</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</dialog>
 
-<div class="battle">
+<dialog id="options">
+  <div class="content box9">
+    <section class="part show">
+      <div class="title">选项</div>
+      <div class="row column middle">
+        <div class="btn switch_part" data-part="recall">回忆</div>
+        <div class="btn switch_part" data-part="saves">存档</div>
+        <div class="btn restart tooltip">
+          重置
+          <div class="tooltip-box">
+            <span>确定删除自动保存存档吗？如果未保存你将会失去全部进度。</span>
+            <div class="btn delete_save">删除存档</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="part" id="recall">
+      <div class="btn back switch_part" data-part="recall">返回</div>
+      <div class="title">回忆</div>
+    </section>
+    <section class="part" id="saves">
+      <div class="btn back switch_part" data-part="saves">返回</div>
+      <div class="title">存档</div>
+    </section>
+  </div>
+</dialog>
+
+<dialog class="battle box3">
   <div class="row right">
     <div></div>
   </div>
   <div class="battle-history"></div>
   <div class="player-status"></div>
-</div>
+</dialog>
 
 
 

@@ -845,12 +845,12 @@ const race_info = {
     passive_skill: [
       {
         name: '魔力收集者',
-        desc: '魔力是通过攝入精液产生的，你需要消耗魔力来释放符咒。你随身都携带着由保险套做成的玛娜瓶，里面装有可随时使用的精液。',
+        desc: '魔力是通过攝入精液产生的，你需要消耗魔力来释放符咒。你随身都携带着由保险套做成的魔力瓶，里面装有可随时使用的精液。',
         task: '在开始游戏时获得15个<span class="color_common">[魔力瓶]</span>。每当你发动攻击时，都需要摄入一个魔力瓶内的精液。每当你或者敌人在事件中射精时，你可以重新装填1个<span class="color_common">[魔力瓶]</span>。你每有10个<span class="color_common">[魔力瓶]</span>，获得3点最大生命值。',
       },
       {
         name: '魔力填装',
-        desc: '法师可以随时间自我生成玛娜。但是由于肉棒增大术需要消耗非常多的魔力，法师们总是不满足于自己的魔力存货。',
+        desc: '法师可以随时间自我生成魔力。但是由于肉棒增大术需要消耗非常多的魔力，法师们总是不满足于自己的魔力存货。',
         task: '当你移动到下ー个格子时，获得2个<span class="color_common">[魔力瓶]</span>。',
       },
     ],
@@ -1091,7 +1091,7 @@ const race_info = {
     desc: '你转生成为了一个魅魔。魅魔的唯一食物就是纯净的魔力，也就是精液。这使得她们必须要尽可能多得狩猎男性敌人以获得充足的食物来源。可惜的是，你似乎只是一只莉莉姆，一种在魅魔的等级划分中处于最底层的魔物。让自己充分地做好准备吧!',
     clothes: {
       name: '迷你比基尼',
-      desc: '大多数魅廣都是不穿衣服的。但是她们也学会了使用内衣让自己看上去更加性感。',
+      desc: '大多数魅魔都是不穿衣服的。但是她们也学会了使用内衣让自己看上去更加性感。',
       task: '你需要穿着一件迷你或者微型比基尼。在你的小腹上用记号笔画上一个心型淫纹。每当你射精或寸止后，升级淫纹的大小和复杂度。',
     },
     passive_skill: [
@@ -1296,6 +1296,7 @@ const race_info = {
   },
 };
 
+
 /**
  * 调整提示框位置以避免超出视口
  */
@@ -1332,12 +1333,9 @@ function adjustTooltipPosition(tooltip) {
 function showTooltip(trigger) {
   const tooltipBox = trigger.querySelector('.tooltip-box');
   if (tooltipBox) {
-    // 先显示以获取准确的尺寸
-    trigger.classList.add('show');
     // 调整位置
-    setTimeout(() => {
-      adjustTooltipPosition(trigger, tooltipBox);
-    }, 10);
+    adjustTooltipPosition(trigger, tooltipBox);
+    trigger.classList.add('show');
   }
 }
 
@@ -1369,21 +1367,10 @@ document.addEventListener('mouseleave', (e) => {
 /**
  * 滚动时调整已显示的提示框位置
  */
-window.addEventListener('scroll', function() {
+document.addEventListener('scroll', function() {
   const tooltip = $('.tooltip.show');
   if (tooltip) adjustTooltipPosition(tooltip);
-});
-
-/**
- * 记录滚动距离
- */
-window.addEventListener('load', () => {
-  const container = $('.container') || window;
-  container.scrollTo(0, getValue('lastScroll'));
-  container.addEventListener('scroll', () => {
-    setValue('lastScroll', container.scrollTop);
-  });
-})
+}, true);
 
 /** 
  * 点击事件

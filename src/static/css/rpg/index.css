@@ -15,14 +15,6 @@
   src: url('/static/fonts/しねきゃぷしょん.ttf') format('truetype');
 }
 
-@keyframes flyIn {
-  0% {
-    transform: translateX(-200px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -44,22 +36,21 @@
     'Microsoft YaHei', 
     'Arial', sans-serif;
 }
-html {
-  height: 100%;
+html, body {
+  width: 100%;
+  height: 100vh;
   overflow: hidden;
+  box-sizing: border-box;
+  line-height: 1.6;
 }
 body {
-  height: 100%;
-  padding-top: 0.01px;
   background: #000000;
-  color: #fff;
   font-size: 16px;
+  color: #fff;
 }
 .container {
   width: 100%;
   height: 100%;
-  padding: 0 5px;
-  padding-bottom: 100px;
   overflow: auto;
   box-sizing: border-box;
 }
@@ -129,16 +120,19 @@ img.icon {
 }
 
 .btn {
-  width: auto;
+  width: fit-content;
   padding: 3px 10px;
   border: 2px solid #afae00;
   background: #1e1e1e;
   color: #e7f063; 
+  border-radius: 3px;
 }
 .btn.disabled {
   opacity: .5;
 }
-
+.btn:active {
+  opacity: .6;
+}
 
 p {
   text-indent: 2em;
@@ -168,6 +162,7 @@ details[open] summary::before {
 
 .row {
   display: flex;
+  align-items: flex-end;
 }
 .row.center {
   justify-content: center;
@@ -499,8 +494,12 @@ figure {
 .color_camp2 {
   color: #7530a4;
 }
+
 .action {
   color: #6086cd;
+}
+.action:active {
+  opacity: .6;
 }
 
 .dice {
@@ -629,7 +628,7 @@ figure {
   overflow: hidden;
   flex-wrap: wrap;
 }
-.race.active {
+.race.show {
   display: flex;
 }
 .race .image_box {
@@ -646,6 +645,9 @@ figure {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.player_status .race_name {
+  width: 70px; 
 }
 .race_details {
   padding: 10px;
@@ -700,61 +702,63 @@ figure {
 }
 
 
+.progress-container {
+  position: relative;
+}
+section {
+  position: absolute;
+  width: 100%;
+  padding: 5px;
+  transition: opacity .3s ease-in-out;
+  visibility: hidden;
+  opacity: 0;
+  box-sizing: border-box;
+}
+section.show {
+  visibility: visible;
+  opacity: 1;
+}
 
-
-
-
-
-
-#section-mainmenu .box {
+#section-title_screen .box {
   margin-bottom: 200px;
 }
 
-.mainmenu_btn {
+#section-title_screen .btn {
   display: block;
   background: transparent;
   font-size: 25px;
   color: #fff;
   border: none;
   outline: none;
-  margin: 10px 20px;
+  margin: 5px 20px;
+  padding: 0 10px;
   user-select: none;
   cursor: pointer;
-  transform: translateX(-200px);
-  animation: flyIn 1s ease-out forwards;
 }
-.mainmenu_btn.load {
-  animation-delay: .2s;
+#section-title_screen .btn.start {
+  color: #f26ed4;
 }
-.mainmenu_btn.options {
-  animation-delay: .4s;
+#section-title_screen .btn.continue {
+  color: #8d54c9;
 }
-
-.mainmenu_btn:active {
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+#section-title_screen .btn.saves {
+  color: #38b827;
 }
-.mainmenu_btn.start:active {
-  background-image: linear-gradient(to right, #f26ed4, #f66dd7);
-}
-.mainmenu_btn.load:active {
-  background-image: linear-gradient(to right, #ea99a2, #eb999b);
-}
-.mainmenu_btn.options:active {
-  background-image: linear-gradient(to right, #2ebb21, #38b827);
-}
-
-
-.comic {
-  border: 2px solid #4a4a4a;
-}
-.fadeIn {
-  animation: fadeIn 1s ease-out forwards;
+#section-title_screen .btn.options {
+  color: #ea99a2;
 }
 
 
 /* 地图 */
+.map_container {
+  display: none;
+  justify-content: center;
+  padding: 0;
+}
+.map_container.show {
+  display: flex;
+}
+
 .map-box {
   position: relative;
 }
@@ -920,7 +924,6 @@ figure {
   color: white;
   padding: 12px 16px;
   border-radius: 8px;
-  white-space: nowrap;
   font-size: 14px;
   font-weight: normal;
   opacity: 0;
@@ -990,27 +993,16 @@ figure {
 .tooltip-box.show-below::after {
   top: auto;
   bottom: 100%;
-  border-top-color: transparent;
-  border-bottom-color: #333;
+  width: 6px;
+  height: 6px;
+  background: #1e1e1e;
+  transform: rotate(45deg) translateY(50%);
+  border: none;
+  border-top: 2px solid #c1b91c;
+  border-left: 2px solid #c1b91c;
 }
 
 
-
-.progress-container {
-  position: relative;
-}
-.progress {
-  position: absolute;
-  padding: 5px;
-  margin: 15px 0;
-  transition: all .3s ease-in-out;
-  opacity: 0;
-  visibility: hidden;
-}
-.progress.active {
-  opacity: 1;
-  visibility: visible;
-}
 .step {
   display: none;
 }
@@ -1084,35 +1076,53 @@ figure {
   pointer-events: auto;
   padding: 3px 7px;
 }
-.player_status .controls .btn:active {
-  opacity: .6;
+
+dialog {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: unset;
+  max-height: unset;
+  transition: opacity .3s;
+  visibility: hidden;
+  opacity: 0;
+  background: transparent;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+dialog[open] {
+  visibility: visible;
+  opacity: 1;
 }
 
-.inventory {
-  display: none;
-  position: fixed;
-  top: 100px;
-  left: 10px;
+dialog::backdrop {
+  background: rgb(0, 0, 0, .3);
+}
+
+dialog > .content {
+  position: relative;
   width: calc(100% - 20px);
   min-height: 50%;
   max-height: calc(100% - 200px);
-  z-index: 10;
   border-radius: 3px;
-}
-.inventory.show {
-  display: block;
+  overflow-x: hidden;
 }
 
-.inventory .title {
+dialog > .content .title {
   text-align: center;
   font-size: 19px;
 }
 
-.inventory .items {
+#inventory .items {
   display: flex;
   flex-wrap: wrap;
 }
-.inventory .items .box {
+#inventory .items .item {
   display: flex;
   align-items: center;
   width: calc(50% - 30px);
@@ -1121,6 +1131,46 @@ figure {
   border-radius: 3px;
 }
 
-.inventory .items .item_info {
+#inventory .items .item_info {
   margin-left: 10px;
+}
+
+#options .btn {
+  padding: 5px 20px;
+  margin: 5px 0;
+}
+#options .restart {
+  background: red;
+  color: #fff;
+}
+.delete_save {
+  margin: 0 auto;
+  background: red;
+  color: #fff;
+}
+
+section.part {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all .5s ease-out;
+  transform: translateX(100%);
+  visibility: hidden;
+}
+section.part:first-child {
+  transform: translateX(-100%);
+}
+section.part.show {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.back,
+#options .back {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  padding: 2px 5px;
 }

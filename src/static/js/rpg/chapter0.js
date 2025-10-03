@@ -50,7 +50,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // 点击事件
+  
+  /**
+   * 记录滚动距离
+   */
+  window.addEventListener('load', () => {
+    const container = $('.container') || window;
+    container.scrollTo(0, getValue('lastScroll'));
+    container.addEventListener('scroll', () => {
+      setValue('lastScroll', container.scrollTop);
+    });
+  })
+
+  /**
+   * 点击事件
+   */
   document.addEventListener('click', (e) => {
     let t;
     switch (true) {
@@ -130,7 +144,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   });
   
-  // 骰子事件
+  /**
+   * 骰子事件
+   */
   document.addEventListener('dice', (e) => {
     let t;
     switch (true) {

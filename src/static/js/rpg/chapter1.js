@@ -141,14 +141,13 @@ document.addEventListener('DOMContentLoaded', function() {
     $(`#step${save.progress}-${step}`).classList.add('active');
   }
   function showBattle(dice) {
-    
   }
   /**
    * 显示物品栏
    */
   function showInventory() {
-    $('.inventory .items').innerHTML = '<div style="color: #a1a1a1; margin: 20px auto">你的背包空空如也...</div>'
-    $('.inventory').classList.add('show');
+    $('#inventory .items').innerHTML = '<div style="color: #a1a1a1; margin: 20px auto">你的背包空空如也...</div>'
+    $('#inventory').showModal();
   }
   
   /**
@@ -170,7 +169,15 @@ document.addEventListener('DOMContentLoaded', function() {
       showInventory();
       return;
     }
-    if (!e.target.closest('.inventory') && $('.inventory.show')) $('.inventory.show').classList.remove('show');
+    if (e.target.closest('#show_options')) {
+      $('#options').showModal();
+      return;
+    }
+    if (e.target.closest('.switch_part')) {
+      const id = e.target.getAttribute('data-part');
+      $('.part:first-child').classList.toggle('show');
+      $('#' + id).classList.toggle('show');
+    }
   });
   
   document.addEventListener('dice', (e) => {

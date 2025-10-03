@@ -1,5 +1,6 @@
 import http.server
 import socketserver
+import logging
 
 
 DIRECTORY = 'src'
@@ -18,4 +19,9 @@ class NoCacheHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 PORT = 8000
 with socketserver.TCPServer(("", PORT), NoCacheHTTPRequestHandler) as httpd:
   print(f"Serving at port {PORT}")
-  httpd.serve_forever()
+  try:
+    httpd.serve_forever()
+  except KeyboardInterrupt:
+    print('\rKeyboardInterrupt')
+  except Exception:
+    logging.exception('错误:')
