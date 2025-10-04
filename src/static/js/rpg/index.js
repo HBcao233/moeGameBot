@@ -164,6 +164,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   let x;
   let save = {};
+  if (getValue('map_show_reverse') == '1') {
+    $('#map_show_reverse').checked = true;
+    $('.container').classList.add('map_show_reverse');
+  }
+  if (getValue('status_show_reverse') == '1') {
+    $('#status_show_reverse').checked = true;
+    $('.wrapper').classList.add('status_show_reverse');
+  }
   if (x = getValue('save')) {
     save = JSON.parse(x);
   }
@@ -174,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
     save.update_time = parseInt(Date.now() / 1000);
     setValue('save', JSON.stringify(save));
   }
+  
   let map;
   function showMap() {
     $('.map_container').classList.add('show');
@@ -526,14 +535,6 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#options').showModal();
   }
   function showSettings() {
-    if (getValue('map_show_reverse') == '1') {
-      $('#map_show_reverse').checked = true;
-      $('.container').classList.add('map_show_reverse');
-    }
-    if (getValue('status_show_reverse') == '1') {
-      $('#status_show_reverse').checked = true;
-      $('.wrapper').classList.add('status_show_reverse');
-    }
     $('#settings').showModal();
   }
   /**
@@ -745,7 +746,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const file = this.files[0];
       const maxSizeBytes = 10 * 1024 * 1024; 
       input.remove();
-      console.log(file)
       if (!(['text/plain', 'application/json'].includes(file.type))) {
         return alert('必须是 json 或 txt 文件');
       }
@@ -803,7 +803,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // 点击 section
       case !!(t = e.target.closest('section')):
         let section = parseInt(t.getAttribute('data-section'));
-        if (!t.querySelector('.action, .controls, .dice')) {
+        if (!t.querySelector('.action, .controls, .dice') && !t.closest('dialog')) {
           switchSection(section + 1);
         }
         return;
