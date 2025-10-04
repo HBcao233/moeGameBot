@@ -343,6 +343,14 @@ document.addEventListener('DOMContentLoaded', function() {
       case 'delete_save':
         deleteSave(arg);
         break;
+      // 导出存档 
+      case 'export_save':
+        exportSave(arg);
+        break;
+      // 载入存档
+      case 'upload_save':
+        uploadSave(arg);
+        break;
     }
   }
   
@@ -402,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="race_info_title color_passive">[${r.passive_skill[0].name}]</div>
         <p>${r.passive_skill[0].desc}</p>
         <br>
-        <p class="color_task">${r.passive_skill[1].task}</p>
+        <p class="color_task">${r.passive_skill[0].task}</p>
       </div>
     </div>
     <div class="race_skill">
@@ -532,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function() {
    * 显示存档
    */
   function showSaves() {
-    if (save.update_time) $('#save-0 .save_time').innerText = formatDateTime(save.update_time);
+    if (save.update_time) $('#save-0 .save_time').innerText = formatDateTime(save.update_time).split(':').slice(0,2).join(':');
     let desc = '空';
     if (save.section) {
       let race_name = '';
@@ -563,14 +571,14 @@ document.addEventListener('DOMContentLoaded', function() {
       for (let i = 0; i < 10; i++) {
         let desc = saves[i].desc || '空';
         let create_time = saves[i].create_time;
-        if (create_time) create_time = formatDateTime(create_time);
+        if (create_time) create_time = formatDateTime(create_time).split(':').slice(0,2).join(':');
         else create_time = '';
         $('#saves .items').appendChild(tag('div', {
           class: 'box',
           id: `save-${i+1}`,
           innerHTML: `<div class="save_info">
   <div class="save_name">存档 ${i+1}</div>
-  <div class="save_controls">
+  <div class="save_controls row">
     <button class="btn delete_save danger" data-action="delete_save-${i+1}">删除</button>
     <button class="btn save_save" data-action="save_save-${i+1}">保存</button>
     <button class="btn load_save" data-action="load_save-${i+1}">加载</button>
@@ -579,6 +587,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="save_desc">${desc}</div>
 <div class="save_details">
   <div class="save_time">${create_time}</div>
+  <div class="save_controls row">
+    <button class="btn export_save" data-action="export_save-${i+1}">导出</button>
+    <button class="btn upload_save" data-action="upload_save-${i+1}">载入</button>
+  </div>
 </div>`,
         }))
       }
@@ -628,18 +640,21 @@ document.addEventListener('DOMContentLoaded', function() {
     let t = tag('div', {
       innerHTML: sections[save.section].html.trim(),
     });
-    let desc = t.innerText.trim().replaceAll(/(\n| )+/g, ' ');
+    let desc = race_name + t.innerText.trim().replaceAll(/(\n| )+/g, ' ');
+    if (desc.length > 60) {
+      desc = desc.slice(0, 60) + '...';
+    }
     t.remove();
     let s = {
       create_time: parseInt(Date.now() / 1000),
-      desc: race_name + desc,
+      desc: desc,
       save: gz64_encode(JSON.stringify(save)),
     }
     let saves = JSON.parse(getValue('saves'));
     saves[id - 1] = s;
     setValue('saves', JSON.stringify(saves));
     $(`#save-${id} .save_desc`).innerText = s.desc;
-    $(`#save-${id} .save_time`).innerText = formatDateTime(s.create_time);
+    $(`#save-${id} .save_time`).innerText = formatDateTime(s.create_time).split(':').slice(0,2).join(':');
   }
   /**
    * 删除存档
@@ -668,6 +683,108 @@ document.addEventListener('DOMContentLoaded', function() {
     $(`#save-${id} .save_desc`).innerText = '空';
     $(`#save-${id} .save_time`).innerText = '';
   }
+  /**
+   * 导出存档
+   */
+  function exportSave(id) {
+    id = parseInt(id)
+    if (id == NaN || id > 10) return alert('存档不存在');
+    let jsonString, create_time;
+    if (id == 0) {
+      if (!save.section) return alert('存档为空');
+      let race_name = '';
+      if (save.race_key) {
+        race_name = race_info[save.race_key].name + ': ';
+      }
+      let s = tag('div', {
+        innerHTML: sections[save.section].html,
+      });
+      desc = race_name + s.innerText.trim().replaceAll(/(\n| )+/g, ' ');
+      if (desc.length > 60) desc = desc.slice(0, 60) + '...';
+      s.remove();
+      create_time = save.update_time;
+      jsonString = JSON.stringify({
+        create_time: create_time,
+        desc: desc,
+        save: gz64_encode(JSON.stringify(save)),
+      });
+    } else {
+      const saves = JSON.parse(getValue('saves'));
+      if (!saves[id - 1].save) return alert('存档为空');
+      create_time = saves[id - 1].create_time;
+      jsonString = JSON.stringify(saves[id - 1])
+    }
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    create_time = formatDateTime(create_time * 1000).replaceAll(':', '-').replace(' ', '_');
+    const name = `save_${create_time}.json`
+    let a = tag('a', {
+      attrs: {
+        download: name,
+        href: url,
+      }
+    });
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+  /**
+   * 载入存档
+   */
+  function uploadSave(id) {
+    id = parseInt(id)
+    if (id == NaN || id <= 0 || id > 10) return alert('存档不存在');
+    let saves = JSON.parse(getValue('saves'));
+    const input = tag('input', {
+      attrs: {
+        type: 'file',
+        accept: 'text/plain, application/json', 
+      },
+    });
+    input.onchange = function() {
+      const file = this.files[0];
+      const maxSizeBytes = 10 * 1024 * 1024; 
+      input.remove();
+      console.log(file)
+      if (!(['text/plain', 'application/json'].includes(file.type))) {
+        return alert('必须是 json 或 txt 文件');
+      }
+      if (file.size > maxSizeBytes) {
+        return alert('文件不能大于 10MB');
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const fileContent = e.target.result;
+          let s = JSON.parse(fileContent);
+          s = {
+            create_time: s.create_time,
+            desc: s.desc,
+            save: s.save,
+          }
+          console.log(s);
+          const save = JSON.parse(gz64_decode(s.save));
+          if (!save.section) {
+            return alert('存档为空');
+          }
+          if (saves[id - 1].save && !confirm(`覆盖存档 ${id} 吗？`)) return;
+          saves[id - 1] = s;
+          setValue('saves', JSON.stringify(saves));
+          $(`#save-${id} .save_desc`).innerText = s.desc;
+          $(`#save-${id} .save_time`).innerText = formatDateTime(s.create_time).split(':').slice(0,2).join(':');
+        } catch (e) {
+          console.error('载入存档失败:', e);
+          return alert('载入存档失败')
+        }
+      };
+      reader.readAsText(file);
+    }
+    input.oncancel = function() {
+      input.remove();
+    }
+    input.click();
+  }
+
 
   document.addEventListener('click', (e) => {
     let t, action, arg;

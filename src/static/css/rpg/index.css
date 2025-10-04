@@ -1222,9 +1222,14 @@ section.part.show {
 .save_name {
   font-weight: bold;
 }
-.save_info {
+.save_info,
+.save_details {
   display: flex;
   justify-content: space-between;
+}
+.save_details .btn {
+  margin: 0 2px;
+  flex-shrink: 0;
 }
 .save_desc {
   display: -webkit-box; 
@@ -1232,6 +1237,6 @@ section.part.show {
   -webkit-line-clamp: 3; 
   overflow: hidden; 
 }
-.save_details .save_time {
-  text-align: center;
+.save_time {
+  flex-shrink: 0;
 }

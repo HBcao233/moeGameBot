@@ -684,7 +684,7 @@ class MoeApp {
         MoeApp.user = JSON.parse(window.localStorage.getItem('user'));
         resolve()
       } else if (!MoeApp.initData) {
-        console.warn('初始化失败: 非telegram访问')
+        // console.warn('初始化失败: 非telegram访问')
         resolve();
       } else {
         MoeApp.apiPost('user/login', {}).then((res) => {
