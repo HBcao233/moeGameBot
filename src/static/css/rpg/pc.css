@@ -41,9 +41,36 @@ figure {
   width: 50%;
 }
 
+.map-box {
+  max-width: 500px;
+}
+
+.wrapper {
+  flex-direction: row-reverse;
+}
+.player_status {
+  width: 20%;
+  height: 100%;
+  border-top: none;
+  border-right: 2px solid #c1b91c;
+  flex-direction: column;
+  align-content: center;
+}
+.player_status .race_name {
+  width: auto; 
+}
 .player_status .effects {
-  flex-direction: row;
+  align-content: center;
   align-items: flex-start;
+}
+.player_status .controls {
+  top: 15px;
+  right: 0;
+  flex-direction: column-reverse;
+  height: fit-content;
+}
+.player_status .controls .btn {
+  margin: 3px 0;
 }
 
 .player_status .effects .effect {

@@ -228,32 +228,42 @@ document.addEventListener('DOMContentLoaded', function() {
   function showStatus() {
     updateStatus();
     $('.player_status').classList.add('show');
-    $('.container').style.paddingBottom = ($('.player_status').getBoundingClientRect().height + 50) + 'px';
   }
   /**
    * 切换内容
    */
   function switchSection(id) {
+    let t;
+    if (t = $('dialog[open]')) t.close();
     window.scrollTo(0, 0);
     let x, y;
     if (x = $('section.show')) x.classList.remove('show');
+    if (x.id == 'section-title_screen') x = null;
     if (id == 'title_screen') {
       y = $('#section-title_screen');
       $('.map_container').classList.remove('show');
       $('.player_status').classList.remove('show');
     } else {
-      save.section = id;
+      let html = '<div class="box">后面还没做了捏亲＾3＾</div>';
+      let load = null;
+      if (sections[id]) {
+        save.section = id;
+        setSave();
+        html = sections[id].html;
+        load = sections[id].load;
+      }
       try {
         $('.progress-container').appendChild(y = tag('section', {
           attrs: {
             'data-section': id,
           },
-          innerHTML: sections[id].html,
+          innerHTML: html,
         }));
       
-        sections[id].load && sections[id].load.apply(y);
+        load && load.apply(y);
       } catch (e) {
-        console.error('加载section错误:', e);
+        console.error(`加载section-${id}错误:`, e);
+        return;
       }
       if (save.section > 7) {
         showMap();
@@ -267,7 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       $('.progress-container').style.height = ($('section:last-child').getBoundingClientRect().height) + 'px';
     }, 10);
-    setSave();
   }
   /**
    * 执行玩家操作
