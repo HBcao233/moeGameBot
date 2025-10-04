@@ -27,8 +27,8 @@
       </div>
       <div class="controls">
         <button class="btn start" type="button">开始</button>
-        <button class="btn saves" type="button">存档</button>
-        <button class="btn options" type="button">设置</button>
+        <button class="btn saves" type="button" data-action="saves">存档</button>
+        <button class="btn settings" type="button" data-action="settings">设置</button>
       </div>
     </section>
   </div>
@@ -92,6 +92,7 @@
         <div class="btn switch_part" data-part="recall">回忆</div>
         <div class="btn switch_part" data-part="saves">存档</div>
         <div class="btn" data-action="title_screen">回到标题界面</div>
+        <div class="btn" data-action="settings">设置</div>
       </div>
     </section>
     <section class="part" id="recall">
@@ -102,6 +103,20 @@
       <div class="btn back switch_part" data-part="saves">返回</div>
       <div class="title">存档</div>
     </section>
+  </div>
+</dialog>
+
+<dialog id="settings">
+  <div class="content box9" style="padding: 10px 20px">
+    <div class="title">设置</div>
+    <label>
+      <span>地图显示在上方</span>
+      <input type="checkbox" id="map_show_reverse" />
+    </label>
+    <label>
+      <span>玩家状态显示在上方/右侧(PC)</span>
+      <input type="checkbox" id="status_show_reverse" />
+    </label>
   </div>
 </dialog>
 

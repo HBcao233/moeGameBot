@@ -167,6 +167,14 @@ document.addEventListener('DOMContentLoaded', function() {
   if (x = getValue('save')) {
     save = JSON.parse(x);
   }
+  if (getValue('map_show_reverse') == '1') {
+    $('#map_show_reverse').checked = true;
+    $('.container').classList.add('map_show_reverse');
+  }
+  if (getValue('status_show_reverse') == '1') {
+    $('#status_show_reverse').checked = true;
+    $('.wrapper').classList.add('status_show_reverse');
+  }
   if (save.section) {
     $('#section-title_screen .btn.start').innerText = '继续';
   }
@@ -254,6 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       try {
         $('.progress-container').appendChild(y = tag('section', {
+          id: 'section-' + id,
           attrs: {
             'data-section': id,
           },
@@ -275,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (x) y.ontransitionend = function() {
         x.remove();
       }
-      $('.progress-container').style.height = ($('section:last-child').getBoundingClientRect().height) + 'px';
+      $('.progress-container').style.height = ($(`#section-${id}`).getBoundingClientRect().height) + 'px';
     }, 10);
   }
   /**
@@ -318,6 +327,10 @@ document.addEventListener('DOMContentLoaded', function() {
       // 回到标题界面
       case 'title_screen':
         switchSection('title_screen');
+        break;
+      // 设置
+      case 'settings':
+        $('#settings').showModal();
         break;
     }
   }
@@ -542,6 +555,31 @@ document.addEventListener('DOMContentLoaded', function() {
         break;
     }
   });
+  /**
+   * input 改变
+   */
+  document.addEventListener('change', (e) => {
+    if (e.target.id == 'map_show_reverse') {
+      if (e.target.checked) {
+        setValue('map_show_reverse', '1');
+        $('.container').classList.add('map_show_reverse');
+      } else {
+        setValue('map_show_reverse', '0');
+        $('.container').classList.remove('map_show_reverse');
+      }
+      return;
+    }
+    if (e.target.id == 'status_show_reverse') {
+      if (e.target.checked) {
+        setValue('status_show_reverse', '1');
+        $('.wrapper').classList.add('status_show_reverse');
+      } else {
+        setValue('status_show_reverse', '0');
+        $('.wrapper').classList.remove('status_show_reverse');
+      }
+      return;
+    }
+  })
   
   MoeApp.login().then(() => {
     Telegram.WebApp.ready();

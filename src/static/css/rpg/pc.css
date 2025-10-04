@@ -48,6 +48,10 @@ figure {
 .wrapper {
   flex-direction: row-reverse;
 }
+.wrapper.status_show_reverse {
+  flex-direction: row;
+}
+
 .player_status {
   width: 20%;
   height: 100%;
@@ -56,6 +60,11 @@ figure {
   flex-direction: column;
   align-content: center;
 }
+.wrapper.status_show_reverse .player_status {
+  border: none;
+  border-left: 2px solid #c1b91c;
+}
+
 .player_status .race_name {
   width: auto; 
 }
