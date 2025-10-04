@@ -167,19 +167,12 @@ document.addEventListener('DOMContentLoaded', function() {
   if (x = getValue('save')) {
     save = JSON.parse(x);
   }
-  if (getValue('map_show_reverse') == '1') {
-    $('#map_show_reverse').checked = true;
-    $('.container').classList.add('map_show_reverse');
-  }
-  if (getValue('status_show_reverse') == '1') {
-    $('#status_show_reverse').checked = true;
-    $('.wrapper').classList.add('status_show_reverse');
-  }
   if (save.section) {
     $('#section-title_screen .btn.start').innerText = '继续';
   }
   const setSave = () => {
-    setValue('save', JSON.stringify(save))
+    save.update_time = parseInt(Date.now() / 1000);
+    setValue('save', JSON.stringify(save));
   }
   let map;
   function showMap() {
@@ -255,8 +248,10 @@ document.addEventListener('DOMContentLoaded', function() {
       let html = '<div class="box">后面还没做了捏亲＾3＾</div>';
       let load = null;
       if (sections[id]) {
-        save.section = id;
-        setSave();
+        if (save.section != id) {
+          save.section = id;
+          setSave();
+        }
         html = sections[id].html;
         load = sections[id].load;
       }
@@ -330,7 +325,23 @@ document.addEventListener('DOMContentLoaded', function() {
         break;
       // 设置
       case 'settings':
-        $('#settings').showModal();
+        showSettings();
+        break;
+      // 存档
+      case 'saves':
+        showSaves();
+        break;
+      // 加载存档
+      case 'load_save':
+        loadSave(arg);
+        break;
+      // 保存存档 
+      case 'save_save':
+        saveSave(arg);
+        break;
+      // 删除存档
+      case 'delete_save':
+        deleteSave(arg);
         break;
     }
   }
@@ -505,6 +516,157 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   function showOptions() {
     $('#options').showModal();
+  }
+  function showSettings() {
+    if (getValue('map_show_reverse') == '1') {
+      $('#map_show_reverse').checked = true;
+      $('.container').classList.add('map_show_reverse');
+    }
+    if (getValue('status_show_reverse') == '1') {
+      $('#status_show_reverse').checked = true;
+      $('.wrapper').classList.add('status_show_reverse');
+    }
+    $('#settings').showModal();
+  }
+  /**
+   * 显示存档
+   */
+  function showSaves() {
+    if (save.update_time) $('#save-0 .save_time').innerText = formatDateTime(save.update_time);
+    let desc = '空';
+    if (save.section) {
+      let race_name = '';
+      if (save.race_key) {
+        race_name = race_info[save.race_key].name + ': ';
+      }
+      let s = tag('div', {
+        innerHTML: sections[save.section].html,
+      });
+      desc = race_name + s.innerText.trim().replaceAll(/(\n| )+/g, ' ');
+      s.remove();
+    }
+    $('#save-0 .save_desc').innerText = desc;
+    let saves = [];
+    if (getValue('saves')) {
+      saves = JSON.parse(getValue('saves'));
+    } else {
+      for (let i = 0; i < 10; i++) {
+        saves.push({
+          desc: '空',
+          create_time: 0,
+          save: '',
+        });
+      }
+      setValue('saves', JSON.stringify(saves));
+    }
+    if (!$('#save-1')) {
+      for (let i = 0; i < 10; i++) {
+        let desc = saves[i].desc || '空';
+        let create_time = saves[i].create_time;
+        if (create_time) create_time = formatDateTime(create_time);
+        else create_time = '';
+        $('#saves .items').appendChild(tag('div', {
+          class: 'box',
+          id: `save-${i+1}`,
+          innerHTML: `<div class="save_info">
+  <div class="save_name">存档 ${i+1}</div>
+  <div class="save_controls">
+    <button class="btn delete_save danger" data-action="delete_save-${i+1}">删除</button>
+    <button class="btn save_save" data-action="save_save-${i+1}">保存</button>
+    <button class="btn load_save" data-action="load_save-${i+1}">加载</button>
+  </div>
+</div>
+<div class="save_desc">${desc}</div>
+<div class="save_details">
+  <div class="save_time">${create_time}</div>
+</div>`,
+        }))
+      }
+    }
+    $('#saves').showModal();
+  }
+  /**
+   * 加载存档
+   */
+  function loadSave(id) {
+    id = parseInt(id);
+    if (id === NaN) return; 
+    let s;
+    if (id != 0) {
+      try {
+        let saves = JSON.parse(getValue('saves'));
+        s = saves[id-1].save;
+        if (s == '') return alert('存档为空');
+        s = JSON.parse(gz64_decode(s));
+      } catch (e) {
+        console.error('加载存档失败', e);
+        alert('加载存档失败');
+        return;
+      }
+      if (!s.section) {
+        alert('存档不存在');
+        return;
+      }
+      save = s;
+    }
+    if (!save.section) {
+      return alert('存档为空');
+    }
+    switchSection(save.section);
+  }
+  /**
+   * 保存存档
+   */
+  function saveSave(id) {
+    id = parseInt(id);
+    if (id <= 0) return;
+    if (id > 10) return alert('最多只能存10个存档！');
+    let race_name = '';
+    if (save.race_key) {
+      race_name = race_info[save.race_key].name + ': ';
+    }
+    let t = tag('div', {
+      innerHTML: sections[save.section].html.trim(),
+    });
+    let desc = t.innerText.trim().replaceAll(/(\n| )+/g, ' ');
+    t.remove();
+    let s = {
+      create_time: parseInt(Date.now() / 1000),
+      desc: race_name + desc,
+      save: gz64_encode(JSON.stringify(save)),
+    }
+    let saves = JSON.parse(getValue('saves'));
+    saves[id - 1] = s;
+    setValue('saves', JSON.stringify(saves));
+    $(`#save-${id} .save_desc`).innerText = s.desc;
+    $(`#save-${id} .save_time`).innerText = formatDateTime(s.create_time);
+  }
+  /**
+   * 删除存档
+   */
+  function deleteSave(id) {
+    id = parseInt(id);
+    if (id === NaN || id > 10) return alert('存档不存在');
+    let name = '自动存档';
+    if (id > 0) name = '存档 ' + id;
+    if (!confirm(`确定要删除 ${name} 吗？`)) return;
+    if (id == 0) {
+      save = {};
+      setSave();
+      $(`#save-${id} .save_desc`).innerText = '空';
+      $(`#save-${id} .save_time`).innerText = '';
+      $('#section-title_screen .btn.start').innerText = '开始';
+      return;
+    }
+    let saves = JSON.parse(getValue('saves'));
+    saves[id - 1] = {
+      desc: '空',
+      create_time: 0,
+      save: '',
+    };
+    setValue('saves', JSON.stringify(saves));
+    $(`#save-${id} .save_desc`).innerText = '空';
+    $(`#save-${id} .save_time`).innerText = '';
   }
 
   document.addEventListener('click', (e) => {

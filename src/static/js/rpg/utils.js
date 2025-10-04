@@ -1336,6 +1336,9 @@ function showTooltip(trigger) {
     // 调整位置
     adjustTooltipPosition(trigger, tooltipBox);
     trigger.classList.add('show');
+    let t;
+    if (t = trigger.parentElement.querySelectorAll('.tooltip')) t.forEach(i => i.style.zIndex = '');
+    trigger.style.zIndex = 1;
   }
 }
 
@@ -1864,3 +1867,17 @@ class MapController {
   }
 }
 
+/**
+ * dialog点击
+ */
+function dialog_close(e) {
+  if (e.target.nodeName != 'DIALOG') return;
+  e.preventDefault();
+  e.target.classList.add('closing');
+  setTimeout(() => {
+    e.target.classList.remove('closing');
+    e.target.close();
+  }, 300);
+}
+document.addEventListener('mousedown', dialog_close);
+if (isMobile()) document.addEventListener('touchend', dialog_close);

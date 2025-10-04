@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/static/css/rpg/pc.css">
   
   <script src="/static/js/telegram-web-app.min.js"></script>
+  <script src="/static/js/pako_v2.0.4.js"></script>
   <script src="/static/js/main.js"></script>
   <script src="/static/js/rpg/utils.js"></script>
   <script src="/static/js/rpg/index.js"></script>
@@ -90,18 +91,14 @@
       <div class="title">选项</div>
       <div class="row column middle">
         <div class="btn switch_part" data-part="recall">回忆</div>
-        <div class="btn switch_part" data-part="saves">存档</div>
+        <div class="btn" data-action="saves">存档</div>
         <div class="btn" data-action="title_screen">回到标题界面</div>
         <div class="btn" data-action="settings">设置</div>
       </div>
     </section>
-    <section class="part" id="recall">
+    <section class="part" id="part-recall">
       <div class="btn back switch_part" data-part="recall">返回</div>
       <div class="title">回忆</div>
-    </section>
-    <section class="part" id="saves">
-      <div class="btn back switch_part" data-part="saves">返回</div>
-      <div class="title">存档</div>
     </section>
   </div>
 </dialog>
@@ -120,12 +117,36 @@
   </div>
 </dialog>
 
-<dialog class="battle box3">
-  <div class="row right">
-    <div></div>
+<dialog id="saves">
+  <div class="content box9" style="padding: 0 10px">
+    <div class="title">存档</div>
+    <div class="items">
+      <div class="box" id="save-0">
+        <div class="save_info">
+          <div class="save_name">自动存档</div>
+          <div class="save_controls">
+            <button class="btn delete_save danger" data-action="delete_save-0">删除</button>
+            <button class="btn load_save" data-action="load_save-0">加载</button>
+          </div>
+        </div>
+        <div class="save_desc">空</div>
+        <div class="save_details">
+          <div class="save_time">2333-33-33 11:45:14</div>
+        </div>
+      </div>
+      
+    </div>
   </div>
-  <div class="battle-history"></div>
-  <div class="player-status"></div>
+</dialog>
+
+<dialog class="battle">
+  <div class="content box box3">
+    <div class="row right">
+      <div></div>
+    </div>
+    <div class="battle-history"></div>
+    <div class="player-status"></div>
+  </div>
 </dialog>
 
 </body>

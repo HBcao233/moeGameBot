@@ -144,6 +144,11 @@ img.icon {
   opacity: .6;
 }
 
+.danger {
+  background: red;
+  color: #fff;
+}
+
 p {
   text-indent: 2em;
 }
@@ -1086,6 +1091,8 @@ section.show {
   width: 50%;
   margin: 5px;
   margin-right: 0;
+  margin-bottom: 30px;
+  z-index: 1;
 }
 
 .player_status .effects .effect {
@@ -1105,14 +1112,14 @@ section.show {
   padding: 3px 7px;
 }
 
+
 dialog {
   position: fixed;
-  display: block;
   width: 100%;
   height: 100%;
   max-width: unset;
   max-height: unset;
-  transition: opacity .3s;
+  transition: all .3s;
   visibility: hidden;
   opacity: 0;
   background: transparent;
@@ -1130,7 +1137,18 @@ dialog[open] {
 
 dialog::backdrop {
   background: rgb(0, 0, 0, .3);
+  opacity: 1;
+  transform: opacity .3s;
 }
+dialog.closing {
+  visibility: hidden;
+  opacity: 0;
+}
+dialog.closing::backdrop {
+  visibility: hidden;
+  opacity: 0;
+}
+
 
 dialog > .content {
   position: relative;
@@ -1198,4 +1216,22 @@ section.part.show {
   top: 0;
   left: 5px;
   padding: 2px 5px;
+}
+
+
+.save_name {
+  font-weight: bold;
+}
+.save_info {
+  display: flex;
+  justify-content: space-between;
+}
+.save_desc {
+  display: -webkit-box; 
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; 
+  overflow: hidden; 
+}
+.save_details .save_time {
+  text-align: center;
 }
