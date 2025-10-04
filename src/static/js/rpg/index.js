@@ -161,9 +161,13 @@ document.addEventListener('DOMContentLoaded', function() {
       children: [7],
     },
   };
+  const getSectionText = (id) => {
+    return parseHTML(sections[id].html)[0].innerText.replaceAll(/\n| /g, ' ').replaceAll('自选模式', '').trim();
+  }
   
   let x;
   let save = {};
+  if (!save.history) save.history = [];
   if (getValue('map_show_reverse') == '1') {
     $('#map_show_reverse').checked = true;
     $('.container').classList.add('map_show_reverse');
@@ -242,6 +246,11 @@ document.addEventListener('DOMContentLoaded', function() {
   /**
    * 切换内容
    */
+  function updateSectionHeight() {
+    $('.progress-container').style.height = ($('section:last-child').getBoundingClientRect().height) + 'px';
+    if (getValue('map_show_reverse') != '1') $('.container').scrollTo(0, 0);
+    else $('.container').scrollTop = -$('.container').scrollHeight;
+  }
   function switchSection(id) {
     let t;
     if (t = $('dialog[open]')) t.close();
@@ -259,6 +268,12 @@ document.addEventListener('DOMContentLoaded', function() {
       if (sections[id]) {
         if (save.section != id) {
           save.section = id;
+          let history = save.history || [];
+          history.push({
+            type: 'to_section',
+            section: id,
+          });
+          save.history = history;
           setSave();
         }
         html = sections[id].html;
@@ -288,7 +303,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (x) y.ontransitionend = function() {
         x.remove();
       }
-      $('.progress-container').style.height = ($(`#section-${id}`).getBoundingClientRect().height) + 'px';
+      
+      setTimeout(function() {
+        updateSectionHeight();
+      }, 90);
+      
     }, 10);
   }
   /**
@@ -360,6 +379,10 @@ document.addEventListener('DOMContentLoaded', function() {
       case 'upload_save':
         uploadSave(arg);
         break;
+      // 显示回忆
+      case 'show_recall':
+        showRecall(arg);
+        break;
     }
   }
   
@@ -372,8 +395,10 @@ document.addEventListener('DOMContentLoaded', function() {
       innerHTML: '<p class="action">(1) 继续</p>'
     }));
     setTimeout(() => {
-      $('.progress-container').style.height = ($('section:last-child').getBoundingClientRect().height) + 'px';
-    }, 100)
+      updateSectionHeight()
+      
+    }, 100);
+    
     const rs = [
       ['princess', 'wizard', 'elf', 'dwarf', 'beastwoman', 'holstaurus'],
       ['witch', 'succubus', 'asceticist', 'zombie', 'corrupted', 'robot'],
@@ -548,11 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (save.race_key) {
         race_name = race_info[save.race_key].name + ': ';
       }
-      let s = tag('div', {
-        innerHTML: sections[save.section].html,
-      });
-      desc = race_name + s.innerText.trim().replaceAll(/(\n| )+/g, ' ');
-      s.remove();
+      desc = race_name + getSectionText(save.section);
     }
     $('#save-0 .save_desc').innerText = desc;
     let saves = [];
@@ -638,14 +659,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (save.race_key) {
       race_name = race_info[save.race_key].name + ': ';
     }
-    let t = tag('div', {
-      innerHTML: sections[save.section].html.trim(),
-    });
-    let desc = race_name + t.innerText.trim().replaceAll(/(\n| )+/g, ' ');
+    let desc = race_name + getSectionText(save.section);
     if (desc.length > 60) {
       desc = desc.slice(0, 60) + '...';
     }
-    t.remove();
     let s = {
       create_time: parseInt(Date.now() / 1000),
       desc: desc,
@@ -697,12 +714,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (save.race_key) {
         race_name = race_info[save.race_key].name + ': ';
       }
-      let s = tag('div', {
-        innerHTML: sections[save.section].html,
-      });
-      desc = race_name + s.innerText.trim().replaceAll(/(\n| )+/g, ' ');
+      desc = race_name + getSectionText(save.section)
       if (desc.length > 60) desc = desc.slice(0, 60) + '...';
-      s.remove();
       create_time = save.update_time;
       jsonString = JSON.stringify({
         create_time: create_time,
@@ -784,6 +797,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     input.click();
   }
+  /**
+   * 显示回想
+   */
+  function showRecall() {
+    $('#recall .items').innerHTML = '';
+    for (const i of save.history.reverse()) {
+      let t = tag('div', {
+        class: 'box box9',
+      });
+      switch (i.type) {
+        case 'to_section':
+          t.innerText = getSectionText(i.section)
+          break;
+        case 'dice':
+          let dice_name = {
+            'random_camp': '选择阵营',
+            'random_race': '选择职业',
+          }[i.action] || '';
+          t.innerText = `投掷${dice_name}骰子得到点数 ${i.dice}`
+          break;
+      }
+      $('#recall .items').appendChild(t);
+    }
+    $('#recall').showModal();
+  }
 
 
   document.addEventListener('click', (e) => {
@@ -816,6 +854,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let dice = e.detail.dice;
     e.target.classList.add('disabled');
     let action = e.target.getAttribute('data-action');
+    if (action && action != 'show_action') {
+      save.history.push({
+        type: 'dice',
+        action: action,
+        dice: dice,
+      });
+      setSave();
+    }
     switch (action) {
       case 'show_action':
         e.target.parentElement.querySelector('.action').style.display = '';

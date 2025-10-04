@@ -194,6 +194,15 @@ function formatTime2(t) {
 function formatTime3(t) {
   return formatTime2(t).replace('d', '天').replace('h', '小时').replace('m', '分钟').replace('s', '秒');
 }
+
+/**
+ * 解析 html 字符串
+ */
+const parseHTML = (html) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  return [...doc.body.children];
+}
 /**
  * 创建 Element
  * @param {String} tagName 
