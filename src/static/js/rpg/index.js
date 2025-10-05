@@ -128,22 +128,25 @@ document.addEventListener('DOMContentLoaded', function() {
       type: 'start',
       parent: null,
       children: [0],
-      x: 47.30,
-      y: 88.40,
+      x: 45.30,
+      y: 90.50,
+      width: 'auto',
+      height: 'auto', 
+      label: '#0 淫乱森林的入口',
     },
     1: {
       type: 'battle',
       parent: 0,
       children: [2],
-      x: 47.30,
-      y: 82.00,
+      x: 46.85,
+      y: 84.70,
     },
     2: {
       type: 'random_event',
       parent: 1,
       children: [3],
-      x: 47.05,
-      y: 75.00,
+      x: 46.7,
+      y: 77.5,
     },
     3: {
       type: 'battle',
@@ -161,8 +164,16 @@ document.addEventListener('DOMContentLoaded', function() {
       children: [7],
     },
   };
+  
   const getSectionText = (id) => {
-    return parseHTML(sections[id].html)[0].innerText.replaceAll(/\n| /g, ' ').replaceAll('自选模式', '').trim();
+    const element = tag('div', {
+      style: 'display: none',
+      innerHTML: sections[id].html,
+    });
+    document.body.appendChild(element);
+    const result = getElementText(element);
+    element.remove();
+    return result;
   }
   
   let x;
@@ -179,8 +190,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (x = getValue('save')) {
     save = JSON.parse(x);
   }
-  if (save.section) {
-    $('#section-title_screen .btn.start').innerText = '继续';
+  if (save.section === undefined) {
+    $('.btn.continue').classList.add('disabled');
   }
   const setSave = () => {
     save.update_time = parseInt(Date.now() / 1000);
@@ -191,12 +202,17 @@ document.addEventListener('DOMContentLoaded', function() {
   function showMap() {
     $('.map_container').classList.add('show');
     map = new MapController();
-    map.addMarker({
-      x: 46.9,
-      y: 84.9,
-      id: 'block1',
-      type: 'battle',
-    })
+    for (const [k, v] of Object.entries(map_blocks)) {
+      map.addMarker({
+        key: k,
+        type: v.type,
+        x: v.x,
+        y: v.y,
+        width: v.width,
+        height: v.height,
+        label: v.label,
+      });
+    }
     const player_marker = map.addMarker({
       x: 47.00,
       y: 75.00,
@@ -568,14 +584,18 @@ document.addEventListener('DOMContentLoaded', function() {
   function showSaves() {
     if (save.update_time) $('#save-0 .save_time').innerText = formatDateTime(save.update_time).split(':').slice(0,2).join(':');
     let desc = '空';
-    if (save.section) {
+    if (save.section !== undefined) {
       let race_name = '';
       if (save.race_key) {
-        race_name = race_info[save.race_key].name + ': ';
+        race_name = race_info[save.race_key].name;
+        let race_color = '#ffb700';
+        if (save.camp == 2) 
+          race_color = '#7530a4';
+        race_name = `ō${race_name}óǒ${race_color}ò: `;
       }
-      desc = race_name + getSectionText(save.section);
+      desc = cutElementText(race_name + getSectionText(save.section));
     }
-    $('#save-0 .save_desc').innerText = desc;
+    $('#save-0 .save_desc').innerHTML = elementText2html(desc);
     let saves = [];
     if (getValue('saves')) {
       saves = JSON.parse(getValue('saves'));
@@ -592,6 +612,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!$('#save-1')) {
       for (let i = 0; i < 10; i++) {
         let desc = saves[i].desc || '空';
+        desc = elementText2html(desc);
         let create_time = saves[i].create_time;
         if (create_time) create_time = formatDateTime(create_time).split(':').slice(0,2).join(':');
         else create_time = '';
@@ -643,7 +664,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       save = s;
     }
-    if (!save.section) {
+    if (save.section === undefined) {
       return alert('存档为空');
     }
     switchSection(save.section);
@@ -657,12 +678,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (id > 10) return alert('最多只能存10个存档！');
     let race_name = '';
     if (save.race_key) {
-      race_name = race_info[save.race_key].name + ': ';
+      let race_color = '#ffb700';
+      if (save.camp == 2) 
+        race_color = '#7530a4';
+      race_name = `ō${race_info[save.race_key].name}óǒ${race_color}ò: `;
     }
-    let desc = race_name + getSectionText(save.section);
-    if (desc.length > 60) {
-      desc = desc.slice(0, 60) + '...';
-    }
+    const desc = cutElementText(race_name + getSectionText(save.section));
     let s = {
       create_time: parseInt(Date.now() / 1000),
       desc: desc,
@@ -671,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let saves = JSON.parse(getValue('saves'));
     saves[id - 1] = s;
     setValue('saves', JSON.stringify(saves));
-    $(`#save-${id} .save_desc`).innerText = s.desc;
+    $(`#save-${id} .save_desc`).innerHTML = elementText2html(s.desc);
     $(`#save-${id} .save_time`).innerText = formatDateTime(s.create_time).split(':').slice(0,2).join(':');
   }
   /**
@@ -688,7 +709,7 @@ document.addEventListener('DOMContentLoaded', function() {
       setSave();
       $(`#save-${id} .save_desc`).innerText = '空';
       $(`#save-${id} .save_time`).innerText = '';
-      $('#section-title_screen .btn.start').innerText = '开始';
+      $('.btn.continue').classList.add('disabled');
       return;
     }
     let saves = JSON.parse(getValue('saves'));
@@ -775,15 +796,14 @@ document.addEventListener('DOMContentLoaded', function() {
             desc: s.desc,
             save: s.save,
           }
-          console.log(s);
           const save = JSON.parse(gz64_decode(s.save));
-          if (!save.section) {
+          if (save.section === undefined) {
             return alert('存档为空');
           }
           if (saves[id - 1].save && !confirm(`覆盖存档 ${id} 吗？`)) return;
           saves[id - 1] = s;
           setValue('saves', JSON.stringify(saves));
-          $(`#save-${id} .save_desc`).innerText = s.desc;
+          $(`#save-${id} .save_desc`).innerHTML = elementText2html(s.desc);
           $(`#save-${id} .save_time`).innerText = formatDateTime(s.create_time).split(':').slice(0,2).join(':');
         } catch (e) {
           console.error('载入存档失败:', e);
@@ -808,7 +828,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       switch (i.type) {
         case 'to_section':
-          t.innerText = getSectionText(i.section)
+          t.innerHTML = elementText2html(getSectionText(i.section));
           break;
         case 'dice':
           let dice_name = {
@@ -825,12 +845,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('disabled')) return;
     let t, action, arg;
     switch(true) {
-      // 开始游戏
+      // 继续游戏
+      case !!e.target.closest('#section-title_screen .btn.continue'):
+        if (save.section !== undefined) switchSection(save.section);
+        else alert('自动存档为空')
+        return;
+      // 从头开始
       case !!e.target.closest('#section-title_screen .btn.start'):
-        if (save.section) switchSection(save.section);
-        else switchSection(0);
+        if (save.section !== undefined && !confirm('该操作将会覆盖自动存档，是否继续？')) return;
+        save = {};
+        switchSection(0);
         return;
       
       // 操作

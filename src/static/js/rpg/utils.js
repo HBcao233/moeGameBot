@@ -1600,7 +1600,7 @@ class MapController {
    * @param {TouchEvent} e - 触摸事件对象
    */
   handleTouchStart(e) {
-    try{e.preventDefault();}catch(err){};
+    // try{e.preventDefault();}catch(err){};
     
     if (e.touches.length === 1) {
       // 单指触摸 - 拖动
@@ -1836,14 +1836,53 @@ class MapController {
    * @returns {HTMLElement} 标记元素
    */
   addMarker(options) {
-    const { x, y, label = '', type = 'pin', id = Date.now(), onClick } = options;
+    let { 
+      x, y, key,
+      label = '', 
+      type = 'pin', 
+      id = Date.now(), 
+      onclick,
+      width, 
+      height,
+    } = options;
   
     // 创建标记元素
+    const blocks = {
+      'battle': '战斗格',
+      'random_event': '随机事件格',
+    }
+    if (type in blocks) {
+      label = blocks[type];
+      label = `#${key} ` + label;
+    }
+    
     const marker = document.createElement('div');
-    marker.className = 'map-marker';
+    marker.className = 'map-marker' + (label ? ' tooltip': '');
+    if (key) {
+      id = 'block-' + key;
+    }
     marker.id = 'marker-' + id;
     marker.style.left = `${x}%`;
     marker.style.top = `${y}%`;
+    switch (type) {
+      case 'pin':
+        width = 3.34;
+        height = 3.34;
+        break;
+      case 'battle':
+      case 'random_event':
+        width = 4.1;
+        height = 4.1;
+        break;
+    }
+    if (width) {
+      if (width != 'auto') width += '%';
+      marker.style.width = width;
+    }
+    if (height) {
+      if (height != 'auto') height += '%';
+      marker.style.height = height;
+    }
     
     // 根据类型创建标记内容
     switch (type) {
@@ -1851,10 +1890,14 @@ class MapController {
         marker.innerHTML = `<div class="marker-pin"></div>${label ? `<div class="marker-label">${label}</div>` : ''}`;
         break;
       case 'battle':
-        marker.innerHTML = `<div class="marker-battle"></div>${label ? `<div class="marker-label">${label}</div>` : ''}`;
+      case 'random_event':
+        marker.innerHTML = `<div class="marker-${type}"></div><div class="tooltip-box">${label}</div>`;
         break;
-      case 'circle':
-        marker.innerHTML = `<div style="width: 20px; height: 20px; background: #e74c3c; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.3);"></div>${label ? `<div class="marker-label">${label}</div>` : ''}`;
+      case 'box':
+        marker.innerHTML = `<div class="box box15"></div><div class="tooltip-box">${label}</div>`;
+        break;
+      case 'start':
+        marker.innerHTML = `<div class="box box15"><div>开始</div></div><div class="tooltip-box">${label}</div>`;
         break;
       case 'custom':
         marker.innerHTML = options.html || '';
@@ -1881,3 +1924,85 @@ function dialog_close(e) {
 }
 document.addEventListener('mousedown', dialog_close);
 if (isMobile()) document.addEventListener('touchend', dialog_close);
+
+/**
+ * rgb(r,g,b)颜色转十六进制
+ */
+function rgbToHex(rgb) {
+  // 检查rgb或rgba格式
+  const match = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+\.?\d*))?\)$/);
+  if (!match) {
+    return '';
+  }
+  // 提取RGB值
+  const r = parseInt(match[1]);
+  const g = parseInt(match[2]);
+  const b = parseInt(match[3]);
+  // 转换为十六进制
+  const hex = '#' + 
+    ((1 << 24) + (r << 16) + (g << 8) + b)
+    .toString(16)
+    .slice(1);
+  return hex;
+}
+/**
+ * 获取Element带颜色文本，注意 Element 需要添加到body中才能获取到 color
+ */
+const getElementText = (obj) => {
+  if (obj == null) return '';
+  if (typeof obj[Symbol.iterator] === 'function') {
+    return [...obj].map(getElementText).join(' ');
+  }
+  if (obj.childElementCount > 0) {
+    return getElementText(obj.children);
+  }
+  const color = rgbToHex(window.getComputedStyle(obj).color);
+  return `ō${obj.innerText}óǒ${color}ò`;
+}
+/**
+ * getElementText 得到的带颜色文本转 html
+ */
+const elementText2html = (text) => {
+  return text.replaceAll(/\ō(.*?)\ó\ǒ(#.*?)\ò/g, '<span style="color: $2">$1</span>');
+}
+/**
+ * 清除 html标签
+ */
+const cleanHTML = (text) => {
+  return text.replaceAll(/<.*?\>.*?\<\/.*?\>/g, '');
+}
+/**
+ * 裁剪 ElementText
+ */
+function cutElementText(str, maxLength = 100) {
+  let totalLength = 0;
+  let result = '';
+  let i = 0;
+  let flag = false;
+  while (i < str.length && totalLength < maxLength) {
+    if (str[i] === 'ō' && str.indexOf('óǒ', i) !== -1) {
+      const bracketEnd = str.indexOf('óǒ', i);
+      const linkEnd = str.indexOf('ò', bracketEnd + 2);
+      if (linkEnd === -1) break;
+      const content = str.substring(i + 1, bracketEnd);
+      const remaining = maxLength - totalLength;
+      if (content.length <= remaining) {
+        result += str.substring(i, linkEnd + 1);
+        totalLength += content.length;
+        i = linkEnd + 1;
+      } else {
+        result += 'ō' + content.substring(0, remaining) + str.substring(bracketEnd, linkEnd + 1);
+        totalLength += remaining;
+        i = linkEnd + 1;
+        flag = true;
+        break;
+      }
+    } else {
+      result += str[i];
+      totalLength++;
+      i++;
+    }
+  }
+  if (flag || totalLength >= maxLength) result += '...';
+  return result;
+}
